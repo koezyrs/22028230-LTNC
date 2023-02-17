@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1676566166 source:d:\dev\uet project\masuguno tales\masuguno tales\main.cpp
+	"include/Game.h"
+
+1676455314 d:\dev\uet project\masuguno tales\masuguno tales\src\game.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1676566154 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+	"../include/Game.h"
+
+1676561226 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
+
+1676561816 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"config.h"
+
