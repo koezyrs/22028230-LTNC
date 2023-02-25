@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1676566166 source:d:\dev\uet project\masuguno tales\masuguno tales\main.cpp
+1677256161 source:d:\dev\uet project\masuguno tales\masuguno tales\main.cpp
 	"include/Game.h"
 
 1676455314 d:\dev\uet project\masuguno tales\masuguno tales\src\game.h
@@ -9,16 +9,87 @@
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 
-1676566154 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+1677321480 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
 	"../include/Game.h"
+	"../include/TextureManager.h"
+	"../include/Map.h"
+	"../include/GameActor.h"
+	"../include/config.h"
 
-1676561226 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
+1677317576 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
 
-1676561816 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
+1677320531 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 	"config.h"
+
+1676695854 d:\dev\uet project\masuguno tales\masuguno tales\include\texturemanager.h
+	"Game.h"
+
+1677250843 d:\dev\uet project\masuguno tales\masuguno tales\include\gameobject.h
+	"Game.h"
+
+1677254209 source:d:\dev\uet project\masuguno tales\masuguno tales\src\gameobject.cpp
+	"../include/GameObject.h"
+	"../include/TextureManager.h"
+	"../include/config.h"
+
+1676695773 source:d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.cpp
+	"../include/TextureManager.h"
+
+1676695331 d:\dev\uet project\masuguno tales\masuguno tales\include\map.h
+	"Game.h"
+
+1677248336 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
+	"../include/Map.h"
+	"../include/TextureManager.h"
+
+1676980112 d:\dev\uet project\masuguno tales\masuguno tales\include\entitycomponentsystem.h
+	<iostream>
+	<vector>
+	<memory>
+	<algorithm>
+	<bitset>
+	<array>
+
+1676704399 d:\dev\uet project\masuguno tales\masuguno tales\include\components.h
+	"EntityComponentSystem.h"
+
+1677247295 d:\dev\uet project\masuguno tales\masuguno tales\include\gamemanager.h
+	<iostream>
+	<vector>
+	<memory>
+	<algorithm>
+	<bitset>
+	<array>
+	"GameObject.h"
+
+1677323090 d:\dev\uet project\masuguno tales\masuguno tales\include\gameactor.h
+	"Game.h"
+	"TextureManager.h"
+	"Component/Component.h"
+	"Vector2D.h"
+	"config.h"
+
+1677323248 source:d:\dev\uet project\masuguno tales\masuguno tales\src\gameactor.cpp
+	"../include/GameActor.h"
+
+1677321293 d:\dev\uet project\masuguno tales\masuguno tales\include\component\transformcomponent.h
+	"../Vector2D.h"
+
+1677321263 d:\dev\uet project\masuguno tales\masuguno tales\include\component\component.h
+	"TransformComponent.h"
+	"KeyboardController.h"
+
+1677319887 d:\dev\uet project\masuguno tales\masuguno tales\include\vector2d.h
+
+1677319279 source:d:\dev\uet project\masuguno tales\masuguno tales\src\vector2d.cpp
+	"../include/Vector2D.h"
+
+1677323378 d:\dev\uet project\masuguno tales\masuguno tales\include\component\keyboardcontroller.h
+	"../Game.h"
+	"Component.h"
 

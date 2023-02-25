@@ -1,13 +1,19 @@
 #include "../include/Game.h"
+#include "../include/TextureManager.h"
+#include "../include/Map.h"
+#include "../include/GameActor.h"
+#include "../include/config.h"
 
-Game::Game(){
-    gWindow = NULL;
-    gRenderer = NULL;
-}
+GameActor* gPlayer;
+Map* currentMap;
+SDL_Renderer* Game::gRenderer = NULL;
+SDL_Event Game::event;
+
+Game::Game(){};
 
 Game::~Game(){};
 
-void Game::init(const char* titile, int xpos, int ypos, int width, int height)
+void Game::init(const char* title, int xpos, int ypos, int width, int height)
 {
     isRunning = true;
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
@@ -35,7 +41,7 @@ void Game::init(const char* titile, int xpos, int ypos, int width, int height)
     }
 
     // Create window
-    gWindow = SDL_CreateWindow(titile, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
     if(gWindow == NULL){
         cout << "Unable to create Window! SDL_Error: " << SDL_GetError() << endl;
         isRunning = false;
@@ -43,7 +49,7 @@ void Game::init(const char* titile, int xpos, int ypos, int width, int height)
     }
 
     // Create renderer
-    gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+    gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(gRenderer == NULL){
         cout << "Unable to create Renderer! SDL_Error: " << SDL_GetError() << endl;
         isRunning = false;
@@ -54,15 +60,15 @@ void Game::init(const char* titile, int xpos, int ypos, int width, int height)
     return;
 }
 
-void Game::load()
+void Game::loadMedia()
 {
-
+    gPlayer = new GameActor(0, 0, "assets/player.png");
+    currentMap = new Map();
     return;
 }
 
 void Game::handleEvents()
 {
-    SDL_Event event;
     SDL_PollEvent(&event);
     switch(event.type){
     case SDL_QUIT:
@@ -77,6 +83,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    gPlayer->Update();
     return;
 }
 
@@ -87,9 +94,8 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
-    SDL_SetRenderDrawColor(gRenderer, 255, 0, 0, 255);
-    SDL_Rect rect = {(1280 - 400) / 2, (720 - 400) / 2 , 400, 400};
-    SDL_RenderFillRect(gRenderer, &rect);
+    currentMap->DrawMap();
+    gPlayer->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);
