@@ -1,10 +1,13 @@
 #include "../include/Game.h"
 #include "../include/TextureManager.h"
 #include "../include/Map.h"
+#include "../include/Collision.h"
 #include "../include/GameActor.h"
+#include "../include/Wall.h"
 #include "../include/config.h"
 
 GameActor* gPlayer;
+Wall* testWall;
 Map* currentMap;
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Event Game::event;
@@ -62,7 +65,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
 
 void Game::loadMedia()
 {
-    gPlayer = new GameActor(0, 0, "assets/player.png");
+    gPlayer = new GameActor();
+    testWall = new Wall();
     currentMap = new Map();
     return;
 }
@@ -84,6 +88,13 @@ void Game::handleEvents()
 void Game::update()
 {
     gPlayer->Update();
+    testWall->Update();
+    if (Collision::AABB(gPlayer->getColliderComponent()->collider,
+                       testWall->getColliderComponent()->collider))
+    {
+        gPlayer->getTransformComponent()->scale = 1;
+        cout << "Hit Wall!!!" << endl;
+    }
     return;
 }
 
@@ -96,6 +107,7 @@ void Game::render()
     // Draw here
     currentMap->DrawMap();
     gPlayer->Render();
+    testWall->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);

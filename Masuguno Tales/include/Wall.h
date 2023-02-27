@@ -1,40 +1,26 @@
 #pragma once
-
-#ifndef GameActor_h
-#define GameActor_h
+#ifndef Wall_h
+#define Wall_h
 
 #include "Game.h"
-#include "TextureManager.h"
 #include "Component/Component.h"
-#include "Vector2D.h"
-#include "config.h"
+#include "TextureManager.h"
 
-class GameActor
+class Wall
 {
 public:
-    GameActor();
-    ~GameActor();
+    Wall();
+    ~Wall();
     void Update();
     void Render();
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
-    KeyboardController* getKeyboardController() {return mController;}
     bool isActive() const {return active;}
     void destroy() {active = false;}
 private:
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;
-    KeyboardController* mController;
     bool active = true;
-
-    SDL_Rect currentSprite;
-    SDL_Rect mSpriteMoveUp[3];
-    SDL_Rect mSpriteMoveDown[3];
-    SDL_Rect mSpriteMoveLeft[3];
-    SDL_Rect mSpriteMoveRight[3];
 };
-
-#endif // GameObject_h
-
-
+#endif // Wall_h
