@@ -3,21 +3,18 @@
 #ifndef Map_h
 #define Map_h
 #include "Game.h"
+#include "Component/Component.h"
+
 class Map
 {
 public:
-    Map();
+    Map(int x, int y, int w, int h, int id, std::string tag);
+    void Update();
+    void Render();
     ~Map();
-
-    void LoadMap(int arr[20][25]);
-    void DrawMap();
 private:
-    SDL_Rect srcRect, destRect;
-    SDL_Texture* dirt;
-    SDL_Texture* grass;
-    SDL_Texture* water;
-
-    int GameMap[20][25];
+    TileComponent* mTile;
+    ColliderComponent* mCollider;
 
 };
 

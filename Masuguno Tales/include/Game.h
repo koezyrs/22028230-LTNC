@@ -7,7 +7,10 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <vector>
 #include "config.h"
+
+class ColliderComponent;
 
 using namespace std;
 
@@ -24,6 +27,7 @@ public:
     bool running();
     static SDL_Renderer* gRenderer;
     static SDL_Event event;
+    static std::vector<ColliderComponent*> gColliders;
 private:
     bool isRunning;
     SDL_Window* gWindow;

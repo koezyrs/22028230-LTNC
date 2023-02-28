@@ -10,28 +10,30 @@ class ColliderComponent
 {
 public:
 
-    SDL_Rect collider;
-    std::string tag;
     TransformComponent* mTransform;
+    SDL_Rect mCollider;
+    std::string tag;
 
     ColliderComponent(TransformComponent* trans)
     {
         mTransform = trans;
         tag = "";
+        Game::gColliders.push_back(this);
     }
 
     ColliderComponent(TransformComponent* trans, std::string _tag)
     {
         mTransform = trans;
         tag = _tag;
+        Game::gColliders.push_back(this);
     }
 
     void Update()
     {
-        collider.x = (int)(mTransform->position.x);
-        collider.y = (int)(mTransform->position.y);
-        collider.w = mTransform->width * mTransform->scale;
-        collider.h = mTransform->height * mTransform->scale;
+        mCollider.x = static_cast<int>(mTransform->position.x);
+        mCollider.y = static_cast<int>(mTransform->position.y);
+        mCollider.w = mTransform->width * mTransform->scale;
+        mCollider.h = mTransform->height * mTransform->scale;
     }
 
 };

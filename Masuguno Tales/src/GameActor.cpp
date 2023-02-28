@@ -2,7 +2,7 @@
 
 GameActor::GameActor()
 {
-    mTransform = new TransformComponent(0, 0, 32, 48, 2);
+    mTransform = new TransformComponent(0, 0, 32, 48, 1);
     mSprite = new SpriteComponent("assets/player.png", mTransform);
     mCollider = new ColliderComponent(mTransform, "Player");
     mController = new KeyboardController(mTransform);

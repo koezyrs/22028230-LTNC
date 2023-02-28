@@ -1,16 +1,23 @@
 #include "../include/Game.h"
 #include "../include/TextureManager.h"
+#include "../include/Component/Component.h"
 #include "../include/Map.h"
 #include "../include/Collision.h"
 #include "../include/GameActor.h"
 #include "../include/Wall.h"
 #include "../include/config.h"
 
-GameActor* gPlayer;
-Wall* testWall;
-Map* currentMap;
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Event Game::event;
+
+std::vector<ColliderComponent*> Game::gColliders;
+
+
+Map* currentMap1;
+Map* currentMap2;
+Map* currentMap3;
+
+GameActor* gPlayer;
 
 Game::Game(){};
 
@@ -60,40 +67,45 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     }
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
 
+    // Init Game Object Here
+    gPlayer = new GameActor();
+    currentMap1 = new Map(200, 200, 32, 32, 0, "Water");
+    currentMap2 = new Map(250, 250, 32, 32, 1, "Dirt");
+    currentMap3 = new Map(300, 300, 32, 32, 2, "Grass");
     return;
 }
 
 void Game::loadMedia()
 {
-    gPlayer = new GameActor();
-    testWall = new Wall();
-    currentMap = new Map();
     return;
 }
 
 void Game::handleEvents()
 {
-    SDL_PollEvent(&event);
-    switch(event.type){
-    case SDL_QUIT:
-        isRunning = false;
-        break;
-    default:
-        break;
+    while(SDL_PollEvent(&event) != 0){
+        switch(event.type){
+        case SDL_QUIT:
+            isRunning = false;
+            break;
+        default:
+            break;
+        }
+        return;
     }
-
-    return;
 }
 
 void Game::update()
 {
+    // Update Game Object
+    currentMap1->Update();
+    currentMap3->Update();
+    currentMap2->Update();
     gPlayer->Update();
-    testWall->Update();
-    if (Collision::AABB(gPlayer->getColliderComponent()->collider,
-                       testWall->getColliderComponent()->collider))
+
+    // Collision check
+    for(auto cc : gColliders)
     {
-        gPlayer->getTransformComponent()->scale = 1;
-        cout << "Hit Wall!!!" << endl;
+        Collision::AABB(*gPlayer->getColliderComponent(), *cc);
     }
     return;
 }
@@ -105,9 +117,10 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
-    currentMap->DrawMap();
+    currentMap1->Render();
+    currentMap2->Render();
+    currentMap3->Render();
     gPlayer->Render();
-    testWall->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);

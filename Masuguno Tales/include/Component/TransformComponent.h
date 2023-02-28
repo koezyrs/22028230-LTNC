@@ -18,27 +18,22 @@ public:
 
     TransformComponent()
     {
-        position.x = 0.0f;
-        position.y = 0.0f;
-        velocity.x = 0;
-        velocity.y = 0;
+        position.Zero();
+        velocity.Zero();
     }
 
     TransformComponent(int _scale)
     {
-        position.x = 0.0f;
-        position.y = 0.0f;
+        position.Zero();
+        velocity.Zero();
         scale = _scale;
-        velocity.x = 0;
-        velocity.y = 0;
     }
 
     TransformComponent(float _x, float _y)
     {
         position.x = _x;
         position.y = _y;
-        velocity.x = 0;
-        velocity.y = 0;
+        velocity.Zero();
     }
 
     TransformComponent(float _x, float _y, int _width, int _height, int _scale)
@@ -48,8 +43,7 @@ public:
         width = _width;
         height = _height;
         scale = _scale;
-        velocity.x = 0;
-        velocity.y = 0;
+        velocity.Zero();
     }
 
     void Update()

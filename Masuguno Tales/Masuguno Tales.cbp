@@ -36,6 +36,7 @@
 		<Unit filename="include/Component/Component.h" />
 		<Unit filename="include/Component/KeyboardController.h" />
 		<Unit filename="include/Component/SpriteComponent.h" />
+		<Unit filename="include/Component/TileComponent.h" />
 		<Unit filename="include/Component/TransformComponent.h" />
 		<Unit filename="include/Game.h" />
 		<Unit filename="include/GameActor.h" />

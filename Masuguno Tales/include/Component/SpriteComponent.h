@@ -31,8 +31,8 @@ public:
 
     void Update()
     {
-        destRect.x = (int)mTransform->position.x;
-        destRect.y = (int)mTransform->position.y;
+        destRect.x = static_cast<int>(mTransform->position.x);
+        destRect.y = static_cast<int>(mTransform->position.y);
         destRect.w = mTransform->width * mTransform->scale;
         destRect.h = mTransform->height * mTransform->scale;
     }
