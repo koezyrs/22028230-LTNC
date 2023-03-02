@@ -18,14 +18,14 @@ public:
     {
         mTransform = trans;
         tag = "";
-        Game::gColliders.push_back(this);
+        Game::gGroupColliders.push_back(this);
     }
 
     ColliderComponent(TransformComponent* trans, std::string _tag)
     {
         mTransform = trans;
         tag = _tag;
-        Game::gColliders.push_back(this);
+        Game::gGroupColliders.push_back(this);
     }
 
     void Update()

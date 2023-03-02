@@ -4,18 +4,28 @@
 #define GameActor_h
 
 #include "Game.h"
+#include "Entity.h"
 #include "TextureManager.h"
 #include "Component/Component.h"
 #include "Vector2D.h"
 #include "config.h"
 
-class GameActor
+class GameActor : public Entity
 {
 public:
     GameActor();
     ~GameActor();
-    void Update();
-    void Render();
+    void Update() override
+    {
+        mController->Update();
+        mTransform->Update();
+        mCollider->Update();
+        mSprite->Update();
+    }
+    void Render() override
+    {
+        mSprite->Render();
+    }
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
     KeyboardController* getKeyboardController() {return mController;}

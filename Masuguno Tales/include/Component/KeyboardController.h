@@ -9,10 +9,12 @@ class KeyboardController
 {
 private:
     TransformComponent* mTransform;
+    SpriteComponent* mSprite;
 public:
     KeyboardController();
-    KeyboardController(TransformComponent* trans)
+    KeyboardController(TransformComponent* trans, SpriteComponent* sprite)
     {
+        mSprite = sprite;
         mTransform = trans;
     }
     void Update()
@@ -23,15 +25,23 @@ public:
             {
             case SDLK_UP:
                 mTransform->velocity.y = -1;
+                mSprite->isIdle = false;
+                mSprite->Play("Up");
                 break;
             case SDLK_DOWN:
                 mTransform->velocity.y = +1;
+                mSprite->isIdle = false;
+                mSprite->Play("Down");
                 break;
             case SDLK_LEFT:
                 mTransform->velocity.x = -1;
+                mSprite->isIdle = false;
+                mSprite->Play("Left");
                 break;
             case SDLK_RIGHT:
                 mTransform->velocity.x = +1;
+                mSprite->isIdle = false;
+                mSprite->Play("Right");
                 break;
             default:
                 break;
@@ -44,15 +54,23 @@ public:
             {
             case SDLK_UP:
                 mTransform->velocity.y = 0;
+                mSprite->isIdle = true;
+                mSprite->Play("Up");
                 break;
             case SDLK_DOWN:
                 mTransform->velocity.y = 0;
+                mSprite->isIdle = true;
+                mSprite->Play("Down");
                 break;
             case SDLK_LEFT:
                 mTransform->velocity.x = 0;
+                mSprite->isIdle = true;
+                mSprite->Play("Left");
                 break;
             case SDLK_RIGHT:
                 mTransform->velocity.x = 0;
+                mSprite->isIdle = true;
+                mSprite->Play("Right");
                 break;
             default:
                 break;

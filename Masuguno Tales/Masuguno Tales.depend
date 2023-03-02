@@ -9,25 +9,27 @@
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 
-1677595187 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+1677773582 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
 	"../include/Game.h"
 	"../include/TextureManager.h"
 	"../include/Component/Component.h"
+	"../include/GameEnity/GameEntity.h"
 	"../include/Map.h"
 	"../include/Collision.h"
+	"../include/Entity.h"
 	"../include/GameActor.h"
-	"../include/Wall.h"
 	"../include/config.h"
 
-1677594775 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
+1677681293 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
 
-1677586941 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
+1677773685 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 	<vector>
+	<string>
 	"config.h"
 
 1676695854 d:\dev\uet project\masuguno tales\masuguno tales\include\texturemanager.h
@@ -44,12 +46,14 @@
 1676695773 source:d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.cpp
 	"../include/TextureManager.h"
 
-1677595931 d:\dev\uet project\masuguno tales\masuguno tales\include\map.h
-	"Game.h"
+1677645470 d:\dev\uet project\masuguno tales\masuguno tales\include\map.h
+	<string>
 	"Component/Component.h"
 
-1677596069 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
+1677772111 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
 	<string>
+	<fstream>
+	"../include/Game.h"
 	"../include/Map.h"
 	"../include/TextureManager.h"
 
@@ -73,14 +77,15 @@
 	<array>
 	"GameObject.h"
 
-1677511619 d:\dev\uet project\masuguno tales\masuguno tales\include\gameactor.h
+1677642571 d:\dev\uet project\masuguno tales\masuguno tales\include\gameactor.h
 	"Game.h"
+	"Entity.h"
 	"TextureManager.h"
 	"Component/Component.h"
 	"Vector2D.h"
 	"config.h"
 
-1677596279 source:d:\dev\uet project\masuguno tales\masuguno tales\src\gameactor.cpp
+1677775671 source:d:\dev\uet project\masuguno tales\masuguno tales\src\gameactor.cpp
 	"../include/GameActor.h"
 
 1677583450 d:\dev\uet project\masuguno tales\masuguno tales\include\component\transformcomponent.h
@@ -99,11 +104,11 @@
 1677583254 source:d:\dev\uet project\masuguno tales\masuguno tales\src\vector2d.cpp
 	"../include/Vector2D.h"
 
-1677509225 d:\dev\uet project\masuguno tales\masuguno tales\include\component\keyboardcontroller.h
+1677776269 d:\dev\uet project\masuguno tales\masuguno tales\include\component\keyboardcontroller.h
 	"../Game.h"
 	"Component.h"
 
-1677586427 d:\dev\uet project\masuguno tales\masuguno tales\include\component\collidercomponent.h
+1677773507 d:\dev\uet project\masuguno tales\masuguno tales\include\component\collidercomponent.h
 	<string>
 	<SDL.h>
 	"Component.h"
@@ -115,10 +120,12 @@
 	<SDL.h>
 	"Component/ColliderComponent.h"
 
-1677583622 d:\dev\uet project\masuguno tales\masuguno tales\include\component\spritecomponent.h
-	"SDL.h"
+1677776282 d:\dev\uet project\masuguno tales\masuguno tales\include\component\spritecomponent.h
+	<map>
+	<SDL.h>
 	"Component.h"
 	"../TextureManager.h"
+	"../Animation.h"
 
 1677512402 source:d:\dev\uet project\masuguno tales\masuguno tales\src\wall.cpp
 	"../include/Wall.h"
@@ -128,9 +135,27 @@
 	"Component/Component.h"
 	"TextureManager.h"
 
-1677596374 d:\dev\uet project\masuguno tales\masuguno tales\include\component\tilecomponent.h
+1677645543 d:\dev\uet project\masuguno tales\masuguno tales\include\component\tilecomponent.h
 	<SDL.h>
 	<string>
 	"TransformComponent.h"
 	"SpriteComponent.h"
+
+1677773129 source:d:\dev\uet project\masuguno tales\masuguno tales\src\entity.cpp
+	"../include/Entity.h"
+
+1677642828 d:\dev\uet project\masuguno tales\masuguno tales\include\entity.h
+	"Game.h"
+
+1677644264 d:\dev\uet project\masuguno tales\masuguno tales\include\gameenity\gameentity.h
+	"TileEntity.h"
+
+1677773517 d:\dev\uet project\masuguno tales\masuguno tales\include\gameenity\tileentity.h
+	<string>
+	"../Game.h"
+	"../Entity.h"
+	"../Component/Component.h"
+	"../config.h"
+
+1677775689 d:\dev\uet project\masuguno tales\masuguno tales\include\animation.h
 

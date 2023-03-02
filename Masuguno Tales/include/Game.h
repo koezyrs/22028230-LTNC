@@ -8,9 +8,13 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include <vector>
+#include <string>
 #include "config.h"
 
 class ColliderComponent;
+class Entity;
+class GameActor;
+class TileEntity;
 
 using namespace std;
 
@@ -25,9 +29,14 @@ public:
     void render();
     void clean();
     bool running();
+
+    static void AddTile(int id, int x, int y, std::string tag);
     static SDL_Renderer* gRenderer;
     static SDL_Event event;
-    static std::vector<ColliderComponent*> gColliders;
+    static std::vector<TileEntity*> gGroupMap;
+    static std::vector<GameActor*> gGroupPlayers;
+    //static std::vector<EnemyActor*> gGroupEnemies;
+    static std::vector<ColliderComponent*> gGroupColliders;
 private:
     bool isRunning;
     SDL_Window* gWindow;

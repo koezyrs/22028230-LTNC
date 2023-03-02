@@ -2,19 +2,20 @@
 
 #ifndef Map_h
 #define Map_h
-#include "Game.h"
+
+#include<string>
 #include "Component/Component.h"
 
 class Map
 {
 public:
-    Map(int x, int y, int w, int h, int id, std::string tag);
+    Map();
+    static void LoadMap(std::string path, int sizeX, int sizeY);
     void Update();
     void Render();
     ~Map();
 private:
-    TileComponent* mTile;
-    ColliderComponent* mCollider;
+
 
 };
 

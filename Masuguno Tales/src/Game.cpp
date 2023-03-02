@@ -1,21 +1,20 @@
 #include "../include/Game.h"
 #include "../include/TextureManager.h"
 #include "../include/Component/Component.h"
+#include "../include/GameEnity/GameEntity.h"
 #include "../include/Map.h"
 #include "../include/Collision.h"
+#include "../include/Entity.h"
 #include "../include/GameActor.h"
-#include "../include/Wall.h"
 #include "../include/config.h"
 
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Event Game::event;
 
-std::vector<ColliderComponent*> Game::gColliders;
+std::vector<TileEntity*> Game::gGroupMap;
+std::vector<GameActor*> Game::gGroupPlayers;
+std::vector<ColliderComponent*> Game::gGroupColliders;
 
-
-Map* currentMap1;
-Map* currentMap2;
-Map* currentMap3;
 
 GameActor* gPlayer;
 
@@ -69,9 +68,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
 
     // Init Game Object Here
     gPlayer = new GameActor();
-    currentMap1 = new Map(200, 200, 32, 32, 0, "Water");
-    currentMap2 = new Map(250, 250, 32, 32, 1, "Dirt");
-    currentMap3 = new Map(300, 300, 32, 32, 2, "Grass");
+    Map::LoadMap("assets/map_16x16.msgn", 16, 16);
     return;
 }
 
@@ -97,13 +94,18 @@ void Game::handleEvents()
 void Game::update()
 {
     // Update Game Object
-    currentMap1->Update();
-    currentMap3->Update();
-    currentMap2->Update();
-    gPlayer->Update();
+    for(auto e : gGroupMap)
+    {
+        e->Update();
+    }
+
+    for(auto e: gGroupPlayers)
+    {
+        e->Update();
+    }
 
     // Collision check
-    for(auto cc : gColliders)
+    for(auto cc : gGroupColliders)
     {
         Collision::AABB(*gPlayer->getColliderComponent(), *cc);
     }
@@ -117,11 +119,15 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
-    currentMap1->Render();
-    currentMap2->Render();
-    currentMap3->Render();
-    gPlayer->Render();
+    for(auto e : gGroupMap)
+    {
+        e->Render();
+    }
 
+    for(auto e: gGroupPlayers)
+    {
+        e->Render();
+    }
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -144,5 +150,11 @@ void Game::clean()
 
     cout << "Game cleaned" << endl;
 
+    return;
+}
+
+void Game::AddTile(int id, int x, int y, std::string tag)
+{
+    TileEntity* tile = new TileEntity(id, x, y, tag);
     return;
 }

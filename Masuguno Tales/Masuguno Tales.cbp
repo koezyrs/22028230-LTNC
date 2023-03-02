@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Animation.h" />
 		<Unit filename="include/Collision.h" />
 		<Unit filename="include/Component/ColliderComponent.h" />
 		<Unit filename="include/Component/Component.h" />
@@ -38,21 +39,23 @@
 		<Unit filename="include/Component/SpriteComponent.h" />
 		<Unit filename="include/Component/TileComponent.h" />
 		<Unit filename="include/Component/TransformComponent.h" />
+		<Unit filename="include/Entity.h" />
 		<Unit filename="include/Game.h" />
 		<Unit filename="include/GameActor.h" />
+		<Unit filename="include/GameEnity/GameEntity.h" />
+		<Unit filename="include/GameEnity/TileEntity.h" />
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/TextureManager.h" />
 		<Unit filename="include/Vector2D.h" />
-		<Unit filename="include/Wall.h" />
 		<Unit filename="include/config.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Collision.cpp" />
+		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/GameActor.cpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/Vector2D.cpp" />
-		<Unit filename="src/Wall.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
