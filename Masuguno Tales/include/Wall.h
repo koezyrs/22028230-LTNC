@@ -23,10 +23,12 @@ public:
     void Render() override
     {
     }
+    bool isActive() {return active;}
+    void destroy() {active = false;}
 private:
+    bool active = true;
     Vector2D position;
     TransformComponent* mTransform;
     ColliderComponent* mCollider;
-
 };
 #endif // Wall_h

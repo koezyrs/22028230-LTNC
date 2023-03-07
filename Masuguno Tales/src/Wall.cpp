@@ -8,4 +8,9 @@ Wall::Wall(float x, float y)
     mCollider = new ColliderComponent(mTransform, "Wall");
 }
 
-Wall::~Wall() {};
+Wall::~Wall()
+{
+    position.Zero();
+    delete mCollider;
+    delete mTransform;
+}

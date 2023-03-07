@@ -18,8 +18,6 @@ std::vector<ColliderComponent*> Game::gGroupColliders;
 GameActor* Game::gPlayer;
 Map* Game::currentMap;
 
-Monster* gCow;
-
 Game::Game(){};
 
 Game::~Game(){};
@@ -71,7 +69,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     // Initialize Game Object Here
     gPlayer = new GameActor();
     currentMap = new Map("assets/map01.png", "assets/map01.msgn", 35, 30);
-    gCow = new Monster(300, 300, GAME_PIXELS,GAME_PIXELS, 1, "assets/cow.png");
+    currentMap->AddMonster(300, 300, "assets/cow.png");
+    currentMap->AddMonster(500, 300, "assets/cow.png");
+    currentMap->AddMonster(300, 500, "assets/cow.png");
+    currentMap->AddMonster(350, 600, "assets/cow.png");
+    currentMap->AddMonster(390, 700, "assets/cow.png");
     return;
 }
 
@@ -100,10 +102,10 @@ void Game::update()
     Vector2D playerPos = gPlayer->getTransformComponent()->position;
 
     // Update Game Object
+    currentMap->Refresh();
     currentMap->Update();
     gPlayer->Update();
 
-    gCow->Update();
     // Collision check
     for(auto& cc : gGroupColliders)
     {
@@ -114,9 +116,20 @@ void Game::update()
             gPlayer->getTransformComponent()->position = playerPos;
         }
 
+        /*
         if((Collision::AABB(playerCol, cCol)) && (cc->tag == "Monster"))
         {
+
+        }
+        */
+    }
+
+    for(auto& monster : currentMap->monsters)
+    {
+        if(Collision::AABB(*gPlayer->getColliderComponent(), *monster->getColliderComponent()))
+        {
             gPlayer->getTransformComponent()->position = playerPos;
+            monster->destroy();
         }
     }
 
@@ -143,7 +156,6 @@ void Game::render()
     currentMap->Render();
     gPlayer->Render();
 
-    gCow->Render();
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -164,6 +176,8 @@ void Game::clean()
     gWindow = NULL;
     gRenderer = NULL;
 
+    delete gPlayer;
+    delete currentMap;
     cout << "Game cleaned" << endl;
 
     return;

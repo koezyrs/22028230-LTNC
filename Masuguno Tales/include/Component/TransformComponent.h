@@ -47,6 +47,12 @@ public:
         velocity.Zero();
     }
 
+    ~TransformComponent()
+    {
+        position.Zero();
+        velocity.Zero();
+        width = height = scale = speed = 0;
+    }
     void Update()
     {
         position.x += velocity.x;
