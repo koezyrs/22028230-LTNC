@@ -91,3 +91,9 @@ Vector2D& Vector2D::Zero()
     this->y = 0;
     return *this;
 }
+
+bool Vector2D::operator==(const Vector2D& vec)
+{
+    if((this->x == vec.x) && (this->y == vec.y)) return true;
+    return false;
+}

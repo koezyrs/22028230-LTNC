@@ -11,10 +11,10 @@
 #include <string>
 #include "config.h"
 
-class ColliderComponent;
+class Map;
 class Entity;
 class GameActor;
-class TileEntity;
+class ColliderComponent;
 
 using namespace std;
 
@@ -30,15 +30,16 @@ public:
     void clean();
     bool running();
 
-    static void AddTile(int id, int x, int y, std::string tag);
-    static SDL_Renderer* gRenderer;
     static SDL_Event event;
-    static std::vector<TileEntity*> gGroupMap;
-    static std::vector<GameActor*> gGroupPlayers;
+    static SDL_Renderer* gRenderer;
+    static GameActor* gPlayer;
+    static Map* currentMap;
     //static std::vector<EnemyActor*> gGroupEnemies;
     static std::vector<ColliderComponent*> gGroupColliders;
+    static SDL_Rect gCamera;
 private:
     bool isRunning;
     SDL_Window* gWindow;
+
 };
 #endif // Game_h

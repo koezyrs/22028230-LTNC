@@ -1,23 +1,20 @@
 #pragma once
+#ifndef Monster_h
+#define Monster_h
 
-#ifndef GameActor_h
-#define GameActor_h
-
-#include "Game.h"
-#include "Entity.h"
-#include "TextureManager.h"
-#include "Component/Component.h"
 #include "Vector2D.h"
-#include "config.h"
+#include "Entity.h"
+#include "Component/Component.h"
 
-class GameActor : public Entity
+class Monster : public Entity
 {
 public:
-    GameActor();
-    ~GameActor();
+    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath);
+    ~Monster();
     void Update() override
     {
-        mController->Update();
+        mTransform->position.x = position.x - Game::gCamera.x;
+        mTransform->position.y = position.y - Game::gCamera.y;
         mTransform->Update();
         mCollider->Update();
         mSprite->Update();
@@ -28,16 +25,16 @@ public:
     }
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
-    KeyboardController* getKeyboardController() {return mController;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
     bool isActive() const {return active;}
     void destroy() {active = false;}
 private:
+    Vector2D position;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;
-    KeyboardController* mController;
     bool active = true;
+
 
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];
@@ -46,6 +43,4 @@ private:
     SDL_Rect mSpriteMoveRight[3];
 };
 
-#endif // GameObject_h
-
-
+#endif // Monster_h

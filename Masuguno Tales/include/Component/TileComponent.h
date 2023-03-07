@@ -4,44 +4,56 @@
 
 #include <SDL.h>
 #include <string>
-#include "TransformComponent.h"
-#include "SpriteComponent.h"
+#include "../Vector2D.h"
+#include "Component.h"
 
 class TileComponent
 {
-public:
+private:
     TransformComponent* mTransform;
-    SpriteComponent* mSprite;
-    SDL_Rect tileRect;
+    ColliderComponent* mCollider;
+    Vector2D position;
     int tileID;
-    std::string path;
-
+    std::string tag;
+public:
     TileComponent();
     TileComponent(int _x, int _y, int _w, int _h, int _id)
     {
-        tileRect.x = _x;
-        tileRect.y = _y;
-        tileRect.w = _w;
-        tileRect.h = _h;
         tileID = _id;
-
+        position.x = static_cast<float> (_x);
+        position.y = static_cast<float> (_y);
         switch(tileID)
         {
             case 0:
-                path = "assets/dirt.png";
+                tag = "Block";
                 break;
             case 1:
-                path = "assets/grass.png";
-                break;
-            case 2:
-                path = "assets/water.png";
+                tag = "Allow";
                 break;
             default:
+                tag = "Allow";
                 break;
         }
-        mTransform = new TransformComponent((float)tileRect.x, (float)tileRect.y, tileRect.w, tileRect.h, 1);
-        mSprite = new SpriteComponent(path.c_str(), mTransform);
+
+        mTransform = new TransformComponent(position.x, position.y, _w, _h, 1);
+        mCollider = new ColliderComponent(mTransform, tag);
     }
+
+    ~TileComponent()
+    {
+        delete mTransform;
+        delete mCollider;
+    }
+
+    void Update()
+    {
+        mTransform->position.x = position.x - Game::gCamera.x;
+        mTransform->position.y = position.y - Game::gCamera.y;
+
+        mCollider->Update();
+    }
+
+    void Render(){}
 
 };
 

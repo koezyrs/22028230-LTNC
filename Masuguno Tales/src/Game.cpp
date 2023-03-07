@@ -1,22 +1,24 @@
 #include "../include/Game.h"
 #include "../include/TextureManager.h"
 #include "../include/Component/Component.h"
-#include "../include/GameEnity/GameEntity.h"
 #include "../include/Map.h"
 #include "../include/Collision.h"
 #include "../include/Entity.h"
 #include "../include/GameActor.h"
+#include "../include/Monster.h"
 #include "../include/config.h"
 
-SDL_Renderer* Game::gRenderer = NULL;
 SDL_Event Game::event;
+SDL_Renderer* Game::gRenderer = NULL;
+SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-std::vector<TileEntity*> Game::gGroupMap;
-std::vector<GameActor*> Game::gGroupPlayers;
 std::vector<ColliderComponent*> Game::gGroupColliders;
 
 
-GameActor* gPlayer;
+GameActor* Game::gPlayer;
+Map* Game::currentMap;
+
+Monster* gCow;
 
 Game::Game(){};
 
@@ -66,9 +68,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     }
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
 
-    // Init Game Object Here
+    // Initialize Game Object Here
     gPlayer = new GameActor();
-    Map::LoadMap("assets/map_16x16.msgn", 16, 16);
+    currentMap = new Map("assets/map01.png", "assets/map01.msgn", 35, 30);
+    gCow = new Monster(300, 300, GAME_PIXELS,GAME_PIXELS, 1, "assets/cow.png");
     return;
 }
 
@@ -93,22 +96,40 @@ void Game::handleEvents()
 
 void Game::update()
 {
+
+    Vector2D playerPos = gPlayer->getTransformComponent()->position;
+
     // Update Game Object
-    for(auto e : gGroupMap)
-    {
-        e->Update();
-    }
+    currentMap->Update();
+    gPlayer->Update();
 
-    for(auto e: gGroupPlayers)
-    {
-        e->Update();
-    }
-
+    gCow->Update();
     // Collision check
-    for(auto cc : gGroupColliders)
+    for(auto& cc : gGroupColliders)
     {
-        Collision::AABB(*gPlayer->getColliderComponent(), *cc);
+        SDL_Rect playerCol = gPlayer->getColliderComponent()->mCollider;
+        SDL_Rect cCol = cc->mCollider;
+        if((Collision::AABB(playerCol, cCol)) && (cc->tag == "Wall"))
+        {
+            gPlayer->getTransformComponent()->position = playerPos;
+        }
+
+        if((Collision::AABB(playerCol, cCol)) && (cc->tag == "Monster"))
+        {
+            gPlayer->getTransformComponent()->position = playerPos;
+        }
     }
+
+    // Camera Update
+    gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
+    gCamera.y = gPlayer->getTransformComponent()->position.y - SCREEN_HEIGHT / 2;
+    if(gCamera.x < 0) gCamera.x = 0;
+    if(gCamera.y < 0) gCamera.y = 0;
+    if(gCamera.x >= gCamera.w) gCamera.x = gCamera.w;
+    if(gCamera.y >= gCamera.h) gCamera.y = gCamera.h;
+    if(gCamera.x + gCamera.w >= currentMap->getWidth()) gCamera.x = currentMap->getWidth() - gCamera.w;
+    if(gCamera.y + gCamera.h >= currentMap->getHeight()) gCamera.y = currentMap->getHeight() - gCamera.h;
+
     return;
 }
 
@@ -119,15 +140,10 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
-    for(auto e : gGroupMap)
-    {
-        e->Render();
-    }
+    currentMap->Render();
+    gPlayer->Render();
 
-    for(auto e: gGroupPlayers)
-    {
-        e->Render();
-    }
+    gCow->Render();
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -150,11 +166,5 @@ void Game::clean()
 
     cout << "Game cleaned" << endl;
 
-    return;
-}
-
-void Game::AddTile(int id, int x, int y, std::string tag)
-{
-    TileEntity* tile = new TileEntity(id, x, y, tag);
     return;
 }

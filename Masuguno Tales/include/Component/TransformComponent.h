@@ -5,6 +5,7 @@
 
 #include "../Vector2D.h"
 #include "../config.h"
+#include "Component.h"
 
 class TransformComponent
 {
@@ -14,7 +15,7 @@ public:
     int width = GAME_PIXELS;
     int height = GAME_PIXELS;
     int scale = 1;
-    int speed = 5;
+    int speed = 2;
 
     TransformComponent()
     {
@@ -48,8 +49,8 @@ public:
 
     void Update()
     {
-        position.x += velocity.x * speed;
-        position.y += velocity.y * speed;
+        position.x += velocity.x;
+        position.y += velocity.y;
     }
 };
 
