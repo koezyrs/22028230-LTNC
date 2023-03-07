@@ -23,6 +23,9 @@ public:
     void Render() override
     {
     }
+    Vector2D getPosition() {return position;}
+    TransformComponent* getTransformComponent() {return mTransform;}
+    ColliderComponent* getColliderComponent() {return mCollider;}
     bool isActive() {return active;}
     void destroy() {active = false;}
 private:

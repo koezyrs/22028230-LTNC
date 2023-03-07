@@ -5,7 +5,7 @@
 	"include/Game.h"
 	"include/Game.h"
 
-1678176188 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
+1678194567 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -31,16 +31,7 @@
 	<SDL.h>
 	"Component/ColliderComponent.h"
 
-1677773507 d:\dev\uet project\masuguno tales\masuguno tales\include\component\collidercomponent.h
-	<string>
-	<SDL.h>
-	"Component.h"
-	<string>
-	<SDL.h>
-	"Component.h"
-	<string>
-	<SDL.h>
-	"Component.h"
+1678194587 d:\dev\uet project\masuguno tales\masuguno tales\include\component\collidercomponent.h
 	<string>
 	<SDL.h>
 	"Component.h"
@@ -144,7 +135,7 @@
 1678110733 source:d:\dev\uet project\masuguno tales\masuguno tales\src\vector2d.cpp
 	"../include/Vector2D.h"
 
-1678194142 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+1678194603 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
 	"../include/Game.h"
 	"../include/TextureManager.h"
 	"../include/Component/Component.h"
@@ -172,7 +163,7 @@
 	"../include/TextureManager.h"
 	"../include/config.h"
 
-1678193045 d:\dev\uet project\masuguno tales\masuguno tales\include\wall.h
+1678194457 d:\dev\uet project\masuguno tales\masuguno tales\include\wall.h
 	"Vector2D.h"
 	"Entity.h"
 	"Component/Component.h"

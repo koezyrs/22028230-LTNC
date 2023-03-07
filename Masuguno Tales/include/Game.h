@@ -34,8 +34,6 @@ public:
     static SDL_Renderer* gRenderer;
     static GameActor* gPlayer;
     static Map* currentMap;
-    //static std::vector<EnemyActor*> gGroupEnemies;
-    static std::vector<ColliderComponent*> gGroupColliders;
     static SDL_Rect gCamera;
 private:
     bool isRunning;

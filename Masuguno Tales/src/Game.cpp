@@ -12,9 +12,6 @@ SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-std::vector<ColliderComponent*> Game::gGroupColliders;
-
-
 GameActor* Game::gPlayer;
 Map* Game::currentMap;
 
@@ -107,21 +104,13 @@ void Game::update()
     gPlayer->Update();
 
     // Collision check
-    for(auto& cc : gGroupColliders)
+
+    for(auto& wall : currentMap->walls)
     {
-        SDL_Rect playerCol = gPlayer->getColliderComponent()->mCollider;
-        SDL_Rect cCol = cc->mCollider;
-        if((Collision::AABB(playerCol, cCol)) && (cc->tag == "Wall"))
+        if(Collision::AABB(*gPlayer->getColliderComponent(), *wall->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
         }
-
-        /*
-        if((Collision::AABB(playerCol, cCol)) && (cc->tag == "Monster"))
-        {
-
-        }
-        */
     }
 
     for(auto& monster : currentMap->monsters)
