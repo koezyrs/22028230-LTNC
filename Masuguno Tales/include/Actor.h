@@ -1,20 +1,20 @@
 #pragma once
 
-#ifndef GameActor_h
-#define GameActor_h
+#ifndef Actor_h
+#define Actor_h
 
 #include "Game.h"
 #include "Entity.h"
 #include "TextureManager.h"
 #include "Component/Component.h"
 #include "Vector2D.h"
-#include "config.h"
+#include "Config.h"
 
-class GameActor : public Entity
+class Actor : public Entity
 {
 public:
-    GameActor();
-    ~GameActor();
+    Actor(float x, float y, const char* filetex);
+    ~Actor();
     void Update() override
     {
         mController->Update();

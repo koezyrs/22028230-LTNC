@@ -1,12 +1,19 @@
+#include <iostream>
 #include "../include/EventManager.h"
 #include "../include/Game.h"
 #include "../include/Map.h"
-#include "../include/GameActor.h"
+#include "../include/MapManager.h"
+#include "../include/Actor.h"
 #include "../include/Vector2D.h"
 
-void EventManager::ChangeMap(int xpos, int ypos, float actorXPos, float actorYPos, const char* maptex, const char* mapfile, int sizeX, int sizeY)
+void EventManager::ChangeMap(int mapID)
 {
-    Game::currentMap->ClearMap();
-    Game::currentMap->LoadMap(maptex, mapfile, sizeX, sizeY);
-    Game::gPlayer->getTransformComponent()->position = Vector2D{actorXPos,actorYPos};
+    switch(mapID){
+    case 1:
+        MapManager::LoadMap1();
+        break;
+    case 2:
+        MapManager::LoadMap2();
+        break;
+    }
 }

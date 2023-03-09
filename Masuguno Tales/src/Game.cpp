@@ -2,17 +2,18 @@
 #include "../include/TextureManager.h"
 #include "../include/Component/Component.h"
 #include "../include/Map.h"
+#include "../include/MapManager.h"
 #include "../include/Collision.h"
 #include "../include/Entity.h"
-#include "../include/GameActor.h"
+#include "../include/Actor.h"
 #include "../include/Monster.h"
-#include "../include/config.h"
+#include "../include/Config.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-GameActor* Game::gPlayer;
+Actor* Game::gPlayer;
 Map* Game::currentMap;
 
 Game::Game(){};
@@ -64,13 +65,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
 
     // Initialize Game Object Here
-    gPlayer = new GameActor();
-    currentMap = new Map("assets/map01.png", "assets/map01.msgn", 35, 30);
-    currentMap->AddMonster(300, 300, "assets/cow.png");
-    currentMap->AddMonster(500, 300, "assets/cow.png");
-    currentMap->AddMonster(300, 500, "assets/cow.png");
-    currentMap->AddMonster(350, 600, "assets/cow.png");
-    currentMap->AddMonster(390, 700, "assets/cow.png");
+    gPlayer = new Actor(100, 100, "assets/player.png");
+    currentMap = new Map();
+    gPlayer->getTransformComponent()->position = Vector2D{17 * GAME_PIXELS, 1 * GAME_PIXELS};
+    MapManager::LoadMap1();
     return;
 }
 
@@ -99,7 +97,6 @@ void Game::update()
     Vector2D playerPos = gPlayer->getTransformComponent()->position;
 
     // Update Game Object
-    currentMap->Refresh();
     currentMap->Update();
     gPlayer->Update();
 
@@ -122,6 +119,14 @@ void Game::update()
         }
     }
 
+    for(auto& eventa : currentMap->events)
+    {
+        if(Collision::AABB(*gPlayer->getColliderComponent(), *eventa->getColliderComponent()))
+        {
+            gPlayer->getTransformComponent()->position = playerPos;
+            eventa->Perform();
+        }
+    }
     // Camera Update
     gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
     gCamera.y = gPlayer->getTransformComponent()->position.y - SCREEN_HEIGHT / 2;
@@ -142,6 +147,7 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
+    currentMap->Refresh();
     currentMap->Render();
     gPlayer->Render();
 

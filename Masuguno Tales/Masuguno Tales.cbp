@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -31,6 +32,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include/Actor.h" />
 		<Unit filename="include/Animation.h" />
 		<Unit filename="include/Collision.h" />
 		<Unit filename="include/Component/AIComponent.h" />
@@ -40,22 +42,27 @@
 		<Unit filename="include/Component/SpriteComponent.h" />
 		<Unit filename="include/Component/TransformComponent.h" />
 		<Unit filename="include/Entity.h" />
+		<Unit filename="include/Event.h" />
 		<Unit filename="include/EventManager.h" />
+		<Unit filename="include/Event/ChangeMapEvent.h" />
+		<Unit filename="include/Event/EventType.h" />
 		<Unit filename="include/Game.h" />
-		<Unit filename="include/GameActor.h" />
 		<Unit filename="include/Map.h" />
+		<Unit filename="include/MapManager.h" />
 		<Unit filename="include/Monster.h" />
 		<Unit filename="include/TextureManager.h" />
 		<Unit filename="include/Vector2D.h" />
 		<Unit filename="include/Wall.h" />
 		<Unit filename="include/config.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Actor.cpp" />
 		<Unit filename="src/Collision.cpp" />
 		<Unit filename="src/Entity.cpp" />
+		<Unit filename="src/Event.cpp" />
 		<Unit filename="src/EventManager.cpp" />
 		<Unit filename="src/Game.cpp" />
-		<Unit filename="src/GameActor.cpp" />
 		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/MapManager.cpp" />
 		<Unit filename="src/Monster.cpp" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/Vector2D.cpp" />

@@ -9,11 +9,11 @@
 #include <SDL_mixer.h>
 #include <vector>
 #include <string>
-#include "config.h"
+#include "Config.h"
 
 class Map;
 class Entity;
-class GameActor;
+class Actor;
 class ColliderComponent;
 
 using namespace std;
@@ -32,7 +32,7 @@ public:
 
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
-    static GameActor* gPlayer;
+    static Actor* gPlayer;
     static Map* currentMap;
     static SDL_Rect gCamera;
 private:

@@ -5,7 +5,7 @@
 	"include/Game.h"
 	"include/Game.h"
 
-1678194567 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
+1678200176 d:\dev\uet project\masuguno tales\masuguno tales\include\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -13,9 +13,9 @@
 	<SDL_mixer.h>
 	<vector>
 	<string>
-	"config.h"
+	"Config.h"
 
-1678101133 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
+1678197043 d:\dev\uet project\masuguno tales\masuguno tales\include\config.h
 
 1678107181 source:d:\dev\uet project\masuguno tales\masuguno tales\src\collision.cpp
 	"../include/Collision.h"
@@ -43,9 +43,9 @@
 	"ColliderComponent.h"
 	"AIComponent.h"
 
-1678188046 d:\dev\uet project\masuguno tales\masuguno tales\include\component\transformcomponent.h
+1678197029 d:\dev\uet project\masuguno tales\masuguno tales\include\component\transformcomponent.h
 	"../Vector2D.h"
-	"../config.h"
+	"../Config.h"
 	"Component.h"
 
 1678110648 d:\dev\uet project\masuguno tales\masuguno tales\include\vector2d.h
@@ -102,16 +102,10 @@
 	"../Vector2D.h"
 	"Component.h"
 
-1677773129 source:d:\dev\uet project\masuguno tales\masuguno tales\src\entity.cpp
-	"../include/Entity.h"
-	"../include/Entity.h"
-	"../include/Entity.h"
+1678202323 source:d:\dev\uet project\masuguno tales\masuguno tales\src\entity.cpp
 	"../include/Entity.h"
 
-1677642828 d:\dev\uet project\masuguno tales\masuguno tales\include\entity.h
-	"Game.h"
-	"Game.h"
-	"Game.h"
+1678202652 d:\dev\uet project\masuguno tales\masuguno tales\include\entity.h
 	"Game.h"
 
 1678104377 source:d:\dev\uet project\masuguno tales\masuguno tales\src\gameactor.cpp
@@ -135,39 +129,43 @@
 1678110733 source:d:\dev\uet project\masuguno tales\masuguno tales\src\vector2d.cpp
 	"../include/Vector2D.h"
 
-1678194603 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+1678288973 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
 	"../include/Game.h"
 	"../include/TextureManager.h"
 	"../include/Component/Component.h"
 	"../include/Map.h"
+	"../include/MapManager.h"
 	"../include/Collision.h"
 	"../include/Entity.h"
-	"../include/GameActor.h"
+	"../include/Actor.h"
 	"../include/Monster.h"
-	"../include/config.h"
+	"../include/Config.h"
 
-1678193948 d:\dev\uet project\masuguno tales\masuguno tales\include\map.h
+1678355204 d:\dev\uet project\masuguno tales\masuguno tales\include\map.h
 	<string>
 	<vector>
 	<memory>
 	"Vector2D.h"
 	"Wall.h"
 	"Monster.h"
+	"Event.h"
 
-1678193779 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
+1678355359 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
 	<string>
 	<fstream>
 	<algorithm>
+	<iostream>
 	"../include/Game.h"
 	"../include/Map.h"
 	"../include/TextureManager.h"
-	"../include/config.h"
+	"../include/Config.h"
+	"../include/Event/EventType.h"
 
-1678194457 d:\dev\uet project\masuguno tales\masuguno tales\include\wall.h
+1678197037 d:\dev\uet project\masuguno tales\masuguno tales\include\wall.h
 	"Vector2D.h"
 	"Entity.h"
 	"Component/Component.h"
-	"config.h"
+	"Config.h"
 
 1678190534 source:d:\dev\uet project\masuguno tales\masuguno tales\src\wall.cpp
 	"../include/Wall.h"
@@ -175,14 +173,16 @@
 1678153233 source:d:\dev\uet project\masuguno tales\masuguno tales\src\monster.cpp
 	"../include/Monster.h"
 
-1678113920 source:d:\dev\uet project\masuguno tales\masuguno tales\src\eventmanager.cpp
+1678264231 source:d:\dev\uet project\masuguno tales\masuguno tales\src\eventmanager.cpp
+	<iostream>
 	"../include/EventManager.h"
 	"../include/Game.h"
 	"../include/Map.h"
-	"../include/GameActor.h"
+	"../include/MapManager.h"
+	"../include/Actor.h"
 	"../include/Vector2D.h"
 
-1678113793 d:\dev\uet project\masuguno tales\masuguno tales\include\eventmanager.h
+1678252897 d:\dev\uet project\masuguno tales\masuguno tales\include\eventmanager.h
 
 1678153416 d:\dev\uet project\masuguno tales\masuguno tales\include\monster.h
 	"Vector2D.h"
@@ -192,4 +192,43 @@
 1678175964 d:\dev\uet project\masuguno tales\masuguno tales\include\component\aicomponent.h
 	<cstdlib>
 	"Component.h"
+
+1678196899 source:d:\dev\uet project\masuguno tales\masuguno tales\src\actor.cpp
+	"../include/Actor.h"
+
+1678197025 d:\dev\uet project\masuguno tales\masuguno tales\include\actor.h
+	"Game.h"
+	"Entity.h"
+	"TextureManager.h"
+	"Component/Component.h"
+	"Vector2D.h"
+	"Config.h"
+
+1678197728 d:\dev\uet project\masuguno tales\masuguno tales\include\mapmanager.h
+
+1678355299 source:d:\dev\uet project\masuguno tales\masuguno tales\src\mapmanager.cpp
+	"../include/Game.h"
+	"../include/Actor.h"
+	"../include/Map.h"
+	"../include/MapManager.h"
+	"../include/Event.h"
+	"../include/Event/EventType.h"
+	"../include/Config.h"
+
+1678268329 source:d:\dev\uet project\masuguno tales\masuguno tales\src\event.cpp
+	<iostream>
+	"../include/Event.h"
+	"../include/EventManager.h"
+	"../include/Config.h"
+
+1678250831 d:\dev\uet project\masuguno tales\masuguno tales\include\event.h
+	"Game.h"
+	"Component/Component.h"
+
+1678202147 d:\dev\uet project\masuguno tales\masuguno tales\include\event\eventtype.h
+	"ChangeMapEvent.h"
+
+1678261551 d:\dev\uet project\masuguno tales\masuguno tales\include\event\changemapevent.h
+	"../Event.h"
+	"../EventManager.h"
 

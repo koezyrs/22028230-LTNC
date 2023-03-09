@@ -5,6 +5,6 @@
 class EventManager
 {
 public:
-    static void ChangeMap(int xpos, int ypos, float actorXPos, float actorYPos, const char* maptex, const char* mapfile, int sizeX, int sizeY);
+    static void ChangeMap(int mapID);
 };
 #endif // EventManager_h

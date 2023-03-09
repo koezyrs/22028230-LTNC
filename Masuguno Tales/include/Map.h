@@ -9,14 +9,16 @@
 #include "Vector2D.h"
 #include "Wall.h"
 #include "Monster.h"
+#include "Event.h"
 
 class Map
 {
 public:
-    Map(const char* maptex, const char* mapfile, int sizeX, int sizeY);
+    Map();
     void LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY);
     void AddWall(int x, int y);
     void AddMonster(float x, float y, const char* filepath);
+    void AddEvent(Event* newEvent);
     int getWidth() {return width;}
     int getHeight() {return height;}
     void ClearMap();
@@ -24,8 +26,9 @@ public:
     void Update();
     void Render();
     ~Map();
-    std::vector<std::unique_ptr<Wall>> walls;
-    std::vector<std::unique_ptr<Monster>> monsters;
+    std::vector<Event*> events;
+    std::vector<Wall*> walls;
+    std::vector<Monster*> monsters;
 private:
     int width;
     int height;

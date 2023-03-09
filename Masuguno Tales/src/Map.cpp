@@ -1,14 +1,15 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <iostream>
 #include "../include/Game.h"
 #include "../include/Map.h"
 #include "../include/TextureManager.h"
-#include "../include/config.h"
-
-Map::Map(const char* maptex, const char* mapfile, int sizeX, int sizeY)
+#include "../include/Config.h"
+#include "../include/Event/EventType.h"
+Map::Map()
 {
-    LoadMap(maptex, mapfile, sizeX, sizeY);
+    LoadMap("assets/map01.png", "assets/map01.msgn", 30, 35);
 };
 
 Map::~Map()
@@ -45,11 +46,15 @@ void Map::LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY)
 
 void Map::Refresh()
 {
+
     walls.erase(std::remove_if(walls.begin(), walls.end(),
-        [](const std::unique_ptr<Wall>& theWall){return !theWall->isActive();}), walls.end());
+        [](Wall* theWall){return !theWall->isActive();}), walls.end());
 
     monsters.erase(std::remove_if(monsters.begin(), monsters.end(),
-        [](const std::unique_ptr<Monster>& theMonster){return !theMonster->isActive();}), monsters.end());
+        [](Monster* theMonster){return !theMonster->isActive();}), monsters.end());
+
+    events.erase(std::remove_if(events.begin(), events.end(),
+        [](Event* theEvent){return !theEvent->isActive();}), events.end());
 }
 
 void Map::Update()
@@ -66,6 +71,11 @@ void Map::Update()
     {
         m->Update();
     }
+
+    for(auto& e : events)
+    {
+        e->Update();
+    }
 }
 
 void Map::Render()
@@ -79,20 +89,25 @@ void Map::Render()
 
 void Map::AddWall(int x, int y)
 {
-    std::unique_ptr<Wall> newWall(new Wall(static_cast<float>(x), static_cast<float>(y)));
-    walls.push_back(std::move(newWall));
+    walls.emplace_back(new Wall(static_cast<float>(x), static_cast<float>(y)));
 }
 
 void Map::AddMonster(float x, float y, const char* filepath)
 {
-    std::unique_ptr<Monster> newMonster(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, 1, filepath));
-    monsters.push_back(std::move(newMonster));
+    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, 1, filepath));
+}
+
+void Map::AddEvent(Event* newEvent)
+{
+    events.emplace_back(newEvent);
+    std::cout << "Added new Event!" << endl;
 }
 
 void Map::ClearMap()
 {
-    walls.erase(walls.begin(), walls.end());
-    monsters.erase(monsters.begin(), monsters.end());
+    for(auto& w: walls) {w->destroy();}
+    for(auto& m : monsters) {m->destroy();}
+    for(auto& e : events) {e->destroy();}
     SDL_DestroyTexture(mTexture);
     mTexture = NULL;
 }

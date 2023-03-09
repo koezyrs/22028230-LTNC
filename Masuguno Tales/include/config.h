@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef config_h
-#define config_h
+#ifndef Config_h
+#define Config_h
 const char GAME_TITLE[] = "Masuguno Tales";
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 640;

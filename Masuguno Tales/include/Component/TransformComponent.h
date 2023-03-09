@@ -4,7 +4,7 @@
 #define TransformComponent_h
 
 #include "../Vector2D.h"
-#include "../config.h"
+#include "../Config.h"
 #include "Component.h"
 
 class TransformComponent

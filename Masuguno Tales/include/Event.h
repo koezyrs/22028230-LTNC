@@ -1,29 +1,21 @@
 #pragma once
-#ifndef Wall_h
-#define Wall_h
+#ifndef Event_h
+#define Event_h
 
-#include "Vector2D.h"
-#include "Entity.h"
+#include "Game.h"
 #include "Component/Component.h"
-#include "Config.h"
-
-class Wall : public Entity
+class Event
 {
 public:
-    Wall(float x, float y);
-    ~Wall();
-
-    void Update() override
+    Event(float x, float y);
+    virtual ~Event();
+    virtual void Perform() = 0;
+    void Update()
     {
         mTransform->position.x = position.x - Game::gCamera.x;
         mTransform->position.y = position.y - Game::gCamera.y;
         mCollider->Update();
     }
-
-    void Render() override
-    {
-    }
-    Vector2D getPosition() {return position;}
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
     bool isActive() {return active;}
@@ -34,4 +26,5 @@ private:
     TransformComponent* mTransform;
     ColliderComponent* mCollider;
 };
-#endif // Wall_h
+
+#endif // Event_h

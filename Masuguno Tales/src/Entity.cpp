@@ -2,6 +2,5 @@
 
 Entity::Entity()
 {
-    //Game::gEntity.push_back(this);
 }
 Entity::~Entity() {}
