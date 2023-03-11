@@ -1,4 +1,4 @@
-#include "../include/Collision.h"
+#include "Collision.h"
 
 bool Collision::AABB(const SDL_Rect &rectA, const SDL_Rect &rectB)
 {

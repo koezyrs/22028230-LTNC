@@ -1,4 +1,4 @@
-#include "../include/Monster.h"
+#include "Monster.h"
 
 Monster::Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath)
 {

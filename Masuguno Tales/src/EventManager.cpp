@@ -1,10 +1,10 @@
 #include <iostream>
-#include "../include/EventManager.h"
-#include "../include/Game.h"
-#include "../include/Map.h"
-#include "../include/MapManager.h"
-#include "../include/Actor.h"
-#include "../include/Vector2D.h"
+#include "EventManager.h"
+#include "Game.h"
+#include "Map.h"
+#include "MapManager.h"
+#include "Actor.h"
+#include "Vector2D.h"
 
 void EventManager::ChangeMap(int mapID)
 {

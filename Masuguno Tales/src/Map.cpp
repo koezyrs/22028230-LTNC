@@ -2,14 +2,14 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
-#include "../include/Game.h"
-#include "../include/Map.h"
-#include "../include/TextureManager.h"
-#include "../include/Config.h"
-#include "../include/Event/EventType.h"
+#include "Game.h"
+#include "Map.h"
+#include "TextureManager.h"
+#include "Settings.h"
+#include "Event/EventType.h"
 Map::Map()
 {
-    LoadMap("assets/map01.png", "assets/map01.msgn", 30, 35);
+    LoadMap("data files/maps/map01.png", "data files/maps/map02.msgn", 30, 35);
 };
 
 Map::~Map()
@@ -37,7 +37,7 @@ void Map::LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY)
         {
             fileContainCoordiate.get(tile);
             int id = atoi(&tile);
-            if(id == 1) AddWall(x * GAME_PIXELS, y * GAME_PIXELS);
+            if(id == 1) AddWall(x * GAME_PIXELS * GAME_SCALE, y * GAME_PIXELS * GAME_SCALE);
             fileContainCoordiate.ignore();
         }
     }
@@ -94,13 +94,12 @@ void Map::AddWall(int x, int y)
 
 void Map::AddMonster(float x, float y, const char* filepath)
 {
-    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, 1, filepath));
+    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath));
 }
 
 void Map::AddEvent(Event* newEvent)
 {
     events.emplace_back(newEvent);
-    std::cout << "Added new Event!" << endl;
 }
 
 void Map::ClearMap()
@@ -110,4 +109,5 @@ void Map::ClearMap()
     for(auto& e : events) {e->destroy();}
     SDL_DestroyTexture(mTexture);
     mTexture = NULL;
+    Refresh();
 }

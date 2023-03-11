@@ -1,13 +1,17 @@
-#include "../include/Game.h"
-#include "../include/TextureManager.h"
-#include "../include/Component/Component.h"
-#include "../include/Map.h"
-#include "../include/MapManager.h"
-#include "../include/Collision.h"
-#include "../include/Entity.h"
-#include "../include/Actor.h"
-#include "../include/Monster.h"
-#include "../include/Config.h"
+#include "Game.h"
+#include "TextureManager.h"
+#include "Component/Component.h"
+#include "Map.h"
+#include "MapManager.h"
+#include "Collision.h"
+#include "Entity.h"
+#include "Actor.h"
+#include "Monster.h"
+#include "Settings.h"
+
+#include "Window.h"
+#include "Dialogue.h"
+
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
@@ -15,6 +19,7 @@ SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 Actor* Game::gPlayer;
 Map* Game::currentMap;
+Dialogue* testDialogue;
 
 Game::Game(){};
 
@@ -64,16 +69,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     }
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
 
-    // Initialize Game Object Here
-    gPlayer = new Actor(100, 100, "assets/player.png");
-    currentMap = new Map();
-    gPlayer->getTransformComponent()->position = Vector2D{17 * GAME_PIXELS, 1 * GAME_PIXELS};
-    MapManager::LoadMap1();
     return;
 }
 
 void Game::loadMedia()
 {
+    // Initialize Game Object Here
+    gPlayer = new Actor(100, 100, "data files/graphics/player.png");
+    currentMap = new Map();
+    gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 1 * GAME_PIXELS};
+    MapManager::LoadMap1();
+    testDialogue = new Dialogue(static_cast<int>((SCREEN_WIDTH - 478)/2), static_cast<int>((SCREEN_HEIGHT - 240)/2), 478, 240, "Test Dialogue System");
     return;
 }
 
@@ -150,7 +156,7 @@ void Game::render()
     currentMap->Refresh();
     currentMap->Render();
     gPlayer->Render();
-
+    testDialogue->Render();
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -173,6 +179,7 @@ void Game::clean()
 
     delete gPlayer;
     delete currentMap;
+    delete testDialogue;
     cout << "Game cleaned" << endl;
 
     return;
