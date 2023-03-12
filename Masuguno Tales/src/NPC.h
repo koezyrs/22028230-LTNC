@@ -38,6 +38,7 @@ class NPC : public Entity
     ColliderComponent* getColliderComponent() {return mCollider;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
     void PlayDialogue();
+    void HideDialogue();
     bool isActive() const {return active;}
     void destroy() {active = false;}
 private:

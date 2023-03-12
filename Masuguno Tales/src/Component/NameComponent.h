@@ -18,7 +18,7 @@ public:
         mTransform = trans;
         mName = _name;
         mFont = TTF_OpenFont(fontPath, fontSize);
-        mTexture = TextureManager::LoadText(mFont, mName.c_str(), textColor);
+        mTexture = TextureManager::LoadText(mFont, mName.c_str(), textColor, 200);
         SDL_QueryTexture(mTexture, NULL, NULL, &mWidth, &mHeight);
         srcRect.w = destRect.w = mWidth;
         srcRect.h = destRect.h = mHeight;

@@ -49,8 +49,8 @@
 	"Game.h"
 	"Game.h"
 
-1678520862 d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.h
-	"Game.h"
+1678615423 d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.h
+	<SDL.h>
 	"Game.h"
 
 1678519837 d:\dev\uet project\masuguno tales\masuguno tales\src\component\component.h
@@ -111,12 +111,7 @@
 	<cstdlib>
 	"Component.h"
 
-1678521402 d:\dev\uet project\masuguno tales\masuguno tales\src\component\namecomponent.h
-	<string>
-	"../Game.h"
-	"Component.h"
-	"../TextureManager.h"
-	"../Vector2D.h"
+1678615506 d:\dev\uet project\masuguno tales\masuguno tales\src\component\namecomponent.h
 	<string>
 	"../Game.h"
 	"Component.h"
@@ -133,10 +128,10 @@
 	<SDL.h>
 	"Component/ColliderComponent.h"
 
-1678606732 source:d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.cpp
+1678620878 source:d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.cpp
 	"Dialogue.h"
 
-1678606882 d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.h
+1678620680 d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
@@ -230,16 +225,7 @@
 	"Entity.h"
 	"Component/Component.h"
 
-1678595791 d:\dev\uet project\masuguno tales\masuguno tales\src\npc.h
-	<map>
-	<memory>
-	<vector>
-	<algorithm>
-	<string>
-	"Vector2D.h"
-	"Entity.h"
-	"Component/Component.h"
-	"Dialogue.h"
+1678611735 d:\dev\uet project\masuguno tales\masuguno tales\src\npc.h
 	<map>
 	<memory>
 	<vector>
@@ -252,19 +238,8 @@
 
 1678197728 d:\dev\uet project\masuguno tales\masuguno tales\src\mapmanager.h
 
-1678546319 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
-	"Game.h"
-	"TextureManager.h"
-	"Component/Component.h"
-	"Map.h"
-	"MapManager.h"
-	"Collision.h"
-	"Entity.h"
-	"Actor.h"
-	"Monster.h"
-	"Settings.h"
-	"Window.h"
-	"Dialogue.h"
+1678612402 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+	<math.h>
 	"Game.h"
 	"TextureManager.h"
 	"Component/Component.h"
@@ -328,12 +303,10 @@
 	"Monster.h"
 	"Monster.h"
 
-1678605323 source:d:\dev\uet project\masuguno tales\masuguno tales\src\npc.cpp
+1678617173 source:d:\dev\uet project\masuguno tales\masuguno tales\src\npc.cpp
 	"NPC.h"
 
-1678522348 source:d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.cpp
-	<SDL_ttf.h>
-	"TextureManager.h"
+1678616530 source:d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.cpp
 	<SDL_ttf.h>
 	"TextureManager.h"
 
@@ -353,11 +326,13 @@
 	"Button.h"
 	"TextureManager.h"
 
-1678606503 d:\dev\uet project\masuguno tales\masuguno tales\src\label.h
+1678620535 d:\dev\uet project\masuguno tales\masuguno tales\src\label.h
+	<SDL.h>
 	<SDL_ttf.h>
 	"Vector2D.h"
+	<functional>
 
-1678606469 source:d:\dev\uet project\masuguno tales\masuguno tales\src\label.cpp
+1678620832 source:d:\dev\uet project\masuguno tales\masuguno tales\src\label.cpp
 	"Label.h"
 	"TextureManager.h"
 

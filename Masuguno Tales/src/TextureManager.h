@@ -3,12 +3,14 @@
 #ifndef TextureManager_h
 #define TextureManager_h
 
+#include <SDL.h>
 #include "Game.h"
+
 class TextureManager
 {
 public:
     static SDL_Texture* LoadTexture(const char* filename);
-    static SDL_Texture* LoadText(TTF_Font* font,const char* text, SDL_Color textColor);
+    static SDL_Texture* LoadText(TTF_Font* font,const char* text, SDL_Color textColor, Uint32 wrapLength);
     static void Draw(SDL_Texture* texture, SDL_Rect srcRect, SDL_Rect destRect);
 };
 

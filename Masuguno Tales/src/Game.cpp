@@ -1,3 +1,4 @@
+#include <math.h>
 #include "Game.h"
 #include "TextureManager.h"
 #include "Component/Component.h"
@@ -97,7 +98,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-
     Vector2D playerPos = gPlayer->getTransformComponent()->position;
 
     // Update Game Object
@@ -127,18 +127,38 @@ void Game::update()
     // Interact with NPC
     for(auto& npc : currentMap->npcs)
     {
+        // Check Collision
         if(Collision::AABB(*gPlayer->getColliderComponent(), *npc->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
+        }
 
-            if(Game::event.type == SDL_KEYDOWN)
-            {
-                switch(Game::event.key.keysym.sym)
+        // Interact with NPC
+        Vector2D npcPos = npc->getTransformComponent()->position;
+        playerPos = gPlayer->getTransformComponent()->position;
+        float distance = sqrt((npcPos.x - playerPos.x)*(npcPos.x - playerPos.x) + (npcPos.y - playerPos.y)*(npcPos.y - playerPos.y));
+        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + 1))
+        {
+            // Check if NPC and Player are facing to each other
+            int playerAnimIndex = gPlayer->getSpriteComponent()->animIndex;
+            int npcAnimIndex = npc->getSpriteComponent()->animIndex;
+            bool success = false;
+            if(playerAnimIndex == 0 && npcAnimIndex == 3) success = true;
+            else if(playerAnimIndex == 1 && npcAnimIndex == 2) success = true;
+            else if(playerAnimIndex == 2 && npcAnimIndex == 1) success = true;
+            else if(playerAnimIndex == 3 && npcAnimIndex == 0) success = true;
+
+            // If facing
+            if(success){
+                switch(Game::event.key.keysym.sym )
                 {
                     case SDLK_LCTRL: npc->PlayDialogue();
                 }
             }
         }
+
+        if(distance > GAME_PIXELS + 1) npc->HideDialogue();
+
     }
 
     // Interact with event

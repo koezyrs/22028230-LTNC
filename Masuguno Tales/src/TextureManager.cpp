@@ -16,10 +16,10 @@ SDL_Texture* TextureManager::LoadTexture(const char* filename)
     return Texture;
 }
 
-SDL_Texture* TextureManager::LoadText(TTF_Font* font,const char* text, SDL_Color textColor)
+SDL_Texture* TextureManager::LoadText(TTF_Font* font,const char* text, SDL_Color textColor, Uint32 wrapLength)
 {
     SDL_Surface* tempSurface = NULL;
-    tempSurface = TTF_RenderText_Blended(font, text, textColor);
+    tempSurface = TTF_RenderText_Blended_Wrapped(font, text, textColor, wrapLength);
     if(tempSurface == NULL)
     {
         std::cout << "Unable to load text! TTF_Error: " << TTF_GetError() << std::endl;
