@@ -53,6 +53,9 @@ void Map::Refresh()
     monsters.erase(std::remove_if(monsters.begin(), monsters.end(),
         [](Monster* theMonster){return !theMonster->isActive();}), monsters.end());
 
+    npcs.erase(std::remove_if(npcs.begin(), npcs.end(),
+        [](NPC* theNPC) {return !theNPC->isActive();}), npcs.end());
+
     events.erase(std::remove_if(events.begin(), events.end(),
         [](Event* theEvent){return !theEvent->isActive();}), events.end());
 }
@@ -72,29 +75,42 @@ void Map::Update()
         m->Update();
     }
 
+    for(auto& n : npcs)
+    {
+        n->Update();
+    }
+
     for(auto& e : events)
     {
         e->Update();
     }
 }
 
-void Map::Render()
+void Map::RenderBottomLayer()
 {
     TextureManager::Draw(mTexture, srcRect, destRect);
+}
+
+void Map::RenderUpperLayer()
+{
     for(auto& m : monsters)
     {
         m->Render();
     }
-}
 
+    for(auto& n : npcs)
+    {
+        n->Render();
+    }
+}
 void Map::AddWall(int x, int y)
 {
     walls.emplace_back(new Wall(static_cast<float>(x), static_cast<float>(y)));
 }
 
-void Map::AddMonster(float x, float y, const char* filepath)
+void Map::AddMonster(float x, float y, const char* filepath, std::string name)
 {
-    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath));
+    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
 }
 
 void Map::AddEvent(Event* newEvent)
@@ -102,11 +118,17 @@ void Map::AddEvent(Event* newEvent)
     events.emplace_back(newEvent);
 }
 
+void Map::AddNPC(float x, float y, const char* filepath, std::string name)
+{
+    npcs.emplace_back(new NPC(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
+}
+
 void Map::ClearMap()
 {
-    for(auto& w: walls) {w->destroy();}
+    for(auto& w : walls) {w->destroy();}
     for(auto& m : monsters) {m->destroy();}
     for(auto& e : events) {e->destroy();}
+    for(auto& n : npcs) (n->destroy());
     SDL_DestroyTexture(mTexture);
     mTexture = NULL;
     Refresh();

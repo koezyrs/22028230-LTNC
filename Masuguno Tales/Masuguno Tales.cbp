@@ -36,6 +36,8 @@
 		<Unit filename="src/Actor.cpp" />
 		<Unit filename="src/Actor.h" />
 		<Unit filename="src/Animation.h" />
+		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/Button.h" />
 		<Unit filename="src/Collision.cpp" />
 		<Unit filename="src/Collision.h" />
 		<Unit filename="src/Component/AIComponent.h" />
@@ -46,6 +48,7 @@
 		<Unit filename="src/Component/SpriteComponent.h" />
 		<Unit filename="src/Component/TileComponent.h" />
 		<Unit filename="src/Component/TransformComponent.h" />
+		<Unit filename="src/Dialogue.cpp" />
 		<Unit filename="src/Dialogue.h" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Entity.h" />
@@ -57,12 +60,16 @@
 		<Unit filename="src/Event/EventType.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
+		<Unit filename="src/Label.cpp" />
+		<Unit filename="src/Label.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/MapManager.cpp" />
 		<Unit filename="src/MapManager.h" />
 		<Unit filename="src/Monster.cpp" />
 		<Unit filename="src/Monster.h" />
+		<Unit filename="src/NPC.cpp" />
+		<Unit filename="src/NPC.h" />
 		<Unit filename="src/Settings.h" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/TextureManager.h" />

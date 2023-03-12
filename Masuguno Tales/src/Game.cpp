@@ -19,7 +19,6 @@ SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 Actor* Game::gPlayer;
 Map* Game::currentMap;
-Dialogue* testDialogue;
 
 Game::Game(){};
 
@@ -72,14 +71,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     return;
 }
 
-void Game::loadMedia()
+void Game::loadData()
 {
     // Initialize Game Object Here
     gPlayer = new Actor(100, 100, "data files/graphics/player.png");
     currentMap = new Map();
-    gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 1 * GAME_PIXELS};
     MapManager::LoadMap1();
-    testDialogue = new Dialogue(static_cast<int>((SCREEN_WIDTH - 478)/2), static_cast<int>((SCREEN_HEIGHT - 240)/2), 478, 240, "Test Dialogue System");
+    gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
     return;
 }
 
@@ -107,7 +105,6 @@ void Game::update()
     gPlayer->Update();
 
     // Collision check
-
     for(auto& wall : currentMap->walls)
     {
         if(Collision::AABB(*gPlayer->getColliderComponent(), *wall->getColliderComponent()))
@@ -116,6 +113,7 @@ void Game::update()
         }
     }
 
+    // Hit Monster check
     for(auto& monster : currentMap->monsters)
     {
         if(Collision::AABB(*gPlayer->getColliderComponent(), *monster->getColliderComponent()))
@@ -125,6 +123,25 @@ void Game::update()
         }
     }
 
+
+    // Interact with NPC
+    for(auto& npc : currentMap->npcs)
+    {
+        if(Collision::AABB(*gPlayer->getColliderComponent(), *npc->getColliderComponent()))
+        {
+            gPlayer->getTransformComponent()->position = playerPos;
+
+            if(Game::event.type == SDL_KEYDOWN)
+            {
+                switch(Game::event.key.keysym.sym)
+                {
+                    case SDLK_LCTRL: npc->PlayDialogue();
+                }
+            }
+        }
+    }
+
+    // Interact with event
     for(auto& eventa : currentMap->events)
     {
         if(Collision::AABB(*gPlayer->getColliderComponent(), *eventa->getColliderComponent()))
@@ -133,6 +150,7 @@ void Game::update()
             eventa->Perform();
         }
     }
+
     // Camera Update
     gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
     gCamera.y = gPlayer->getTransformComponent()->position.y - SCREEN_HEIGHT / 2;
@@ -154,9 +172,9 @@ void Game::render()
 
     // Draw here
     currentMap->Refresh();
-    currentMap->Render();
+    currentMap->RenderBottomLayer();
     gPlayer->Render();
-    testDialogue->Render();
+    currentMap->RenderUpperLayer();
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -179,7 +197,6 @@ void Game::clean()
 
     delete gPlayer;
     delete currentMap;
-    delete testDialogue;
     cout << "Game cleaned" << endl;
 
     return;

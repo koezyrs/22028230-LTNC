@@ -14,10 +14,11 @@ public:
     void destroy() {active = false;}
     void showWindow() {hide = false;}
     void hideWindow() {hide = true;}
+    void Toggle() {hide = !hide;}
     virtual void Update() = 0;
     virtual void Render() = 0;
 private:
-    bool hide = false;
+    bool hide = true;
     bool active = true;
 };
 
