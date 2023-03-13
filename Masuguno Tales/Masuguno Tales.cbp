@@ -50,6 +50,8 @@
 		<Unit filename="src/Component/TransformComponent.h" />
 		<Unit filename="src/Dialogue.cpp" />
 		<Unit filename="src/Dialogue.h" />
+		<Unit filename="src/DialogueManager.cpp" />
+		<Unit filename="src/DialogueManager.h" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Entity.h" />
 		<Unit filename="src/Event.cpp" />

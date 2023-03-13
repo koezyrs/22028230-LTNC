@@ -33,6 +33,7 @@ public:
     ColliderComponent* getColliderComponent() {return mCollider;}
     KeyboardController* getKeyboardController() {return mController;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
+    NameComponent* getNameComponent() {return mName;}
     bool isActive() const {return active;}
     void destroy() {active = false;}
 private:

@@ -22,7 +22,10 @@ public:
         if(!isHide())
         {
             closeButton->handleEvent(&Game::event);
-            dialogueContent->handleEvent(&Game::event);
+            dialogueOption1->handleEvent(&Game::event);
+            dialogueOption2->handleEvent(&Game::event);
+            dialogueOption3->handleEvent(&Game::event);
+            dialogueOption4->handleEvent(&Game::event);
         }
     }
 
@@ -34,10 +37,19 @@ public:
             TextureManager::Draw(Face, faceSrcRect, faceDestRect);
             dialogueTitle->Render();
             dialogueContent->Render();
+            dialogueOption1->Render();
+            dialogueOption2->Render();
+            dialogueOption3->Render();
+            dialogueOption4->Render();
             closeButton->Render();
         }
     }
-
+    void setTitleLabel(const char* title);
+    void setContentLabel(const char* content);
+    void setOption1(const char* text, std::function<void()> func = []{});
+    void setOption2(const char* text, std::function<void()> func = []{});
+    void setOption3(const char* text, std::function<void()> func = []{});
+    void setOption4(const char* text, std::function<void()> func = []{});
 private:
     Vector2D position;
     int mWidth, mHeight;
@@ -48,6 +60,10 @@ private:
 
     Label* dialogueTitle;
     Label* dialogueContent;
+    Label* dialogueOption1;
+    Label* dialogueOption2;
+    Label* dialogueOption3;
+    Label* dialogueOption4;
     Button* closeButton;
 };
 

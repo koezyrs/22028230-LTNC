@@ -43,6 +43,7 @@ public:
     {
         TextureManager::Draw(mTexture, srcRect, destRect);
     }
+    std::string mName;
 private:
     int mWidth, mHeight;
     Vector2D position;
@@ -50,7 +51,6 @@ private:
     SDL_Texture* mTexture;
     TransformComponent* mTransform;
     TTF_Font* mFont;
-    std::string mName;
 };
 
 #endif // NameComponent

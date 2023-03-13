@@ -15,6 +15,7 @@ public:
     void handleEvent(SDL_Event* e);
     void Render();
     void Perform();
+    void Reset();
 private:
     bool isFunctional = false;
     bool inside = false;

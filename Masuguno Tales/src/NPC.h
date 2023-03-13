@@ -26,17 +26,16 @@ class NPC : public Entity
         mCollider->Update();
         mSprite->Update();
         mName->Update();
-        TestNPCDialogue->Update();
     }
     void Render() override
     {
         mSprite->Render();
         mName->Render();
-        TestNPCDialogue->Render();
     }
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
+    NameComponent* getNameComponent() {return mName;}
     void PlayDialogue();
     void HideDialogue();
     bool isActive() const {return active;}
@@ -49,7 +48,7 @@ private:
     ColliderComponent* mCollider;
     NameComponent* mName;
 
-    Dialogue* TestNPCDialogue;
+    std::string npcName;
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];
     SDL_Rect mSpriteMoveDown[3];

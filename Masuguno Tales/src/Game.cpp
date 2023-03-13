@@ -2,17 +2,17 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Component/Component.h"
+#include "Settings.h"
 #include "Map.h"
 #include "MapManager.h"
 #include "Collision.h"
 #include "Entity.h"
 #include "Actor.h"
 #include "Monster.h"
-#include "Settings.h"
 
 #include "Window.h"
 #include "Dialogue.h"
-
+#include "DialogueManager.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
@@ -20,6 +20,7 @@ SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 Actor* Game::gPlayer;
 Map* Game::currentMap;
+Dialogue* Game::gDialogue;
 
 Game::Game(){};
 
@@ -75,9 +76,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
 void Game::loadData()
 {
     // Initialize Game Object Here
-    gPlayer = new Actor(100, 100, "data files/graphics/player.png");
     currentMap = new Map();
+    gPlayer = new Actor(100, 100, "data files/graphics/player.png");
+    gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, "a", "data files/graphics/faces/1.png", "a");
+
+    // Load all game dialogue
+    DialogueManager::LoadDialogue();
+
+    // Load the begin map
     MapManager::LoadMap1();
+
+    // Set player position
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
     return;
 }
@@ -98,11 +107,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    // Saved the last position after taking the next move
     Vector2D playerPos = gPlayer->getTransformComponent()->position;
 
     // Update Game Object
     currentMap->Update();
     gPlayer->Update();
+    if(!gDialogue->isHide()) gDialogue->Update();
 
     // Collision check
     for(auto& wall : currentMap->walls)
@@ -124,7 +135,7 @@ void Game::update()
     }
 
 
-    // Interact with NPC
+    // Collide with NPC
     for(auto& npc : currentMap->npcs)
     {
         // Check Collision
@@ -148,7 +159,7 @@ void Game::update()
             else if(playerAnimIndex == 2 && npcAnimIndex == 1) success = true;
             else if(playerAnimIndex == 3 && npcAnimIndex == 0) success = true;
 
-            // If facing
+            // If is facing
             if(success){
                 switch(Game::event.key.keysym.sym )
                 {
@@ -157,7 +168,7 @@ void Game::update()
             }
         }
 
-        if(distance > GAME_PIXELS + 1) npc->HideDialogue();
+        if(distance > GAME_PIXELS + 1) {npc->HideDialogue();}
 
     }
 
@@ -195,6 +206,9 @@ void Game::render()
     currentMap->RenderBottomLayer();
     gPlayer->Render();
     currentMap->RenderUpperLayer();
+
+    if(!gDialogue->isHide()) gDialogue->Render();
+
     // Update screen
     SDL_RenderPresent(gRenderer);
 
@@ -215,8 +229,9 @@ void Game::clean()
     gWindow = NULL;
     gRenderer = NULL;
 
-    delete gPlayer;
     delete currentMap;
+    delete gPlayer;
+    delete gDialogue;
     cout << "Game cleaned" << endl;
 
     return;

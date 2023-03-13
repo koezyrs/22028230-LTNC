@@ -6,7 +6,7 @@ Label::Label(const char* fontFile, const char* textContent, int fontSize, float 
 {
     font = TTF_OpenFont(fontFile, fontSize);
     textOut = TextureManager::LoadText(font, textContent, textColor, wrapLength);
-    SDL_Color textColorOver = {static_cast<int>(textColor.r) + 64, static_cast<int> (textColor.g) + 64, static_cast<int>(textColor.b) + 64};
+    SDL_Color textColorOver = {static_cast<int>(textColor.r) + 92, static_cast<int> (textColor.g) + 92, static_cast<int>(textColor.b) + 64};
     textOver = TextureManager::LoadText(font, textContent, textColorOver, wrapLength);
     SDL_QueryTexture(textOut, NULL, NULL, &Width, &Height);
     srcRect.x = srcRect.y = 0;
@@ -19,12 +19,7 @@ Label::Label(const char* fontFile, const char* textContent, int fontSize, float 
 
 Label::~Label()
 {
-    TTF_CloseFont(font);
-    SDL_DestroyTexture(textOut);
-    SDL_DestroyTexture(textOver);
-    font = NULL;
-    textOut = NULL;
-    textOver = NULL;
+    Reset();
 }
 
 void Label::handleEvent(SDL_Event* e)
@@ -57,4 +52,14 @@ void Label::Render()
 void Label::Perform()
 {
     LabelFunction();
+}
+
+void Label::Reset()
+{
+    TTF_CloseFont(font);
+    SDL_DestroyTexture(textOut);
+    SDL_DestroyTexture(textOver);
+    font = NULL;
+    textOut = NULL;
+    textOver = NULL;
 }

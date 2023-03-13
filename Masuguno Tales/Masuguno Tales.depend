@@ -3,15 +3,7 @@
 	"src/Game.h"
 	"src/Game.h"
 
-1678542735 d:\dev\uet project\masuguno tales\masuguno tales\src\game.h
-	<iostream>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_ttf.h>
-	<SDL_mixer.h>
-	<vector>
-	<string>
-	"Settings.h"
+1678700745 d:\dev\uet project\masuguno tales\masuguno tales\src\game.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -29,14 +21,7 @@
 	"Actor.h"
 	"TextureManager.h"
 
-1678522908 d:\dev\uet project\masuguno tales\masuguno tales\src\actor.h
-	<SDL.h>
-	"Game.h"
-	"Entity.h"
-	"TextureManager.h"
-	"Component/Component.h"
-	"Vector2D.h"
-	"Settings.h"
+1678701921 d:\dev\uet project\masuguno tales\masuguno tales\src\actor.h
 	<SDL.h>
 	"Game.h"
 	"Entity.h"
@@ -111,7 +96,7 @@
 	<cstdlib>
 	"Component.h"
 
-1678615506 d:\dev\uet project\masuguno tales\masuguno tales\src\component\namecomponent.h
+1678703609 d:\dev\uet project\masuguno tales\masuguno tales\src\component\namecomponent.h
 	<string>
 	"../Game.h"
 	"Component.h"
@@ -128,10 +113,10 @@
 	<SDL.h>
 	"Component/ColliderComponent.h"
 
-1678620878 source:d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.cpp
+1678709782 source:d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.cpp
 	"Dialogue.h"
 
-1678620680 d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.h
+1678709017 d:\dev\uet project\masuguno tales\masuguno tales\src\dialogue.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
@@ -189,15 +174,7 @@
 	"Actor.h"
 	"Vector2D.h"
 
-1678546264 d:\dev\uet project\masuguno tales\masuguno tales\src\map.h
-	<string>
-	<vector>
-	<memory>
-	"Vector2D.h"
-	"Wall.h"
-	"Monster.h"
-	"Event.h"
-	"NPC.h"
+1678701693 d:\dev\uet project\masuguno tales\masuguno tales\src\map.h
 	<string>
 	<vector>
 	<memory>
@@ -225,7 +202,7 @@
 	"Entity.h"
 	"Component/Component.h"
 
-1678611735 d:\dev\uet project\masuguno tales\masuguno tales\src\npc.h
+1678704108 d:\dev\uet project\masuguno tales\masuguno tales\src\npc.h
 	<map>
 	<memory>
 	<vector>
@@ -238,31 +215,23 @@
 
 1678197728 d:\dev\uet project\masuguno tales\masuguno tales\src\mapmanager.h
 
-1678612402 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
+1678705042 source:d:\dev\uet project\masuguno tales\masuguno tales\src\game.cpp
 	<math.h>
 	"Game.h"
 	"TextureManager.h"
 	"Component/Component.h"
+	"Settings.h"
 	"Map.h"
 	"MapManager.h"
 	"Collision.h"
 	"Entity.h"
 	"Actor.h"
 	"Monster.h"
-	"Settings.h"
 	"Window.h"
 	"Dialogue.h"
+	"DialogueManager.h"
 
-1678546393 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
-	<string>
-	<fstream>
-	<algorithm>
-	<iostream>
-	"Game.h"
-	"Map.h"
-	"TextureManager.h"
-	"Settings.h"
-	"Event/EventType.h"
+1678701687 source:d:\dev\uet project\masuguno tales\masuguno tales\src\map.cpp
 	<string>
 	<fstream>
 	<algorithm>
@@ -283,14 +252,7 @@
 	"../Event.h"
 	"../EventManager.h"
 
-1678544918 source:d:\dev\uet project\masuguno tales\masuguno tales\src\mapmanager.cpp
-	"Game.h"
-	"Actor.h"
-	"Map.h"
-	"MapManager.h"
-	"Event.h"
-	"Event/EventType.h"
-	"Settings.h"
+1678627304 source:d:\dev\uet project\masuguno tales\masuguno tales\src\mapmanager.cpp
 	"Game.h"
 	"Actor.h"
 	"Map.h"
@@ -303,8 +265,11 @@
 	"Monster.h"
 	"Monster.h"
 
-1678617173 source:d:\dev\uet project\masuguno tales\masuguno tales\src\npc.cpp
+1678709110 source:d:\dev\uet project\masuguno tales\masuguno tales\src\npc.cpp
+	<iostream>
 	"NPC.h"
+	"Game.h"
+	"DialogueManager.h"
 
 1678616530 source:d:\dev\uet project\masuguno tales\masuguno tales\src\texturemanager.cpp
 	<SDL_ttf.h>
@@ -326,13 +291,24 @@
 	"Button.h"
 	"TextureManager.h"
 
-1678620535 d:\dev\uet project\masuguno tales\masuguno tales\src\label.h
+1678703414 d:\dev\uet project\masuguno tales\masuguno tales\src\label.h
 	<SDL.h>
 	<SDL_ttf.h>
 	"Vector2D.h"
 	<functional>
 
-1678620832 source:d:\dev\uet project\masuguno tales\masuguno tales\src\label.cpp
+1678709517 source:d:\dev\uet project\masuguno tales\masuguno tales\src\label.cpp
 	"Label.h"
 	"TextureManager.h"
+
+1678709712 source:d:\dev\uet project\masuguno tales\masuguno tales\src\dialoguemanager.cpp
+	"Game.h"
+	"Dialogue.h"
+	"DialogueManager.h"
+
+1678707752 d:\dev\uet project\masuguno tales\masuguno tales\src\dialoguemanager.h
+	<map>
+	<string>
+	<vector>
+	<functional>
 

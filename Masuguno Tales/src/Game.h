@@ -12,9 +12,8 @@
 #include "Settings.h"
 
 class Map;
-class Entity;
 class Actor;
-class ColliderComponent;
+class Dialogue;
 
 using namespace std;
 
@@ -32,8 +31,11 @@ public:
 
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
-    static Actor* gPlayer;
+
     static Map* currentMap;
+    static Actor* gPlayer;
+    static Dialogue* gDialogue;
+
     static SDL_Rect gCamera;
 private:
     bool isRunning;
