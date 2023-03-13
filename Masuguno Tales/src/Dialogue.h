@@ -44,6 +44,7 @@ public:
             closeButton->Render();
         }
     }
+    void setFace(const char* facePath);
     void setTitleLabel(const char* title);
     void setContentLabel(const char* content);
     void setOption1(const char* text, std::function<void()> func = []{});

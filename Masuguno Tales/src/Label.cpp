@@ -2,13 +2,16 @@
 #include "TextureManager.h"
 
 Label::Label(const char* fontFile, const char* textContent, int fontSize, float x, float y, SDL_Color textColor, Uint32 wrapLength, bool isFunc , std::function<void()> func)
-: position(x,y), LabelFunction([this, func]{func();}), isFunctional(isFunc)
+: position(x,y), LabelFunction([this, func]{func();}), isFunctional(isFunc), textOut(NULL), textOver(NULL)
 {
     font = TTF_OpenFont(fontFile, fontSize);
-    textOut = TextureManager::LoadText(font, textContent, textColor, wrapLength);
-    SDL_Color textColorOver = {static_cast<int>(textColor.r) + 92, static_cast<int> (textColor.g) + 92, static_cast<int>(textColor.b) + 64};
-    textOver = TextureManager::LoadText(font, textContent, textColorOver, wrapLength);
-    SDL_QueryTexture(textOut, NULL, NULL, &Width, &Height);
+    if(textContent != NULL)
+    {
+        textOut = TextureManager::LoadText(font, textContent, textColor, wrapLength);
+        SDL_Color textColorOver = {static_cast<int>(textColor.r) + 92, static_cast<int> (textColor.g) + 92, static_cast<int>(textColor.b) + 64};
+        textOver = TextureManager::LoadText(font, textContent, textColorOver, wrapLength);
+        SDL_QueryTexture(textOut, NULL, NULL, &Width, &Height);
+    }else {Width = 0; Height = 0;}
     srcRect.x = srcRect.y = 0;
     destRect.x = position.x;
     destRect.y = position.y;
@@ -44,6 +47,7 @@ void Label::handleEvent(SDL_Event* e)
 
 void Label::Render()
 {
+    if(textOver == NULL || textOut == NULL) return;
     if(inside && isFunctional){
         TextureManager::Draw(textOver, srcRect, destRect);
     }else TextureManager::Draw(textOut, srcRect, destRect);

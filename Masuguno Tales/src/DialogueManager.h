@@ -9,29 +9,31 @@
 
 struct DialogueType
 {
+    std::string FACEPATH;
     std::string TITLE;
     std::string CONTENT;
-    std::string REPLY1;
-    std::string REPLY2;
-    std::string REPLY3;
-    std::string REPLY4;
-    std::function<void()> func1;
-    std::function<void()> func2;
-    std::function<void()> func3;
-    std::function<void()> func4;
+    const char* REPLY1;
+    const char* REPLY2;
+    const char* REPLY3;
+    const char* REPLY4;
+    std::function<void()> FUNC1;
+    std::function<void()> FUNC2;
+    std::function<void()> FUNC3;
+    std::function<void()> FUNC4;
 
-    DialogueType(std::string title = "", std::string content = "", std::string reply1 = "", std::string reply2 = "",
-                 std::string reply3 = "", std::string reply4 = "",
+    DialogueType(std::string title = "", std::string content = "", const char* reply1 = NULL, const char* reply2 = NULL,
+                 const char* reply3 = NULL, const char* reply4 = NULL,
                  std::function<void()> funct1 = []{}, std::function<void()> funct2 = []{},
-                 std::function<void()> funct3 = []{}, std::function<void()> funct4 = []{})
-    : TITLE(title), CONTENT(content), REPLY1(reply1), REPLY2(reply2), REPLY3(reply3), REPLY4(reply3),
-        func1([this, funct1] {funct1();}), func2([this, funct2] {funct2();}), func3([this, funct3] {funct3();}), func4([this, funct4] {funct4();})
+                 std::function<void()> funct3 = []{}, std::function<void()> funct4 = []{}, std::string facePath = "")
+    : TITLE(title), CONTENT(content), REPLY1(reply1), REPLY2(reply2), REPLY3(reply3), REPLY4(reply4),
+        FUNC1([this, funct1] {funct1();}), FUNC2([this, funct2] {funct2();}), FUNC3([this, funct3] {funct3();}), FUNC4([this, funct4] {funct4();}) , FACEPATH(facePath)
     {}
 };
 
 class DialogueManager
 {
 public:
+    static void Play(std::string dialogueName);
     static void LoadDialogue();
     static std::map<std::string, DialogueType> dialogueList;
 };

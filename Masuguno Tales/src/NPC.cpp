@@ -21,19 +21,7 @@ NPC::~NPC()
 
 void NPC::PlayDialogue()
 {
-    if(DialogueManager::dialogueList[npcName].CONTENT.empty())
-    {
-        std::cout << "Unable to find " << npcName << " conversation!"  << std::endl;
-        return;
-    }
-    DialogueType context = DialogueManager::dialogueList[npcName];
-    Game::gDialogue->setTitleLabel(context.TITLE.c_str());
-    Game::gDialogue->setContentLabel(context.CONTENT.c_str());
-    Game::gDialogue->setOption1(context.REPLY1.c_str(), context.func1);
-    Game::gDialogue->setOption2(context.REPLY2.c_str(), context.func2);
-    Game::gDialogue->setOption3(context.REPLY3.c_str(), context.func3);
-    Game::gDialogue->setOption4(context.REPLY4.c_str(), context.func4);
-    Game::gDialogue->showWindow();
+    DialogueManager::Play(npcName);
 }
 
 void NPC::HideDialogue()

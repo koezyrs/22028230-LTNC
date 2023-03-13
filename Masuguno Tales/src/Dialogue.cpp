@@ -34,6 +34,13 @@ Dialogue::~Dialogue()
     DialogueBox = NULL;
 }
 
+void Dialogue::setFace(const char* facePath)
+{
+    SDL_DestroyTexture(Face);
+    Face = NULL;
+    Face = TextureManager::LoadTexture(facePath);
+}
+
 void Dialogue::setTitleLabel(const char* title)
 {
     dialogueTitle->Reset();
@@ -51,26 +58,22 @@ void Dialogue::setOption1(const char* text, std::function<void()> func)
 {
     dialogueOption1->Reset();
     if(text != "") dialogueOption1 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430, true, func);
-    else dialogueOption1 = new Label("data files/font/game.ttf", " ", 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430, false, []{});
 }
 
 void Dialogue::setOption2(const char* text, std::function<void()> func)
 {
     dialogueOption2->Reset();
     if(text != "") dialogueOption2 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430, true, func);
-    else dialogueOption2 = new Label("data files/font/game.ttf", " ", 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430, false, []{});
 }
 
 void Dialogue::setOption3(const char* text, std::function<void()> func)
 {
     dialogueOption3->Reset();
     if(text != "") dialogueOption3 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430, true, func);
-    else dialogueOption3 = new Label("data files/font/game.ttf", " ", 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430, false, []{});
 }
 
 void Dialogue::setOption4(const char* text, std::function<void()> func)
 {
     dialogueOption4->Reset();
     if(text != "") dialogueOption4 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430, true, func);
-    else dialogueOption4 = new Label("data files/font/game.ttf", " ", 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430, false, []{});
 }
