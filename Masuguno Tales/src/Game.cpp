@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Actor.h"
 #include "Monster.h"
+#include "Item.h"
 
 // GUI Include
 #include "Window.h"
@@ -17,6 +18,7 @@
 #include "DialogueManager.h"
 #include "Inventory.h"
 #include "HUD.h"
+#include "Hotbar.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
@@ -27,6 +29,7 @@ Map* Game::currentMap;
 Dialogue* Game::gDialogue;
 Inventory* Game::gInventory;
 HUD* Game::gHUD;
+Hotbar* Game::gHotbar;
 
 Game::Game(){};
 
@@ -89,6 +92,7 @@ void Game::loadData()
     gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, "a", "data files/graphics/faces/1.png", "a");
     gInventory = new Inventory(790, 130, 198, 314);
     gHUD = new HUD();
+    gHotbar = new Hotbar();
 
     // Load all game dialogue
     DialogueManager::LoadDialogue();
@@ -98,6 +102,18 @@ void Game::loadData()
 
     // Set player position
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
+
+    // Add test Item
+    gInventory->AddItem(new Item(1,"data files/graphics/items/2.png",1,"Dagger", "Assasin Dagger", []{}) );
+    gInventory->AddItem(new Item(2,"data files/graphics/items/3.png",1,"Sword", "Masuguno Sword", []{}) );
+    gInventory->AddItem(new Item(3,"data files/graphics/items/4.png",1,"Axe1", "Draven Axe", []{}) );
+    gInventory->AddItem(new Item(4,"data files/graphics/items/5.png",1,"Axe2", "Darius Axe", []{}) );
+    gInventory->AddItem(new Item(5,"data files/graphics/items/6.png",1,"Helmet", "Supierior Helmet", []{}) );
+    gInventory->AddItem(new Item(6,"data files/graphics/items/7.png",1,"Armo", "Dragon Armor", []{}) );
+    gInventory->AddItem(new Item(7,"data files/graphics/items/8.png",1,"Cloack", "Mystic Cloack", []{}) );
+    gInventory->AddItem(new Item(8,"data files/graphics/items/9.png",1,"Boots", "Water Boots", []{}) );
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(10, "data files/graphics/items/12.png", 5, "Potion", "MP Potion", []{if(gPlayer->mStats->getMana() + 10 <= gPlayer->mStats->getMaxMana()) gPlayer->mStats->setMana(gPlayer->mStats->getMana() + 10);}));
     return;
 }
 
@@ -143,6 +159,7 @@ void Game::update()
     if(!gDialogue->isHide()) gDialogue->Update();
     if(!gInventory->isHide()) gInventory->Update();
     gHUD->Update();
+    gHotbar->Update();
 
     // Collision check
     for(auto& wall : currentMap->walls)
@@ -239,6 +256,7 @@ void Game::render()
     if(!gDialogue->isHide()) gDialogue->Render();
     if(!gInventory->isHide()) gInventory->Render();
     gHUD->Render();
+    gHotbar->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);
@@ -265,6 +283,8 @@ void Game::clean()
     delete gDialogue;
     delete gInventory;
     delete gHUD;
+    delete gHotbar;
+
     cout << "Game cleaned" << endl;
 
     return;

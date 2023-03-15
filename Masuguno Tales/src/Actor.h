@@ -24,33 +24,32 @@ public:
         mCollider->Update();
         mSprite->Update();
         mName->Update();
-        mInventory->Update();
     }
     void Render() override
     {
         mSprite->Render();
         mName->Render();
-        mInventory->Render();
     }
     TransformComponent* getTransformComponent() {return mTransform;}
     ColliderComponent* getColliderComponent() {return mCollider;}
     KeyboardController* getKeyboardController() {return mController;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
     NameComponent* getNameComponent() {return mName;}
-    Inventory* getInventory() {return mInventory;}
+
     StatsComponent* mStats;
+
     bool isActive() const {return active;}
     void destroy() {active = false;}
+
 private:
+    bool active = true;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;
     KeyboardController* mController;
     NameComponent* mName;
 
-    Inventory* mInventory;
-
-    bool active = true;
+    // Sprite Section
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];
     SDL_Rect mSpriteMoveDown[3];

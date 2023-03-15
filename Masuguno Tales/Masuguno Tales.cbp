@@ -65,8 +65,12 @@
 		<Unit filename="src/Game.h" />
 		<Unit filename="src/HUD.cpp" />
 		<Unit filename="src/HUD.h" />
+		<Unit filename="src/Hotbar.cpp" />
+		<Unit filename="src/Hotbar.h" />
 		<Unit filename="src/Inventory.cpp" />
 		<Unit filename="src/Inventory.h" />
+		<Unit filename="src/Item.cpp" />
+		<Unit filename="src/Item.h" />
 		<Unit filename="src/Label.cpp" />
 		<Unit filename="src/Label.h" />
 		<Unit filename="src/Map.cpp" />

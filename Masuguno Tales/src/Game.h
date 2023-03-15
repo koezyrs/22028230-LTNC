@@ -16,6 +16,7 @@ class Actor;
 class Dialogue;
 class Inventory;
 class HUD;
+class Hotbar;
 
 using namespace std;
 
@@ -39,6 +40,7 @@ public:
     static Dialogue* gDialogue;
     static Inventory* gInventory;
     static HUD* gHUD;
+    static Hotbar* gHotbar;
 
     static SDL_Rect gCamera;
 private:
