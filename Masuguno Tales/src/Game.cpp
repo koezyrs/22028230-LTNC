@@ -1,3 +1,4 @@
+// System Include
 #include <math.h>
 #include "Game.h"
 #include "TextureManager.h"
@@ -10,9 +11,12 @@
 #include "Actor.h"
 #include "Monster.h"
 
+// GUI Include
 #include "Window.h"
 #include "Dialogue.h"
 #include "DialogueManager.h"
+#include "Inventory.h"
+#include "HUD.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
@@ -21,6 +25,8 @@ SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 Actor* Game::gPlayer;
 Map* Game::currentMap;
 Dialogue* Game::gDialogue;
+Inventory* Game::gInventory;
+HUD* Game::gHUD;
 
 Game::Game(){};
 
@@ -78,7 +84,11 @@ void Game::loadData()
     // Initialize Game Object Here
     currentMap = new Map();
     gPlayer = new Actor(100, 100, "data files/graphics/player.png");
+
+    // Initialize GUI
     gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, "a", "data files/graphics/faces/1.png", "a");
+    gInventory = new Inventory(790, 130, 198, 314);
+    gHUD = new HUD();
 
     // Load all game dialogue
     DialogueManager::LoadDialogue();
@@ -101,8 +111,25 @@ void Game::handleEvents()
         default:
             break;
         }
+
+        if(event.type == SDL_KEYDOWN)
+        {
+            switch(event.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                Game::gDialogue->hideWindow();
+                Game::gInventory->hideWindow();
+                break;
+            case SDLK_i:
+                Game::gInventory->Toggle();
+                break;
+            default:
+                break;
+            }
+        }
         return;
     }
+
 }
 
 void Game::update()
@@ -114,6 +141,8 @@ void Game::update()
     currentMap->Update();
     gPlayer->Update();
     if(!gDialogue->isHide()) gDialogue->Update();
+    if(!gInventory->isHide()) gInventory->Update();
+    gHUD->Update();
 
     // Collision check
     for(auto& wall : currentMap->walls)
@@ -208,6 +237,8 @@ void Game::render()
     currentMap->RenderUpperLayer();
 
     if(!gDialogue->isHide()) gDialogue->Render();
+    if(!gInventory->isHide()) gInventory->Render();
+    gHUD->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);
@@ -232,6 +263,8 @@ void Game::clean()
     delete currentMap;
     delete gPlayer;
     delete gDialogue;
+    delete gInventory;
+    delete gHUD;
     cout << "Game cleaned" << endl;
 
     return;

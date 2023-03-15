@@ -1,6 +1,8 @@
 #include "Game.h"
+#include "Actor.h"
 #include "Dialogue.h"
 #include "DialogueManager.h"
+#include <string>
 
 std::map<std::string, DialogueType> DialogueManager::dialogueList;
 
@@ -27,12 +29,12 @@ void DialogueManager::LoadDialogue()
     dialogueList["The Guard Introduction"] = DialogueType("Conversation with the Guard",
                                              "You at no where to be found hahaah!",
                                              "1. Shit",
-                                             NULL,
-                                             NULL,
+                                             "2. Decrease Mana (-10MP)",
+                                             "3. Regen Mana (+10MP)",
                                              NULL,
                                              []{Game::gDialogue->hideWindow();},
-                                             []{},
-                                             []{},
+                                             []{if(Game::gPlayer->mStats->getMana() - 10 >= 0) Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() - 10); } ,
+                                             []{if(Game::gPlayer->mStats->getMana() + 10 <= 30)Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() + 10); },
                                              []{},
                                              "data files/graphics/faces/18.png");
 
@@ -41,11 +43,11 @@ void DialogueManager::LoadDialogue()
                                              "Bipbom",
                                              "1. Where Am I?",
                                              "2. I don't care!",
-                                             NULL,
-                                             NULL,
+                                             "3. Attack me (-10 HP)",
+                                             "4. Heal me (+10 HP)",
                                              []{DialogueManager::Play("The Guard Introduction");},
                                              []{Game::gDialogue->hideWindow();},
-                                             []{} ,
-                                             []{},
+                                             []{if(Game::gPlayer->mStats->getHealth() - 10 >= 0) Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() - 10); } ,
+                                             []{if(Game::gPlayer->mStats->getHealth() + 10 <= 100)Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() + 10); },
                                              "data files/graphics/faces/18.png");
 }

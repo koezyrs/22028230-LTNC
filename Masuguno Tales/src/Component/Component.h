@@ -8,5 +8,6 @@
 #include "ColliderComponent.h"
 #include "AIComponent.h"
 #include "NameComponent.h"
+#include "StatsComponent.h"
 
 #endif // Component_h

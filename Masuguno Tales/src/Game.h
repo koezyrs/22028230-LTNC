@@ -14,6 +14,8 @@
 class Map;
 class Actor;
 class Dialogue;
+class Inventory;
+class HUD;
 
 using namespace std;
 
@@ -35,6 +37,8 @@ public:
     static Map* currentMap;
     static Actor* gPlayer;
     static Dialogue* gDialogue;
+    static Inventory* gInventory;
+    static HUD* gHUD;
 
     static SDL_Rect gCamera;
 private:

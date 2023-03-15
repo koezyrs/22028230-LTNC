@@ -13,7 +13,6 @@ public:
     TransformComponent* mTransform;
     SDL_Rect mCollider;
     std::string tag;
-
     ColliderComponent(TransformComponent* trans)
     {
         mTransform = trans;
