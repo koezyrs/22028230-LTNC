@@ -10,6 +10,7 @@ void MapManager::LoadMap1()
     Game::currentMap->ClearMap();
     Game::currentMap->LoadMap("data files/maps/map01.png", "data files/maps/map01.msgn", 35, 30);
     Game::currentMap->AddNPC(10 * GAME_PIXELS, 10 * GAME_PIXELS, "data files/graphics/characters/158.png", "The Guard");
+    Game::currentMap->AddNPC(20 * GAME_PIXELS, 20 * GAME_PIXELS, "data files/graphics/characters/159.png", "KienHDVN");
     //Game::currentMap->AddEvent(new ChangeMapEvent(14 * GAME_PIXELS, 0,2));
     //Game::currentMap->AddEvent(new ChangeMapEvent(15 * GAME_PIXELS, 0,2));
     //Game::currentMap->AddEvent(new ChangeMapEvent(16 * GAME_PIXELS, 0,2));

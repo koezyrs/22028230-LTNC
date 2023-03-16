@@ -38,6 +38,7 @@ class NPC : public Entity
     NameComponent* getNameComponent() {return mName;}
     void PlayDialogue();
     void HideDialogue();
+    bool isInteract = false;
     bool isActive() const {return active;}
     void destroy() {active = false;}
 private:

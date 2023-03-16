@@ -180,7 +180,6 @@ void Game::update()
         }
     }
 
-
     // Collide with NPC
     for(auto& npc : currentMap->npcs)
     {
@@ -192,8 +191,9 @@ void Game::update()
 
         // Interact with NPC
         Vector2D npcPos = npc->getTransformComponent()->position;
-        playerPos = gPlayer->getTransformComponent()->position;
-        float distance = sqrt((npcPos.x - playerPos.x)*(npcPos.x - playerPos.x) + (npcPos.y - playerPos.y)*(npcPos.y - playerPos.y));
+        Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
+        float distance = sqrt((npcPos.x - currentplayerPos.x)*(npcPos.x - currentplayerPos.x) + (npcPos.y - currentplayerPos.y)*(npcPos.y - currentplayerPos.y));
+
         if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + 1))
         {
             // Check if NPC and Player are facing to each other
@@ -209,12 +209,12 @@ void Game::update()
             if(success){
                 switch(Game::event.key.keysym.sym )
                 {
-                    case SDLK_LCTRL: npc->PlayDialogue();
+                    case SDLK_LCTRL: {npc->PlayDialogue(); npc->isInteract = true;}
                 }
             }
         }
 
-        if(distance > GAME_PIXELS + 1) {npc->HideDialogue();}
+        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) {npc->HideDialogue(); npc->isInteract = false;}
 
     }
 
