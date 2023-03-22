@@ -23,8 +23,45 @@ Inventory::Inventory(int _x, int _y, int _width, int _height)
 
 void Inventory::AddItem(Item* _item)
 {
-    itemList.emplace_back(_item);
-    std::cout << "Added " << _item->itemName << " to the Inventory!" << std::endl;
+    bool success = false;
+    for(auto& theItem : itemList)
+    {
+        if(theItem->itemName == _item->itemName && theItem->currentStack < theItem->maxStack)
+        {
+            delete _item;
+            theItem->currentStack = theItem->currentStack + 1;
+            success = true;
+            break;
+        }
+    }
+
+    if(!success)
+    {
+        for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+        {
+            if(invSlot[i].isFull == false)
+            {
+                itemList.emplace_back(_item);
+                invSlot[i].AddItemToSlot(_item);
+                break;
+            }
+        }
+        std::cout << "Added " << _item->itemName << " to the Inventory!" << std::endl;
+    }
+}
+
+void Inventory::AddEquipment(Equipment* _equipment)
+{
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        if(invSlot[i].isFull == false)
+        {
+            equipmentList.emplace_back(_equipment);
+            invSlot[i].AddEquipmentToSlot(_equipment);
+            std::cout << "Added " << _equipment->equipmentName << " to the Inventory!" << std::endl;
+            break;
+        }
+    }
 }
 
 Inventory::~Inventory()

@@ -17,6 +17,7 @@ public:
     void destroy() {active = false;}
     int id;
     int maxStack;
+    int currentStack;
     const char* itemTag;
     const char* description;
     std::string itemName;

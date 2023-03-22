@@ -21,10 +21,12 @@ NPC::~NPC()
 
 void NPC::PlayDialogue()
 {
+    isInteract = true;
     DialogueManager::Play(npcName);
 }
 
 void NPC::HideDialogue()
 {
+    isInteract = false;
     Game::gDialogue->hideWindow();
 }

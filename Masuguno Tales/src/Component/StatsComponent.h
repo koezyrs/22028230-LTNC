@@ -33,16 +33,16 @@ public:
     void setAttackSpeed(int _attackSpeed) {AttackSpeed = _attackSpeed;}
 
 private:
-    int Level;
-    int Experience;
-    int ExperienceToNextLevel;
-    int Health;
-    int MaxHealth;
-    int Mana;
-    int MaxMana;
-    int Damage;
-    int Defense;
-    int AttackSpeed;
+    int Level = 0;
+    int Experience = 0;
+    int ExperienceToNextLevel = 0;
+    int Health = 0;
+    int MaxHealth = 0;
+    int Mana = 0;
+    int MaxMana = 0;
+    int Damage = 0;
+    int Defense = 0;
+    int AttackSpeed = 0;
 };
 
 #endif // StatsComponent_h

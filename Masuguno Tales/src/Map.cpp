@@ -46,7 +46,6 @@ void Map::LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY)
 
 void Map::Refresh()
 {
-
     walls.erase(std::remove_if(walls.begin(), walls.end(),
         [](Wall* theWall){return !theWall->isActive();}), walls.end());
 

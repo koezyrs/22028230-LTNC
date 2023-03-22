@@ -1,8 +1,9 @@
+#include <string>
 #include "Game.h"
 #include "Actor.h"
 #include "Dialogue.h"
 #include "DialogueManager.h"
-#include <string>
+#include "Inventory.h"
 
 std::map<std::string, DialogueType> DialogueManager::dialogueList;
 
@@ -46,8 +47,9 @@ void DialogueManager::LoadDialogue()
                                              "3. Attack me (-10 HP)",
                                              "4. Heal me (+10 HP)",
                                              []{DialogueManager::Play("The Guard Introduction");},
-                                             []{Game::gDialogue->hideWindow();},
+                                             []{Game::gInventory->AddItem(new Item(10, "data files/graphics/items/12.png", 5, "Potion", "MP Potion", []{if(Game::gPlayer->mStats->getMana() + 10 <= Game::gPlayer->mStats->getMaxMana()) Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() + 10);}));},
                                              []{if(Game::gPlayer->mStats->getHealth() - 10 >= 0) Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() - 10); } ,
                                              []{if(Game::gPlayer->mStats->getHealth() + 10 <= 100)Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() + 10); },
                                              "data files/graphics/faces/18.png");
 }
+

@@ -55,6 +55,8 @@
 		<Unit filename="src/DialogueManager.h" />
 		<Unit filename="src/Entity.cpp" />
 		<Unit filename="src/Entity.h" />
+		<Unit filename="src/Equipment.cpp" />
+		<Unit filename="src/Equipment.h" />
 		<Unit filename="src/Event.cpp" />
 		<Unit filename="src/Event.h" />
 		<Unit filename="src/EventManager.cpp" />

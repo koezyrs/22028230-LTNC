@@ -11,6 +11,7 @@
 #include "Actor.h"
 #include "Monster.h"
 #include "Item.h"
+#include "Equipment.h"
 
 // GUI Include
 #include "Window.h"
@@ -104,16 +105,28 @@ void Game::loadData()
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
 
     // Add test Item
-    gInventory->AddItem(new Item(1,"data files/graphics/items/2.png",1,"Dagger", "Assasin Dagger", []{}) );
-    gInventory->AddItem(new Item(2,"data files/graphics/items/3.png",1,"Sword", "Masuguno Sword", []{}) );
-    gInventory->AddItem(new Item(3,"data files/graphics/items/4.png",1,"Axe1", "Draven Axe", []{}) );
-    gInventory->AddItem(new Item(4,"data files/graphics/items/5.png",1,"Axe2", "Darius Axe", []{}) );
-    gInventory->AddItem(new Item(5,"data files/graphics/items/6.png",1,"Helmet", "Supierior Helmet", []{}) );
-    gInventory->AddItem(new Item(6,"data files/graphics/items/7.png",1,"Armo", "Dragon Armor", []{}) );
-    gInventory->AddItem(new Item(7,"data files/graphics/items/8.png",1,"Cloack", "Mystic Cloack", []{}) );
-    gInventory->AddItem(new Item(8,"data files/graphics/items/9.png",1,"Boots", "Water Boots", []{}) );
+    gInventory->AddEquipment(new Equipment(1,"data files/graphics/items/2.png","Dagger", "Assasin Dagger", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(2,"data files/graphics/items/3.png","Sword", "Masuguno Sword", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(3,"data files/graphics/items/4.png","Axe1", "Draven Axe",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(4,"data files/graphics/items/5.png","Axe2", "Darius Axe",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(5,"data files/graphics/items/6.png","Helmet", "Supierior Helmet",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(6,"data files/graphics/items/7.png","Armo", "Dragon Armor",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(7,"data files/graphics/items/8.png","Cloack", "Mystic Cloack", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/9.png","Boots", "Water Boots", 0, 0, 10, 0, 2) );
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
     gInventory->AddItem(new Item(10, "data files/graphics/items/12.png", 5, "Potion", "MP Potion", []{if(gPlayer->mStats->getMana() + 10 <= gPlayer->mStats->getMaxMana()) gPlayer->mStats->setMana(gPlayer->mStats->getMana() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+
     return;
 }
 
@@ -209,12 +222,12 @@ void Game::update()
             if(success){
                 switch(Game::event.key.keysym.sym )
                 {
-                    case SDLK_LCTRL: {npc->PlayDialogue(); npc->isInteract = true;}
+                    case SDLK_LCTRL: npc->PlayDialogue();
                 }
             }
         }
 
-        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) {npc->HideDialogue(); npc->isInteract = false;}
+        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) npc->HideDialogue();
 
     }
 
