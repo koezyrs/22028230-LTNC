@@ -10,6 +10,7 @@
 class Label
 {
 public:
+    Label() {}
     Label(const char* fontFile, const char* textContent, int fontSize, float x, float y, SDL_Color textColor, Uint32 wrapLength, bool isFunc = false , std::function<void()> func = []{});
     ~Label();
     void handleEvent(SDL_Event* e);

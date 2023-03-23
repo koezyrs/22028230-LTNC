@@ -5,6 +5,8 @@
 #include "MapManager.h"
 #include "Actor.h"
 #include "Vector2D.h"
+#include "Inventory.h"
+#include "CharacterInformation.h"
 
 void EventManager::ChangeMap(int mapID)
 {
@@ -16,4 +18,14 @@ void EventManager::ChangeMap(int mapID)
         MapManager::LoadMap2();
         break;
     }
+}
+
+bool EventManager::AddEquipmentToInventory(Equipment* _equipment)
+{
+    return Game::gInventory->AddEquipment(_equipment);
+}
+
+bool EventManager::AddEquipmentToCharacterInformation(Equipment* _equipment)
+{
+    return Game::gCharacterInformation->AddEquipment(_equipment);
 }

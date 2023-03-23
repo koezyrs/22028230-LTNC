@@ -14,5 +14,22 @@ const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 const int PLAYER_VELOCITY = 5;
 const int MAX_INVENTORY_SLOTS = 35;
+const int MAX_EQUIPMENT_SLOTS = 10;
 
+
+// Enums
+
+enum EQUIPMENT_TAG
+{
+    WEAPON,
+    SHIELD,
+    HELMET,
+    ARMOR,
+    GLOVE,
+    SHOES,
+    CAPE,
+    RING,
+    NECKLACE,
+    MEDAL
+};
 #endif // Settings_h

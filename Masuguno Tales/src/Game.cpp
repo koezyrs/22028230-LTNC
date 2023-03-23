@@ -18,6 +18,7 @@
 #include "Dialogue.h"
 #include "DialogueManager.h"
 #include "Inventory.h"
+#include "CharacterInformation.h"
 #include "HUD.h"
 #include "Hotbar.h"
 
@@ -31,6 +32,7 @@ Dialogue* Game::gDialogue;
 Inventory* Game::gInventory;
 HUD* Game::gHUD;
 Hotbar* Game::gHotbar;
+CharacterInformation* Game::gCharacterInformation;
 
 Game::Game(){};
 
@@ -94,6 +96,7 @@ void Game::loadData()
     gInventory = new Inventory(790, 130, 198, 314);
     gHUD = new HUD();
     gHotbar = new Hotbar();
+    gCharacterInformation = new CharacterInformation(50,110, 206, 418);
 
     // Load all game dialogue
     DialogueManager::LoadDialogue();
@@ -105,14 +108,14 @@ void Game::loadData()
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
 
     // Add test Item
-    gInventory->AddEquipment(new Equipment(1,"data files/graphics/items/2.png","Dagger", "Assasin Dagger", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(2,"data files/graphics/items/3.png","Sword", "Masuguno Sword", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(3,"data files/graphics/items/4.png","Axe1", "Draven Axe",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(4,"data files/graphics/items/5.png","Axe2", "Darius Axe",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(5,"data files/graphics/items/6.png","Helmet", "Supierior Helmet",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(6,"data files/graphics/items/7.png","Armo", "Dragon Armor",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(7,"data files/graphics/items/8.png","Cloack", "Mystic Cloack", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/9.png","Boots", "Water Boots", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(1,"data files/graphics/items/2.png",WEAPON, "Assasin Dagger", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(2,"data files/graphics/items/3.png",WEAPON, "Masuguno Sword", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(3,"data files/graphics/items/4.png",WEAPON, "Draven Axe",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(4,"data files/graphics/items/5.png",WEAPON, "Darius Axe",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(5,"data files/graphics/items/6.png",HELMET, "Supierior Helmet",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(6,"data files/graphics/items/7.png",ARMOR, "Dragon Armor",0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(7,"data files/graphics/items/8.png",CAPE, "Mystic Cloack", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/9.png",SHOES, "Water Boots", 0, 0, 10, 0, 2) );
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
     gInventory->AddItem(new Item(10, "data files/graphics/items/12.png", 5, "Potion", "MP Potion", []{if(gPlayer->mStats->getMana() + 10 <= gPlayer->mStats->getMaxMana()) gPlayer->mStats->setMana(gPlayer->mStats->getMana() + 10);}));
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
@@ -126,6 +129,7 @@ void Game::loadData()
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
     gInventory->AddItem(new Item(9, "data files/graphics/items/14.png", 5, "Potion", "HP Potion", []{if(gPlayer->mStats->getHealth() + 10 <= gPlayer->mStats->getMaxHealth()) gPlayer->mStats->setHealth(gPlayer->mStats->getHealth() + 10);}));
+    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/25.png",MEDAL, "Gold Medal", 0, 0, 10, 0, 2) );
 
     return;
 }
@@ -148,9 +152,13 @@ void Game::handleEvents()
             case SDLK_ESCAPE:
                 Game::gDialogue->hideWindow();
                 Game::gInventory->hideWindow();
+                Game::gInventory->hideWindow();
                 break;
             case SDLK_i:
                 Game::gInventory->Toggle();
+                break;
+            case SDLK_c:
+                Game::gCharacterInformation->Toggle();
                 break;
             default:
                 break;
@@ -173,6 +181,7 @@ void Game::update()
     if(!gInventory->isHide()) gInventory->Update();
     gHUD->Update();
     gHotbar->Update();
+    if(!gCharacterInformation->isHide()) gCharacterInformation->Update();
 
     // Collision check
     for(auto& wall : currentMap->walls)
@@ -270,6 +279,7 @@ void Game::render()
     if(!gInventory->isHide()) gInventory->Render();
     gHUD->Render();
     gHotbar->Render();
+    if(!gCharacterInformation->isHide()) gCharacterInformation->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);
@@ -297,6 +307,7 @@ void Game::clean()
     delete gInventory;
     delete gHUD;
     delete gHotbar;
+    delete gCharacterInformation;
 
     cout << "Game cleaned" << endl;
 

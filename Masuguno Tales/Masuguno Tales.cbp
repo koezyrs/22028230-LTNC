@@ -38,6 +38,8 @@
 		<Unit filename="src/Animation.h" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
+		<Unit filename="src/CharacterInformation.cpp" />
+		<Unit filename="src/CharacterInformation.h" />
 		<Unit filename="src/Collision.cpp" />
 		<Unit filename="src/Collision.h" />
 		<Unit filename="src/Component/AIComponent.h" />

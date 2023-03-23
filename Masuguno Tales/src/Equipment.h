@@ -5,17 +5,18 @@
 #include <SDL.h>
 #include <string>
 #include <functional>
+#include "Settings.h"
 
 class Equipment
 {
 public:
-    Equipment(int _id, const char* spritePath, const char* _equipmentTag, std::string _equipmentName, int _maxHealth, int _maxMana, int _damage, int _defense, int _attackSpeed);
+    Equipment(int _id, const char* spritePath, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName, int _maxHealth, int _maxMana, int _damage, int _defense, int _attackSpeed);
     ~Equipment();
     SDL_Texture* getEquipmentSprite() {return equipmentSprite;}
     bool isActive() {return active;}
     void destroy() {active = false;}
     int id;
-    const char* equipmentTag;
+    EQUIPMENT_TAG equipmentTag;
     const char* description;
     std::string equipmentName;
     int MaxHealth = 0;

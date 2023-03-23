@@ -50,7 +50,7 @@ void Inventory::AddItem(Item* _item)
     }
 }
 
-void Inventory::AddEquipment(Equipment* _equipment)
+bool Inventory::AddEquipment(Equipment* _equipment)
 {
     for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
@@ -59,9 +59,11 @@ void Inventory::AddEquipment(Equipment* _equipment)
             equipmentList.emplace_back(_equipment);
             invSlot[i].AddEquipmentToSlot(_equipment);
             std::cout << "Added " << _equipment->equipmentName << " to the Inventory!" << std::endl;
+            return true;
             break;
         }
     }
+    return false;
 }
 
 Inventory::~Inventory()

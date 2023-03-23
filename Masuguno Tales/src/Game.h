@@ -15,6 +15,7 @@ class Map;
 class Actor;
 class Dialogue;
 class Inventory;
+class CharacterInformation;
 class HUD;
 class Hotbar;
 
@@ -41,6 +42,7 @@ public:
     static Inventory* gInventory;
     static HUD* gHUD;
     static Hotbar* gHotbar;
+    static CharacterInformation* gCharacterInformation;
 
     static SDL_Rect gCamera;
 private:

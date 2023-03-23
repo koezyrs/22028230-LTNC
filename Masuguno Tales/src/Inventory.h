@@ -16,6 +16,7 @@
 #include "Item.h"
 #include "Equipment.h"
 #include "Settings.h"
+#include "EventManager.h"
 
 struct InventorySlot
 {
@@ -63,9 +64,13 @@ struct InventorySlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-                std::cout << "You have equip the " << equipment->equipmentName << "!" << std::endl;
-                equipment->destroy();
-                Reset();
+                if(EventManager::AddEquipmentToCharacterInformation(equipment))
+                {
+                    std::cout << "You have equip the " << equipment->equipmentName << "!" << std::endl;
+                    equipment->destroy();
+                    Reset();
+                }
+
             }
 
         }
@@ -149,7 +154,7 @@ public:
     }
 
     void AddItem(Item* _item);
-    void AddEquipment(Equipment* _equipment);
+    bool AddEquipment(Equipment* _equipment);
 private:
     Vector2D position;
     int mWidth, mHeight;
