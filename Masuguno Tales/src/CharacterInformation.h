@@ -41,10 +41,13 @@ struct EquipmentSlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-                std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
-                EventManager::AddEquipmentToInventory(equipment);
-                equipment->destroy();
-                Reset();
+                if(EventManager::AddEquipmentToInventory(equipment))
+                {
+                    std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
+                    equipment->destroy();
+                    Reset();
+                }
+
             }
 
         }

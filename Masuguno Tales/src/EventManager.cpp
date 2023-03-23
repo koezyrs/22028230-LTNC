@@ -29,3 +29,8 @@ bool EventManager::AddEquipmentToCharacterInformation(Equipment* _equipment)
 {
     return Game::gCharacterInformation->AddEquipment(_equipment);
 }
+
+bool EventManager::AddItemToInventory(Item* _item)
+{
+    return Game::gInventory->AddItem(_item);
+}

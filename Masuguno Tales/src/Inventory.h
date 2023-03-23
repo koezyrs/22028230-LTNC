@@ -153,7 +153,7 @@ public:
         }
     }
 
-    void AddItem(Item* _item);
+    bool AddItem(Item* _item);
     bool AddEquipment(Equipment* _equipment);
 private:
     Vector2D position;

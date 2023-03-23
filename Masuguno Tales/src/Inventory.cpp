@@ -21,33 +21,30 @@ Inventory::Inventory(int _x, int _y, int _width, int _height)
 
 }
 
-void Inventory::AddItem(Item* _item)
+bool Inventory::AddItem(Item* _item)
 {
-    bool success = false;
     for(auto& theItem : itemList)
     {
         if(theItem->itemName == _item->itemName && theItem->currentStack < theItem->maxStack)
         {
             delete _item;
             theItem->currentStack = theItem->currentStack + 1;
-            success = true;
-            break;
+            return true;
         }
     }
 
-    if(!success)
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
-        for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+        if(invSlot[i].isFull == false)
         {
-            if(invSlot[i].isFull == false)
-            {
-                itemList.emplace_back(_item);
-                invSlot[i].AddItemToSlot(_item);
-                break;
-            }
+            itemList.emplace_back(_item);
+            invSlot[i].AddItemToSlot(_item);
+            std::cout << "Added " << _item->itemName << " to the Inventory!" << std::endl;
+            return true;
         }
-        std::cout << "Added " << _item->itemName << " to the Inventory!" << std::endl;
     }
+    std::cout << "Inventory full!" << std::endl;
+    return false;
 }
 
 bool Inventory::AddEquipment(Equipment* _equipment)
@@ -63,6 +60,8 @@ bool Inventory::AddEquipment(Equipment* _equipment)
             break;
         }
     }
+
+    std::cout << "Inventory full!" << std::endl;
     return false;
 }
 
