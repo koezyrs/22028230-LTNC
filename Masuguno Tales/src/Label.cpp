@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 
 Label::Label(const char* fontFile, const char* textContent, int fontSize, float x, float y, SDL_Color textColor, Uint32 wrapLength, bool isFunc , std::function<void()> func)
-: position(x,y), LabelFunction([this, func]{func();}), isFunctional(isFunc), textOut(NULL), textOver(NULL)
+:  isFunctional(isFunc), position(x,y), LabelFunction([this, func]{func();}), textOut(NULL), textOver(NULL)
 {
     font = TTF_OpenFont(fontFile, fontSize);
     if(textContent != NULL)

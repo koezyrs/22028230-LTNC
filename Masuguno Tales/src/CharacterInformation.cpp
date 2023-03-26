@@ -123,6 +123,7 @@ bool CharacterInformation::AddEquipment(Equipment* _equipment)
     default:
         break;
     }
+    return false;
 }
 
 CharacterInformation::~CharacterInformation()

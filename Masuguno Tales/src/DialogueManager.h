@@ -9,7 +9,6 @@
 
 struct DialogueType
 {
-    std::string FACEPATH;
     std::string TITLE;
     std::string CONTENT;
     const char* REPLY1;
@@ -20,6 +19,7 @@ struct DialogueType
     std::function<void()> FUNC2;
     std::function<void()> FUNC3;
     std::function<void()> FUNC4;
+    std::string FACEPATH;
 
     DialogueType(std::string title = "", std::string content = "", const char* reply1 = NULL, const char* reply2 = NULL,
                  const char* reply3 = NULL, const char* reply4 = NULL,
