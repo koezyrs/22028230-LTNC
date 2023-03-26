@@ -6,8 +6,8 @@ class StatsComponent
 {
 public:
     StatsComponent(int _level, int _experience, int _experienceToNextLevel, int _maxHealth, int _health, int _maxMana, int _mana, int _damage, int _defense, int _attackSpeed)
-    : Level(_level), Experience(_experience), ExperienceToNextLevel(_experienceToNextLevel), MaxHealth(_maxHealth), Health(_health),
-    MaxMana(_maxMana), Mana(_mana), Damage(_damage), Defense(_defense), AttackSpeed(_attackSpeed)
+    : Level(_level), Experience(_experience), ExperienceToNextLevel(_experienceToNextLevel), Health(_health), MaxHealth(_maxHealth),
+    Mana(_mana), MaxMana(_maxMana), Damage(_damage), Defense(_defense), AttackSpeed(_attackSpeed)
     {}
     ~StatsComponent() {}
     int getLevel() const {return Level;}

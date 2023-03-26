@@ -73,8 +73,8 @@ public:
 
         srcRect.y = animIndex * mTransform->height;
 
-        destRect.x = static_cast<int>(mTransform->position.x);
-        destRect.y = static_cast<int>(mTransform->position.y);
+        destRect.x = static_cast<int>(mTransform->position.x) - Game::gCamera.x;
+        destRect.y = static_cast<int>(mTransform->position.y) - Game::gCamera.y;
         destRect.w = mTransform->width * mTransform->scale;
         destRect.h = mTransform->height * mTransform->scale;
     }

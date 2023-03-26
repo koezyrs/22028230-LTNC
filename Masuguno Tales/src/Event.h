@@ -12,8 +12,8 @@ public:
     virtual void Perform() = 0;
     void Update()
     {
-        mTransform->position.x = position.x - Game::gCamera.x;
-        mTransform->position.y = position.y - Game::gCamera.y;
+        mTransform->position.x = position.x;
+        mTransform->position.y = position.y;
         mCollider->Update();
     }
     TransformComponent* getTransformComponent() {return mTransform;}

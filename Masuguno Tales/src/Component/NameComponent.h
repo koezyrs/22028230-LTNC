@@ -33,8 +33,8 @@ public:
     }
     void Update()
     {
-        position.x = mTransform->position.x;
-        position.y = mTransform->position.y - 15;
+        position.x = mTransform->position.x - Game::gCamera.x;
+        position.y = mTransform->position.y - 15 - Game::gCamera.y;
 
         destRect.x = static_cast<int>(position.x - (mWidth - mTransform->width)/2);
         destRect.y = static_cast<int>(position.y);

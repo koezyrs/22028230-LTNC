@@ -27,8 +27,8 @@ public:
 
     void Update()
     {
-        mCollider.x = static_cast<int>(mTransform->position.x);
-        mCollider.y = static_cast<int>(mTransform->position.y);
+        mCollider.x = static_cast<int>(mTransform->position.x) - Game::gCamera.x;
+        mCollider.y = static_cast<int>(mTransform->position.y) - Game::gCamera.y;
         mCollider.w = mTransform->width * mTransform->scale;
         mCollider.h = mTransform->height * mTransform->scale;
     }

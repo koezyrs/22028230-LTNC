@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 
 Button::Button(const char* spriteOut, const char* spriteOver, int x, int y, int _width, int _height, std::function<void()> func)
-: ButtonSpriteOut(nullptr), ButtonSpriteOver(nullptr), ButtonFunction([this, func]{func();}), position(x, y), Width(_width), Height(_height)
+: position(x, y), Width(_width), Height(_height), ButtonFunction([this, func]{func();}), ButtonSpriteOut(nullptr), ButtonSpriteOver(nullptr)
 {
     ButtonSpriteOut = TextureManager::LoadTexture(spriteOut);
     ButtonSpriteOver = TextureManager::LoadTexture(spriteOver);
