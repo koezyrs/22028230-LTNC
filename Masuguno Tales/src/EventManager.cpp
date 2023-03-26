@@ -1,10 +1,12 @@
-#include <iostream>
 #include "EventManager.h"
+
+#include <iostream>
 #include "Game.h"
 #include "Map.h"
 #include "MapManager.h"
-#include "Actor.h"
 #include "Vector2D.h"
+
+#include "Actor.h"
 #include "Inventory.h"
 #include "CharacterInformation.h"
 
@@ -33,4 +35,9 @@ bool EventManager::AddEquipmentToCharacterInformation(Equipment* _equipment)
 bool EventManager::AddItemToInventory(Item* _item)
 {
     return Game::gInventory->AddItem(_item);
+}
+
+Tile** EventManager::getMapTiles()
+{
+    return Game::currentMap->tiles;
 }

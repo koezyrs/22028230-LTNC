@@ -5,16 +5,18 @@
 #include "Vector2D.h"
 #include "Entity.h"
 #include "Component/Component.h"
+#include "Component/AIComponent.h"
 
 class Monster : public Entity
 {
 public:
-    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name);
+    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name, int _speed);
     ~Monster();
     void Update() override
     {
-        mTransform->position.x = position.x;
-        mTransform->position.y = position.y;
+        //mTransform->position.x = position.x;
+        //mTransform->position.y = position.y;
+        mAI->Update();
         mTransform->Update();
         mCollider->Update();
         mSprite->Update();
@@ -36,8 +38,10 @@ private:
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;
     NameComponent* mName;
-    bool active = true;
+    AIComponent* mAI;
 
+    bool active = true;
+    float speed;
 
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];

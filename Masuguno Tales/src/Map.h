@@ -11,14 +11,20 @@
 #include "Monster.h"
 #include "Event.h"
 #include "NPC.h"
+#include "Tile.h"
 
 class Map
 {
 public:
     Map();
+    ~Map();
+    Tile** tiles;
+    void setTargetAndCalculateFlowField(int targetXNew, int targetYNew);
+    void calculateDistances();
+    void calculateFlowDirections();
     void LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY);
     void AddWall(int x, int y);
-    void AddMonster(float x, float y, const char* filepath, std::string name);
+    void AddMonster(float x, float y, const char* filepath, std::string name, float _speed);
     void AddEvent(Event* newEvent);
     void AddNPC(float x, float y, const char* filepath, std::string name);
     int getWidth() {return width;}
@@ -28,7 +34,6 @@ public:
     void Update();
     void RenderBottomLayer();
     void RenderUpperLayer();
-    ~Map();
     std::vector<Event*> events;
     std::vector<Wall*> walls;
     std::vector<Monster*> monsters;
@@ -36,6 +41,10 @@ public:
 private:
     int width;
     int height;
+    int sizeX;
+    int sizeY;
+    int targetX;
+    int targetY;
     Vector2D position;
     SDL_Texture* mTexture;
     SDL_Rect srcRect, destRect;

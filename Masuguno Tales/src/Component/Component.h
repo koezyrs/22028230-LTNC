@@ -6,7 +6,6 @@
 #include "SpriteComponent.h"
 #include "KeyboardController.h"
 #include "ColliderComponent.h"
-#include "AIComponent.h"
 #include "NameComponent.h"
 #include "StatsComponent.h"
 

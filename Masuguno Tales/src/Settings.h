@@ -15,7 +15,7 @@ const int frameDelay = 1000 / FPS;
 const int PLAYER_VELOCITY = 5;
 const int MAX_INVENTORY_SLOTS = 35;
 const int MAX_EQUIPMENT_SLOTS = 10;
-
+const unsigned int flowDistanceMax = 512;
 
 // Enums
 

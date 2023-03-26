@@ -1,9 +1,9 @@
 // System Include
 #include <math.h>
 #include "Game.h"
+#include "EventManager.h"
 #include "TextureManager.h"
 #include "Component/Component.h"
-#include "Settings.h"
 #include "Map.h"
 #include "MapManager.h"
 #include "Collision.h"
@@ -21,6 +21,9 @@
 #include "CharacterInformation.h"
 #include "HUD.h"
 #include "Hotbar.h"
+
+// Settings
+#include "Settings.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;

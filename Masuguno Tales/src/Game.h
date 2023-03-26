@@ -40,9 +40,9 @@ public:
     static Actor* gPlayer;
     static Dialogue* gDialogue;
     static Inventory* gInventory;
+    static CharacterInformation* gCharacterInformation;
     static HUD* gHUD;
     static Hotbar* gHotbar;
-    static CharacterInformation* gCharacterInformation;
 
     static SDL_Rect gCamera;
 private:
