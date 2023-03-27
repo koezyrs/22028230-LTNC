@@ -26,10 +26,12 @@ public:
     Vector2D& operator*=(const Vector2D& vec);
     Vector2D& operator/=(const Vector2D& vec);
 
-    Vector2D& operator*(const int& i);
+    Vector2D& operator*(const float& i);
     Vector2D& Zero();
 
     bool operator==(const Vector2D& vec);
+
+    float DistanceTo(const Vector2D& vec);
 };
 
 #endif // Vector2D_h

@@ -21,7 +21,6 @@ public:
     {
         if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
         {
-            mSprite->isIdle = false;
             switch(Game::event.key.keysym.sym)
             {
             case SDLK_UP:
@@ -61,16 +60,6 @@ public:
                 break;
             }
         }
-
-        if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == 0) mSprite->Play("Down");
-        else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == 0) mSprite->Play("Up");
-        else if(mTransform->velocity.y == 0 && mTransform->velocity.x == mTransform->speed) mSprite->Play("Right");
-        else if(mTransform->velocity.y == 0 && mTransform->velocity.x == -mTransform->speed) mSprite->Play("Left");
-        else if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == mTransform->speed) mSprite->Play("Down");
-        else if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == -mTransform->speed) mSprite->Play("Down");
-        else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == mTransform->speed) mSprite->Play("Up");
-        else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == -mTransform->speed) mSprite->Play("Up");
-        if(mTransform->velocity == Vector2D{0.0f,0.0f}) mSprite->isIdle = true;
     }
 };
 

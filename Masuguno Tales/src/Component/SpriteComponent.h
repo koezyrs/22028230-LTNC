@@ -67,6 +67,17 @@ public:
     {
         if(animated)
         {
+            isIdle = false;
+            if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == 0) Play("Down");
+            else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == 0) Play("Up");
+            else if(mTransform->velocity.y == 0 && mTransform->velocity.x == mTransform->speed) Play("Right");
+            else if(mTransform->velocity.y == 0 && mTransform->velocity.x == -mTransform->speed) Play("Left");
+            else if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == mTransform->speed) Play("Down");
+            else if(mTransform->velocity.y == mTransform->speed && mTransform->velocity.x == -mTransform->speed) Play("Down");
+            else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == mTransform->speed) Play("Up");
+            else if(mTransform->velocity.y == -mTransform->speed && mTransform->velocity.x == -mTransform->speed) Play("Up");
+            if(mTransform->velocity == Vector2D{0.0f,0.0f}) isIdle = true;
+
             if(isIdle) srcRect.x = srcRect.w; // The middle animation
             else srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
         }

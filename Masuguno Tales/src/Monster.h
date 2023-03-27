@@ -2,22 +2,28 @@
 #ifndef Monster_h
 #define Monster_h
 
+#include "Game.h"
+#include "Actor.h"
 #include "Vector2D.h"
 #include "Entity.h"
 #include "Component/Component.h"
 #include "Component/AIComponent.h"
+#include "Collision.h"
 
 class Monster : public Entity
 {
 public:
-    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name, int _speed);
+    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name, float _speed);
     ~Monster();
     void Update() override
     {
-        //mTransform->position.x = position.x;
-        //mTransform->position.y = position.y;
+        Vector2D monsterPos = mTransform->position;
         mAI->Update();
         mTransform->Update();
+        if(Collision::AABB(*mCollider, *Game::gPlayer->getColliderComponent()))
+        {
+            mTransform->position = monsterPos;
+        }
         mCollider->Update();
         mSprite->Update();
         mName->Update();
@@ -31,9 +37,10 @@ public:
     ColliderComponent* getColliderComponent() {return mCollider;}
     SpriteComponent* getSpriteComponent() {return mSprite;}
     bool isActive() const {return active;}
+    void setTrigger() {trigger = true;}
     void destroy() {active = false;}
 private:
-    Vector2D position;
+    Vector2D startPosition;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;
@@ -41,6 +48,7 @@ private:
     AIComponent* mAI;
 
     bool active = true;
+    bool trigger = false;
     float speed;
 
     SDL_Rect currentSprite;

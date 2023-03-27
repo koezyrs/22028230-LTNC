@@ -34,8 +34,8 @@ void DialogueManager::LoadDialogue()
                                              "3. Regen Mana (+10MP)",
                                              NULL,
                                              []{Game::gDialogue->hideWindow();},
-                                             []{if(Game::gPlayer->mStats->getMana() - 10 >= 0) Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() - 10); } ,
-                                             []{if(Game::gPlayer->mStats->getMana() + 10 <= 30)Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() + 10); },
+                                             []{Game::gPlayer->mStats->Mana -= 10;},
+                                             []{Game::gPlayer->mStats->Mana += 10;},
                                              []{},
                                              "data files/graphics/faces/18.png");
 
@@ -47,9 +47,9 @@ void DialogueManager::LoadDialogue()
                                              "3. Attack me (-10 HP)",
                                              "4. Heal me (+10 HP)",
                                              []{DialogueManager::Play("The Guard Introduction");},
-                                             []{Game::gInventory->AddItem(new Item(10, "data files/graphics/items/12.png", 5, "Potion", "MP Potion", []{if(Game::gPlayer->mStats->getMana() + 10 <= Game::gPlayer->mStats->getMaxMana()) Game::gPlayer->mStats->setMana(Game::gPlayer->mStats->getMana() + 10);}));},
-                                             []{if(Game::gPlayer->mStats->getHealth() - 10 >= 0) Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() - 10); } ,
-                                             []{if(Game::gPlayer->mStats->getHealth() + 10 <= 100)Game::gPlayer->mStats->setHealth(Game::gPlayer->mStats->getHealth() + 10); },
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{Game::gPlayer->mStats->Health -= 10;},
+                                             []{Game::gPlayer->mStats->Health += 10;},
                                              "data files/graphics/faces/18.png");
 }
 

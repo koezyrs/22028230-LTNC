@@ -22,6 +22,7 @@ public:
         mController->Update();
         mTransform->Update();
         mCollider->Update();
+        mStats->Update();
         mSprite->Update();
         mName->Update();
     }

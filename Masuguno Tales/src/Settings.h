@@ -12,11 +12,12 @@ const int PLAYER_HEIGHT = 32;
 const int GAME_SCALE = 1;
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
-const int PLAYER_VELOCITY = 5;
+const int PLAYER_VELOCITY = 2;
 const int MAX_INVENTORY_SLOTS = 35;
 const int MAX_EQUIPMENT_SLOTS = 10;
+const int MAX_LEVEL = 50;
 const unsigned int flowDistanceMax = 512;
-
+const float NEXT_LEVEL_EXP_RATE = 1.5;
 // Enums
 
 enum EQUIPMENT_TAG

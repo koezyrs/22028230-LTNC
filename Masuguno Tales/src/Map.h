@@ -29,6 +29,8 @@ public:
     void AddNPC(float x, float y, const char* filepath, std::string name);
     int getWidth() {return width;}
     int getHeight() {return height;}
+    int getSizeX() {return sizeX;}
+    int getSizeY() {return sizeY;}
     void ClearMap();
     void Refresh();
     void Update();

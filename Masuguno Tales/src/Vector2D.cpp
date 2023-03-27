@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Vector2D.h"
 
 Vector2D::Vector2D()
@@ -78,7 +79,7 @@ Vector2D& Vector2D::operator/=(const Vector2D& vec)
     return this->Divide(vec);
 }
 
-Vector2D& Vector2D::operator*(const int& i)
+Vector2D& Vector2D::operator*(const float& i)
 {
     this->x *= i;
     this->y *= i;
@@ -96,4 +97,9 @@ bool Vector2D::operator==(const Vector2D& vec)
 {
     if((this->x == vec.x) && (this->y == vec.y)) return true;
     return false;
+}
+
+float Vector2D::DistanceTo(const Vector2D& vec)
+{
+    return sqrt((this->x - vec.x)*(this->x - vec.x) + (this->y - vec.y)*(this->y - vec.y));
 }

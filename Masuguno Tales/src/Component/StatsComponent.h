@@ -2,6 +2,8 @@
 #ifndef StatsComponent_h
 #define StatsComponent_h
 
+#include "../Settings.h"
+
 class StatsComponent
 {
 public:
@@ -10,29 +12,28 @@ public:
     Mana(_mana), MaxMana(_maxMana), Damage(_damage), Defense(_defense), AttackSpeed(_attackSpeed)
     {}
     ~StatsComponent() {}
-    int getLevel() const {return Level;}
-    int getExperience() const {return Experience;}
-    int getExperienceToNextLevel() const {return ExperienceToNextLevel;}
-    int getMaxHealth() const {return MaxHealth;}
-    int getHealth() const {return Health;}
-    int getMaxMana() const {return MaxMana;}
-    int getMana() const {return Mana;}
-    int getDamage() const {return Damage;}
-    int getDefense() const {return Defense;}
-    int getAttackSpeed() const {return AttackSpeed;}
 
-    void setLevel(int _level) {Level = _level;}
-    void setExperience(int _experience) {Experience = _experience;}
-    void setExperienceToNextLevel(int _experienceToNextLevel) {ExperienceToNextLevel = _experienceToNextLevel;}
-    void setMaxHealth(int _maxHealth) {MaxHealth = _maxHealth;}
-    void setMaxMana(int _maxMana) {MaxMana = _maxMana;}
-    void setHealth(int _health) {Health = _health;}
-    void setMana(int _mana) {Mana = _mana;}
-    void setDamage(int _damage) {Damage = _damage;}
-    void setDefense(int _defense) {Defense = _defense;}
-    void setAttackSpeed(int _attackSpeed) {AttackSpeed = _attackSpeed;}
+    void Update()
+    {
+        if(Health <= 0) Health = 0;
+        if(Mana <= 0) Mana = 0;
+        if(Health >= MaxHealth) Health = MaxHealth;
+        if(Mana >= MaxMana) Mana = MaxMana;
 
-private:
+        if(Level >= MAX_LEVEL)
+        {
+            Level = MAX_LEVEL;
+            Experience = ExperienceToNextLevel;
+        }else{
+            if(Experience >= ExperienceToNextLevel)
+            {
+                Experience = Experience - ExperienceToNextLevel;
+                Level = Level + 1;
+                ExperienceToNextLevel = ExperienceToNextLevel + ExperienceToNextLevel*NEXT_LEVEL_EXP_RATE;
+            }
+        }
+    }
+
     int Level = 0;
     int Experience = 0;
     int ExperienceToNextLevel = 0;

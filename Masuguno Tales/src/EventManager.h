@@ -14,5 +14,7 @@ public:
     static bool AddEquipmentToCharacterInformation(Equipment* _equipment);
     static bool AddItemToInventory(Item* _item);
     static Tile** getMapTiles();
+    static int GetMapSizeX();
+    static int GetMapSizeY();
 };
 #endif // EventManager_h

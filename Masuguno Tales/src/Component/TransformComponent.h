@@ -15,7 +15,7 @@ public:
     int width = GAME_PIXELS;
     int height = GAME_PIXELS;
     int scale = 1;
-    int speed = 2;
+    float speed = 2;
 
     TransformComponent()
     {

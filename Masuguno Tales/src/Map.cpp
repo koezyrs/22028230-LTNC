@@ -141,11 +141,11 @@ void Map::AddNPC(float x, float y, const char* filepath, std::string name)
 
 void Map::ClearMap()
 {
-    if(tiles != NULL)
+    for(int i = 0; i < sizeY; i++)
     {
-        for(int i = 0; i < sizeY; i++) delete[] tiles[i];
-        delete[] tiles;
+        if(tiles[i] != NULL) delete[] tiles[i];
     }
+    if(tiles != NULL) delete[] tiles;
     for(auto& w : walls) {w->destroy();}
     for(auto& m : monsters) {m->destroy();}
     for(auto& e : events) {e->destroy();}

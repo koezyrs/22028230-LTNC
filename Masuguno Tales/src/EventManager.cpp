@@ -41,3 +41,13 @@ Tile** EventManager::getMapTiles()
 {
     return Game::currentMap->tiles;
 }
+
+int EventManager::GetMapSizeX()
+{
+    return Game::currentMap->getSizeX();
+}
+
+int EventManager::GetMapSizeY()
+{
+    return Game::currentMap->getSizeY();
+}

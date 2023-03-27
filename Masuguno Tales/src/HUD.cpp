@@ -7,10 +7,10 @@ HUD::HUD()
     HUDBase = TextureManager::LoadTexture("data files/graphics/gui/HUDBase.png");
     HUDBars = TextureManager::LoadTexture("data files/graphics/gui/HUDBars.png");
     playerName = new Label("data files/font/game.ttf", "TunDuong" ,10,370, 485, White, 120, false, []{});
-    playerLevel = new Label("data files/font/game.ttf", "Level 1",10,550,485, White, 120, false, []{});
-    playerHP = new Label("data files/font/game.ttf", "100/100",10,370,503, White, 120, false, []{});
-    playerMP = new Label("data files/font/game.ttf", "30/30",10,570,503, White, 120, false, []{});
-    playerExperience = new Label("data files/font/game.ttf", "0/100",10,495,495, White, 120, false, []{});
+    playerLevel = new Label("data files/font/game.ttf", " ",10,550,485, White, 120, false, []{});
+    playerHP = new Label("data files/font/game.ttf", " ",10,370,503, White, 120, false, []{});
+    playerMP = new Label("data files/font/game.ttf", " ",10,570,503, White, 120, false, []{});
+    playerExperience = new Label("data files/font/game.ttf", " ",10,495,495, White, 120, false, []{});
 
     BaseSrcRect = {0,0,365,48};
     BaseDestRect = {329,478,365,48};
