@@ -2,6 +2,7 @@
 #ifndef Button_h
 #define Button_h
 #include <SDL.h>
+#include <string>
 #include <functional>
 #include "Vector2D.h"
 #include "Window.h"
@@ -9,7 +10,7 @@
 class Button
 {
 public:
-    Button(const char* spriteOut, const char* spriteOver, int x, int y, int _width, int _height, std::function<void()> func = []{});
+    Button(std::string spriteOut, std::string spriteOver, int x, int y, int _width, int _height, std::function<void()> func = []{});
     ~Button();
     void setPosition(int x, int y);
     void handleEvent(SDL_Event* e);

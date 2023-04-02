@@ -13,7 +13,7 @@
 class Monster : public Entity
 {
 public:
-    Monster(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name, float _speed);
+    Monster(float _x, float _y, int _width, int _height, int _scale, std::string spriteName, std::string name, float _speed);
     ~Monster();
     void Update() override
     {

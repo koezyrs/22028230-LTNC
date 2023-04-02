@@ -9,6 +9,7 @@ int main(int argc, char* args[]){
 
     game = new Game();
     game->init(GAME_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT);
+    game->loadResources();
     game->loadData();
 
     while(game->running()){

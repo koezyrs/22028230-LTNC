@@ -1,12 +1,12 @@
 #include "Dialogue.h"
 
-Dialogue::Dialogue(int _x, int _y, int _width, int _height, const char* title, const char* facefile, const char* content)
+Dialogue::Dialogue(int _x, int _y, int _width, int _height, const char* title, std::string facefile, const char* content)
 : Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height)
 
 {
-    DialogueBox = TextureManager::LoadTexture("data files/graphics/gui/Dialogue.png");
-    Face = TextureManager::LoadTexture(facefile); // (x,y) = (24,40)
-    closeButton = new Button("data files/graphics/gui/8.png", "data files/graphics/gui/9.png", _x + 461, _y + 5, 13, 13, [this]{Window::hideWindow(); });
+    DialogueBox = TextureManager::GetTexture("Dialogue");
+    Face = TextureManager::GetTexture(facefile); // (x,y) = (24,40)
+    closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 461, _y + 5, 13, 13, [this]{Window::hideWindow(); });
     dialogueTitle = new Label("data files/font/game.ttf", title, 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
     dialogueContent = new Label("data files/font/game.ttf", content, 10, _x + 134, _y + 45, SDL_Color{255,255,255}, 320, false, []{});
     dialogueOption1 = new Label("data files/font/game.ttf", "1.", 10, _x + 25, _y + 145, SDL_Color{0,0,0}, 430, false, []{});
@@ -28,17 +28,13 @@ Dialogue::~Dialogue()
     delete dialogueOption2;
     delete dialogueOption3;
     delete dialogueOption4;
-    SDL_DestroyTexture(DialogueBox);
-    SDL_DestroyTexture(Face);
-    Face = NULL;
     DialogueBox = NULL;
 }
 
-void Dialogue::setFace(const char* facePath)
+void Dialogue::setFace(std::string faceImg)
 {
-    SDL_DestroyTexture(Face);
     Face = NULL;
-    Face = TextureManager::LoadTexture(facePath);
+    Face = TextureManager::GetTexture(faceImg);
 }
 
 void Dialogue::setTitleLabel(const char* title)

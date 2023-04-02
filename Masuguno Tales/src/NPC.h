@@ -16,7 +16,7 @@
 class NPC : public Entity
 {
     public:
-    NPC(float _x, float _y, int _width, int _height, int _scale, const char* filepath, std::string name);
+    NPC(float _x, float _y, int _width, int _height, int _scale, std::string spriteName, std::string name);
     ~NPC();
     void Update() override
     {

@@ -90,14 +90,49 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     return;
 }
 
+void Game::loadResources()
+{
+    // GUI
+    TextureManager::LoadTexture("data files/graphics/gui/8.png", "CloseButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/9.png", "CloseButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/Dialogue.png", "Dialogue");
+    TextureManager::LoadTexture("data files/graphics/gui/CharacterInformation.png", "CharacterInformation");
+    TextureManager::LoadTexture("data files/graphics/gui/Hotbar.png", "Hotbar");
+    TextureManager::LoadTexture("data files/graphics/gui/HUDBars.png", "HUDBars");
+    TextureManager::LoadTexture("data files/graphics/gui/HUDBase.png", "HUDBase");
+    TextureManager::LoadTexture("data files/graphics/gui/Inventory.png", "Inventory");
+    TextureManager::LoadTexture("data files/graphics/gui/Quest.png", "Quest");
+
+    // Map
+    TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
+    TextureManager::LoadTexture("data files/maps/map02.png", "Map02");
+
+    // Sprite
+    TextureManager::LoadTexture("data files/graphics/player.png", "Sprite-Player");
+    TextureManager::LoadTexture("data files/graphics/characters/158.png", "Sprite-Guard1");
+    TextureManager::LoadTexture("data files/graphics/characters/159.png", "Sprite-Guard2");
+    TextureManager::LoadTexture("data files/graphics/characters/17.png", "Sprite-MonsterCow");
+
+    //Equipment
+    TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
+
+    // Item
+
+    // Faces
+    TextureManager::LoadTexture("data files/graphics/faces/18.png", "Face-Guard1");
+
+    // Projectile
+    TextureManager::LoadTexture("data files/graphics/animations/13.png", "Projectile-Attack");
+}
+
 void Game::loadData()
 {
     // Initialize Game Object Here
     currentMap = new Map();
-    gPlayer = new Actor(100, 100, "data files/graphics/player.png");
+    gPlayer = new Actor(100, 100, "Sprite-Player");
 
     // Initialize GUI
-    gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "data files/graphics/faces/1.png", "a");
+    gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "EmptyFace", " ");
     gInventory = new Inventory(790, 130, 198, 314);
     gHUD = new HUD();
     gHotbar = new Hotbar();
@@ -113,15 +148,7 @@ void Game::loadData()
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
 
     // Add test Item
-    gInventory->AddEquipment(new Equipment(1,"data files/graphics/items/2.png",WEAPON, "Assasin Dagger", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(2,"data files/graphics/items/3.png",WEAPON, "Masuguno Sword", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(3,"data files/graphics/items/4.png",WEAPON, "Draven Axe",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(4,"data files/graphics/items/5.png",WEAPON, "Darius Axe",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(5,"data files/graphics/items/6.png",HELMET, "Supierior Helmet",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(6,"data files/graphics/items/7.png",ARMOR, "Dragon Armor",0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(7,"data files/graphics/items/8.png",CAPE, "Mystic Cloack", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/9.png",SHOES, "Water Boots", 0, 0, 10, 0, 2) );
-    gInventory->AddEquipment(new Equipment(8,"data files/graphics/items/25.png",MEDAL, "Gold Medal", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(1,"Equip-AssasinDagger",WEAPON, "Assasin Dagger", 0, 0, 10, 0, 2) );
 
     return;
 }
@@ -144,7 +171,7 @@ void Game::handleEvents()
             case SDLK_ESCAPE:
                 Game::gDialogue->hideWindow();
                 Game::gInventory->hideWindow();
-                Game::gInventory->hideWindow();
+                Game::gCharacterInformation->hideWindow();
                 break;
             case SDLK_i:
                 Game::gInventory->Toggle();
@@ -169,10 +196,10 @@ void Game::update()
     // Update Game Object
     currentMap->Update();
     gPlayer->Update();
-    if(!gDialogue->isHide()) gDialogue->Update();
-    if(!gInventory->isHide()) gInventory->Update();
     gHUD->Update();
     gHotbar->Update();
+    if(!gDialogue->isHide()) gDialogue->Update();
+    if(!gInventory->isHide()) gInventory->Update();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Update();
 
     // Collision check
@@ -190,8 +217,24 @@ void Game::update()
         if(Collision::AABB(*gPlayer->getColliderComponent(), *monster->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
-            //monster->destroy();
         }
+
+        // Attack Monster
+        Vector2D monsterPos = monster->getTransformComponent()->position;
+        Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
+        float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
+
+        float exitDistance = 1.0f;
+        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
+        {
+            float offsetX = 32;
+            float offsetY = 32;
+            switch(Game::event.key.keysym.sym )
+            {
+                case SDLK_LCTRL: currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY);
+            }
+        }
+
     }
 
     // Collide with NPC
@@ -208,7 +251,8 @@ void Game::update()
         Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
         float distance = sqrt((npcPos.x - currentplayerPos.x)*(npcPos.x - currentplayerPos.x) + (npcPos.y - currentplayerPos.y)*(npcPos.y - currentplayerPos.y));
 
-        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + 1))
+        float exitDistance = 1.0f;
+        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
         {
             // Check if NPC and Player are facing to each other
             int playerAnimIndex = gPlayer->getSpriteComponent()->animIndex;
@@ -269,9 +313,9 @@ void Game::render()
 
     if(!gDialogue->isHide()) gDialogue->Render();
     if(!gInventory->isHide()) gInventory->Render();
+    if(!gCharacterInformation->isHide()) gCharacterInformation->Render();
     gHUD->Render();
     gHotbar->Render();
-    if(!gCharacterInformation->isHide()) gCharacterInformation->Render();
 
     // Update screen
     SDL_RenderPresent(gRenderer);
@@ -287,6 +331,7 @@ bool Game::running()
 
 void Game::clean()
 {
+    TextureManager::CleanTexture();
     SDL_DestroyWindow(gWindow);
     SDL_DestroyRenderer(gRenderer);
 

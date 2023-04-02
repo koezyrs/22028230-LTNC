@@ -24,16 +24,16 @@ public:
     std::map<const char*, Animation> animations;
 
     SpriteComponent();
-    SpriteComponent(const char* path, TransformComponent* trans)
+    SpriteComponent(std::string spriteName, TransformComponent* trans)
     {
-        mTexture = TextureManager::LoadTexture(path);
+        mTexture = TextureManager::GetTexture(spriteName);
         mTransform = trans;
         srcRect.x = srcRect.y = 0;
         srcRect.w = mTransform->width;
         srcRect.h = mTransform->height;
     }
 
-    SpriteComponent(const char* path, TransformComponent* trans, bool isAnimated)
+    SpriteComponent(std::string spriteName, TransformComponent* trans, bool isAnimated)
     {
         animated = isAnimated;
 
@@ -49,7 +49,7 @@ public:
 
         Play("Down");
 
-        mTexture = TextureManager::LoadTexture(path);
+        mTexture = TextureManager::GetTexture(spriteName);
         mTransform = trans;
         srcRect.x = srcRect.y = 0;
         srcRect.w = mTransform->width;
@@ -59,7 +59,6 @@ public:
 
     ~SpriteComponent()
     {
-        SDL_DestroyTexture(mTexture);
         mTexture = NULL;
     }
 

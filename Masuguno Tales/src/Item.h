@@ -9,7 +9,7 @@
 class Item
 {
 public:
-    Item(int _id, const char* spritePath, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func = []{});
+    Item(int _id, std::string spriteName, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func = []{});
     ~Item();
     SDL_Texture* getItemSprite() {return itemSprite;}
     void Perform();

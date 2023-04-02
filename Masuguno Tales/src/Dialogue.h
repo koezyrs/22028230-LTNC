@@ -14,7 +14,7 @@
 class Dialogue : public Window
 {
 public:
-    Dialogue(int _x, int _y, int _width, int _height, const char* title, const char* facefile, const char* content);
+    Dialogue(int _x, int _y, int _width, int _height, const char* title, std::string facefile, const char* content);
 
     ~Dialogue();
     void Update() override
@@ -45,7 +45,7 @@ public:
         }
     }
 
-    void setFace(const char* facePath);
+    void setFace(std::string facePath);
     void setTitleLabel(const char* title);
     void setContentLabel(const char* content);
     void setOption1(const char* text, std::function<void()> func = []{});

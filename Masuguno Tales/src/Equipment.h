@@ -10,7 +10,7 @@
 class Equipment
 {
 public:
-    Equipment(int _id, const char* spritePath, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName, int _maxHealth, int _maxMana, int _damage, int _defense, int _attackSpeed);
+    Equipment(int _id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName, int _maxHealth, int _maxMana, int _damage, int _defense, int _attackSpeed);
     ~Equipment();
     SDL_Texture* getEquipmentSprite() {return equipmentSprite;}
     bool isActive() {return active;}

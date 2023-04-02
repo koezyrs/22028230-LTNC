@@ -26,6 +26,7 @@ public:
     Game();
     ~Game();
     void init(const char* titile, int xpos, int ypos, int width, int height);
+    void loadResources();
     void loadData();
     void handleEvents();
     void update();

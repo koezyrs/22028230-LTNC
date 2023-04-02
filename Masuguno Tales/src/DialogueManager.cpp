@@ -37,7 +37,7 @@ void DialogueManager::LoadDialogue()
                                              []{Game::gPlayer->mStats->Mana -= 10;},
                                              []{Game::gPlayer->mStats->Mana += 10;},
                                              []{},
-                                             "data files/graphics/faces/18.png");
+                                             "Face-Guard1");
 
 
     dialogueList["The Guard"] = DialogueType("Conversation with the Guard",
@@ -50,6 +50,6 @@ void DialogueManager::LoadDialogue()
                                              []{Game::gDialogue->hideWindow();},
                                              []{Game::gPlayer->mStats->Health -= 10;},
                                              []{Game::gPlayer->mStats->Health += 10;},
-                                             "data files/graphics/faces/18.png");
+                                             "Face-Guard1");
 }
 

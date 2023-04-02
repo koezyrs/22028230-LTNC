@@ -3,8 +3,8 @@
 CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _height)
 : Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height)
 {
-    CharacterInformationBox = TextureManager::LoadTexture("data files/graphics/gui/CharacterInformation.png");
-    closeButton = new Button("data files/graphics/gui/8.png", "data files/graphics/gui/9.png", _x + 190, _y + 4, 13, 13, [this]{Window::hideWindow(); });
+    CharacterInformationBox = TextureManager::GetTexture("CharacterInformation");
+    closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 190, _y + 4, 13, 13, [this]{Window::hideWindow(); });
     characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
@@ -129,7 +129,7 @@ bool CharacterInformation::AddEquipment(Equipment* _equipment)
 CharacterInformation::~CharacterInformation()
 {
     delete characterInformationTitle;
-
+    delete closeButton;
     /*
     delete information;
     delete name;
@@ -149,6 +149,5 @@ CharacterInformation::~CharacterInformation()
     delete avaliblePoints;
     delete pointsText;
     */
-    SDL_DestroyTexture(CharacterInformationBox);
     CharacterInformationBox = NULL;
 }

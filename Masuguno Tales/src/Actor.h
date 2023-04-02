@@ -4,6 +4,7 @@
 #define Actor_h
 
 #include <SDL.h>
+#include <string>
 #include "Game.h"
 #include "Entity.h"
 #include "TextureManager.h"
@@ -15,7 +16,7 @@
 class Actor : public Entity
 {
 public:
-    Actor(float x, float y, const char* filetex);
+    Actor(float x, float y, std::string spriteName);
     ~Actor();
     void Update() override
     {

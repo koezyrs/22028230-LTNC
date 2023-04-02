@@ -10,6 +10,7 @@
 #include "TextureManager.h"
 #include "Settings.h"
 #include "Event/EventType.h"
+#include "Component/Component.h"
 
 Map::Map()
 : width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
@@ -19,9 +20,9 @@ Map::~Map()
     ClearMap();
 }
 
-void Map::LoadMap(const char* maptex, const char* mapfile, int _sizeX, int _sizeY)
+void Map::LoadMap(std::string maptex, const char* mapfile, int _sizeX, int _sizeY)
 {
-    mTexture = TextureManager::LoadTexture(maptex);
+    mTexture = TextureManager::GetTexture(maptex);
     SDL_QueryTexture(mTexture, NULL, NULL, &width, &height);
     srcRect.x = srcRect.y = destRect.x = destRect.y = 0;
     srcRect.w = destRect.w = width;
@@ -70,6 +71,9 @@ void Map::Refresh()
 
     events.erase(std::remove_if(events.begin(), events.end(),
         [](Event* theEvent){return !theEvent->isActive();}), events.end());
+
+    projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(),
+        [](Projectile* theProjectile){return !theProjectile->isActive();}), projectiles.end());
 }
 
 void Map::Update()
@@ -100,6 +104,11 @@ void Map::Update()
     {
         e->Update();
     }
+
+    for(auto& p : projectiles)
+    {
+        p->Update();
+    }
 }
 
 void Map::RenderBottomLayer()
@@ -117,6 +126,11 @@ void Map::RenderUpperLayer()
     for(auto& n : npcs)
     {
         n->Render();
+    }
+
+    for(auto& p : projectiles)
+    {
+        p->Render();
     }
 }
 void Map::AddWall(int x, int y)
@@ -139,6 +153,11 @@ void Map::AddNPC(float x, float y, const char* filepath, std::string name)
     npcs.emplace_back(new NPC(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
 }
 
+void Map::AddProjectile(float x, float y)
+{
+    projectiles.emplace_back(new Projectile(x, y, 5, 100, "Player"));
+}
+
 void Map::ClearMap()
 {
     for(int i = 0; i < sizeY; i++)
@@ -149,8 +168,8 @@ void Map::ClearMap()
     for(auto& w : walls) {w->destroy();}
     for(auto& m : monsters) {m->destroy();}
     for(auto& e : events) {e->destroy();}
-    for(auto& n : npcs) (n->destroy());
-    SDL_DestroyTexture(mTexture);
+    for(auto& n : npcs) {n->destroy();}
+    for(auto& p : projectiles) {p->destroy();}
     mTexture = NULL;
     Refresh();
 }

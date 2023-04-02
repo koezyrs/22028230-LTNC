@@ -1,11 +1,11 @@
 #include "Button.h"
 #include "TextureManager.h"
 
-Button::Button(const char* spriteOut, const char* spriteOver, int x, int y, int _width, int _height, std::function<void()> func)
+Button::Button(std::string spriteOut, std::string spriteOver, int x, int y, int _width, int _height, std::function<void()> func)
 : position(x, y), Width(_width), Height(_height), ButtonFunction([this, func]{func();}), ButtonSpriteOut(nullptr), ButtonSpriteOver(nullptr)
 {
-    ButtonSpriteOut = TextureManager::LoadTexture(spriteOut);
-    ButtonSpriteOver = TextureManager::LoadTexture(spriteOver);
+    ButtonSpriteOut = TextureManager::GetTexture(spriteOut);
+    ButtonSpriteOver = TextureManager::GetTexture(spriteOver);
     srcRect.x = srcRect.y = 0;
     destRect.x = x;
     destRect.y = y;
@@ -14,13 +14,7 @@ Button::Button(const char* spriteOut, const char* spriteOver, int x, int y, int 
     srcRect.h = destRect.h = _height;
 }
 
-Button::~Button()
-{
-    SDL_DestroyTexture(ButtonSpriteOut);
-    SDL_DestroyTexture(ButtonSpriteOver);
-    ButtonSpriteOver = NULL;
-    ButtonSpriteOut = NULL;
-}
+Button::~Button() {}
 
 void Button::setPosition(int x, int y)
 {

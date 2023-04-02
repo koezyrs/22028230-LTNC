@@ -65,7 +65,6 @@ public:
     }
     ~AIComponent()
     {
-        int sizeX = EventManager::GetMapSizeX();
         int sizeY = EventManager::GetMapSizeY();
 
         for(int i = 0; i < sizeY; i++) if(tiles[i] != NULL) delete[] tiles[i];

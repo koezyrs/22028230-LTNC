@@ -4,8 +4,8 @@
 HUD::HUD()
 {
     SDL_Color White = {255,255,255};
-    HUDBase = TextureManager::LoadTexture("data files/graphics/gui/HUDBase.png");
-    HUDBars = TextureManager::LoadTexture("data files/graphics/gui/HUDBars.png");
+    HUDBase = TextureManager::GetTexture("HUDBase");
+    HUDBars = TextureManager::GetTexture("HUDBars");
     playerName = new Label("data files/font/game.ttf", "TunDuong" ,10,370, 485, White, 120, false, []{});
     playerLevel = new Label("data files/font/game.ttf", " ",10,550,485, White, 120, false, []{});
     playerHP = new Label("data files/font/game.ttf", " ",10,370,503, White, 120, false, []{});
@@ -29,9 +29,6 @@ HUD::~HUD()
     delete playerHP;
     delete playerMP;
     delete playerExperience;
-
-    SDL_DestroyTexture(HUDBars);
-    SDL_DestroyTexture(HUDBase);
 
     HUDBars = NULL;
     HUDBase = NULL;

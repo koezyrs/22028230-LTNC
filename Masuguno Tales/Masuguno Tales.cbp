@@ -84,6 +84,8 @@
 		<Unit filename="src/Monster.h" />
 		<Unit filename="src/NPC.cpp" />
 		<Unit filename="src/NPC.h" />
+		<Unit filename="src/Projectile.cpp" />
+		<Unit filename="src/Projectile.h" />
 		<Unit filename="src/Settings.h" />
 		<Unit filename="src/System.h" />
 		<Unit filename="src/TextureManager.cpp" />

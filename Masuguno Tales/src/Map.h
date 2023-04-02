@@ -12,6 +12,7 @@
 #include "Event.h"
 #include "NPC.h"
 #include "Tile.h"
+#include "Projectile.h"
 
 class Map
 {
@@ -22,11 +23,12 @@ public:
     void setTargetAndCalculateFlowField(int targetXNew, int targetYNew);
     void calculateDistances();
     void calculateFlowDirections();
-    void LoadMap(const char* maptex, const char* mapfile, int sizeX, int sizeY);
+    void LoadMap(std::string maptex, const char* mapfile, int sizeX, int sizeY);
     void AddWall(int x, int y);
     void AddMonster(float x, float y, const char* filepath, std::string name, float _speed);
     void AddEvent(Event* newEvent);
     void AddNPC(float x, float y, const char* filepath, std::string name);
+    void AddProjectile(float x, float y);
     int getWidth() {return width;}
     int getHeight() {return height;}
     int getSizeX() {return sizeX;}
@@ -40,6 +42,7 @@ public:
     std::vector<Wall*> walls;
     std::vector<Monster*> monsters;
     std::vector<NPC*> npcs;
+    std::vector<Projectile*> projectiles;
 private:
     int width;
     int height;
