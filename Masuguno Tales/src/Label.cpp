@@ -8,7 +8,7 @@ Label::Label(const char* fontFile, const char* textContent, int fontSize, float 
     if(textContent != NULL)
     {
         textOut = TextureManager::LoadText(font, textContent, textColor, wrapLength);
-        SDL_Color textColorOver = {static_cast<int>(textColor.r) + 92, static_cast<int> (textColor.g) + 92, static_cast<int>(textColor.b) + 64};
+        SDL_Color textColorOver = {static_cast<int>(textColor.r) + 92, static_cast<int> (textColor.g) + 92, static_cast<int>(textColor.b) + 92};
         textOver = TextureManager::LoadText(font, textContent, textColorOver, wrapLength);
         SDL_QueryTexture(textOut, NULL, NULL, &Width, &Height);
     }else {Width = 0; Height = 0;}

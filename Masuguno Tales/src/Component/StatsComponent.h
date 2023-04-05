@@ -34,6 +34,17 @@ public:
         }
     }
 
+    void ApplyDamage(int _damage)
+    {
+        float LO = 0.8f;
+        float HI = 1.8f;
+        float D = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
+        int healthLose = (_damage - Defense) * D;
+
+        if(healthLose <= 0) return;
+        if(Health - healthLose <= 0) Health = 0;
+        else Health -= healthLose;
+    }
     int Level = 0;
     int Experience = 0;
     int ExperienceToNextLevel = 0;

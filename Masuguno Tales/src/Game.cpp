@@ -24,6 +24,9 @@
 #include "HUD.h"
 #include "Hotbar.h"
 
+// Database
+#include "Database/MonsterDB.h"
+
 // Settings
 #include "Settings.h"
 
@@ -141,6 +144,9 @@ void Game::loadData()
     // Load all game dialogue
     DialogueManager::LoadDialogue();
 
+    // Load all monster database
+    MonsterDB::LoadMonsterDatabase();
+
     // Load the begin map
     MapManager::LoadMap1();
 
@@ -224,14 +230,17 @@ void Game::update()
         Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
         float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
 
-        float exitDistance = 1.0f;
-        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
+        float attackRange = 10.0f;
+        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + attackRange))
         {
             float offsetX = 32;
             float offsetY = 32;
             switch(Game::event.key.keysym.sym )
             {
-                case SDLK_LCTRL: currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY);
+                case SDLK_LCTRL:
+                    monster->setTrigger();
+                    currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY);
+                    break;
             }
         }
 
@@ -283,6 +292,27 @@ void Game::update()
         {
             gPlayer->getTransformComponent()->position = playerPos;
             eventa->Perform();
+        }
+    }
+
+    // Apply damage from projectile
+    for(auto& prjtile : currentMap->projectiles)
+    {
+        if(prjtile->isUsed()) continue;
+        for(auto& mon : currentMap->monsters)
+        {
+            if(prjtile->getTag() == "Monster") continue;
+            if(Collision::AABB(*prjtile->getColliderComponent(), *mon->getColliderComponent()))
+            {
+                mon->applyDamage(Game::gPlayer->mStats->Damage);
+                prjtile->Used();
+            }
+        }
+
+        if(prjtile->getTag() == "Player") continue;
+        if(Collision::AABB(*prjtile->getColliderComponent(), *Game::gPlayer->getColliderComponent()))
+        {
+            prjtile->Used();
         }
     }
 

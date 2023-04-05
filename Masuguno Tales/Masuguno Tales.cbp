@@ -50,6 +50,8 @@
 		<Unit filename="src/Component/SpriteComponent.h" />
 		<Unit filename="src/Component/StatsComponent.h" />
 		<Unit filename="src/Component/TransformComponent.h" />
+		<Unit filename="src/Database/MonsterDB.cpp" />
+		<Unit filename="src/Database/MonsterDB.h" />
 		<Unit filename="src/Dialogue.cpp" />
 		<Unit filename="src/Dialogue.h" />
 		<Unit filename="src/DialogueManager.cpp" />

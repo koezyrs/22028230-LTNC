@@ -39,10 +39,16 @@ public:
         destRect.h = 96 * mTransform->scale;
         TextureManager::Draw(mTexture, srcRect, destRect);
     }
+    TransformComponent* getTransformComponent() {return mTransform;}
+    ColliderComponent* getColliderComponent() {return mCollider;}
     bool isActive() {return active;}
+    bool isUsed() {return used;}
+    void Used() {used = true;}
     void destroy() {active = false;}
+    std::string getTag() const {return tag;}
 private:
     bool active = true;
+    bool used = false;
     Vector2D position;
     int frames, speed;
     SDL_Texture* mTexture;

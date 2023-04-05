@@ -13,10 +13,19 @@
 class Monster : public Entity
 {
 public:
-    Monster(float _x, float _y, int _width, int _height, int _scale, std::string spriteName, std::string name, float _speed);
+    Monster(float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
+                 std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
+                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed);
     ~Monster();
     void Update() override
     {
+        // Check if HP <= 0
+        if(health <= 0) {
+            destroy();
+            return;
+        }
+
+        // Update component
         Vector2D monsterPos = mTransform->position;
         mAI->Update();
         mTransform->Update();
@@ -39,6 +48,7 @@ public:
     bool isActive() const {return active;}
     void setTrigger() {trigger = true;}
     void destroy() {active = false;}
+    void applyDamage(float _damage) {health -= _damage;}
 private:
     Vector2D startPosition;
     TransformComponent* mTransform;
@@ -49,7 +59,12 @@ private:
 
     bool active = true;
     bool trigger = false;
-    float speed;
+
+    std::string monsterName;
+    std::string monsterSprite;
+    float damage, health, attackSpeed;
+    float chaseSpeed, roamSpeed;
+    float attackRange, stopChaseRange;
 
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];

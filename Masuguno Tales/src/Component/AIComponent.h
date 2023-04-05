@@ -28,22 +28,29 @@ private:
     Tile** tiles;
     TransformComponent* mTransform;
     Vector2D startPostion;
-    bool trigger;
+    bool* trigger;
     Uint64 nextAttackTime;
-    float attackSpeed;
+
+    float damage, attackSpeed;
+    float chaseSpeed, roamSpeed;
+    float attackRange, stopChaseRange;
+
     STATE monsterState;
     Vector2D roamPosition;
     int targetX, targetY;
     Uint64 timeout;
 public:
-    AIComponent(TransformComponent* trans, Vector2D startPos, float _speed, bool _trigger)
-    : startPostion(startPos), trigger(_trigger), monsterState(ROAMING), targetX(0), targetY(0)
+    AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
+    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger)
+    : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
+    roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
+    targetX(0), targetY(0)
     {
+        trigger = _trigger;
         mTransform = trans;
-        mTransform->speed = _speed;
+        mTransform->speed = roamSpeed;
         roamPosition = startPostion;
-        nextAttackTime = 0;
-        attackSpeed = 2000;
+        nextAttackTime =  SDL_GetTicks64() + attackSpeed;
 
         int sizeX = EventManager::GetMapSizeX();
         int sizeY = EventManager::GetMapSizeY();
@@ -63,6 +70,7 @@ public:
             }
         }
     }
+
     ~AIComponent()
     {
         int sizeY = EventManager::GetMapSizeY();
@@ -84,12 +92,14 @@ public:
         case ROAMING:
             {
                 // Move to destination
+                mTransform->speed = roamSpeed;
+
                 int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
                 int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
                 mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
                 mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
-                float reachedPositionDistance = 32.0f;
+                float reachedPositionDistance = 33.0f;
                 if(mTransform->position.DistanceTo(roamPosition) < reachedPositionDistance)
                 {
                     int rangeX = getRandomRange(4);
@@ -111,18 +121,21 @@ public:
                     roamPosition.y = nextMoveY * GAME_PIXELS;
                     setTargetAndCalculateFlowField(nextMoveX, nextMoveY);
                 }
-                FindTarget();
+
+                if(*trigger) FindTarget();
                 break;
             }
 
         case CHASETARGET:
             {
+                mTransform->speed = chaseSpeed;
+
                 int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
                 int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
                 mTransform->velocity.x = mTransform->speed * static_cast<float>(EventManager::getMapTiles()[coordinateY][coordinateX].flowDirectionX);
                 mTransform->velocity.y = mTransform->speed * static_cast<float>(EventManager::getMapTiles()[coordinateY][coordinateX].flowDirectionY);
 
-                float attackRange = 46.0f;
+
                 if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) < attackRange)
                 {
                     // Attack the player in range
@@ -130,15 +143,14 @@ public:
                     if( SDL_GetTicks64() > nextAttackTime )
                     {
                         // Attack
-                        Game::gPlayer->mStats->Health -= 10;
+                        Game::gPlayer->mStats->ApplyDamage(damage);
                         nextAttackTime = SDL_GetTicks64() + attackSpeed;
 
                     }
 
                 }
 
-                float stopChaseDistance = 128.0f;
-                if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) > stopChaseDistance)
+                if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) > stopChaseRange)
                 {
                     // Too far from the target
                     monsterState = RECALL;
@@ -159,14 +171,14 @@ public:
                 mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
                 mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
-                float reachedPositionDistance = 32.0f;
+                float reachedPositionDistance = 33.0f;
                 if(mTransform->position.DistanceTo(startPostion) < reachedPositionDistance)
                 {
                     roamPosition.x = startPostion.x;
                     roamPosition.y = startPostion.y;
                     monsterState = ROAMING;
                 }
-                FindTarget();
+                if(*trigger) FindTarget();
                 break;
             }
 
@@ -237,7 +249,7 @@ public:
                     //Check if the tile has been assigned a distance yet or not.
                     if (tiles[neighborY][neighborX].flowDistance == flowDistanceMax) {
                         //If not the set it's distance and add it to the queue.
-                        tiles[neighborY][neighborX].flowDistance = tiles[static_cast<int>(tileCurrent.position.y)][static_cast<int>(tileCurrent.position.x)].flowDistance + 1;
+                        tiles[neighborY][neighborX].flowDistance = tiles[currentY][currentX].flowDistance + 1;
                         listTilesToCheck.push(tiles[neighborY][neighborX]);
                     }
                 }

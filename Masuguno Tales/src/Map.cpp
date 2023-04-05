@@ -12,6 +12,9 @@
 #include "Event/EventType.h"
 #include "Component/Component.h"
 
+// Database
+#include "Database/MonsterDB.h"
+
 Map::Map()
 : width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
 
@@ -138,9 +141,19 @@ void Map::AddWall(int x, int y)
     walls.emplace_back(new Wall(static_cast<float>(x), static_cast<float>(y)));
 }
 
-void Map::AddMonster(float x, float y, const char* filepath, std::string name, float _speed)
+void Map::AddMonster(float x, float y, std::string _monsterDB)
 {
-    monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name, _speed));
+    MonsterType monster = MonsterDB::monsterDatabase[_monsterDB];
+    if(!monster.monsterSprite.empty())
+    {
+        monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
+                                          , monster.monsterSprite, monster.damage, monster.health, monster.attackSpeed,
+                                          monster.attackRange, monster.stopChaseRange, monster.chaseSpeed, monster.roamSpeed));
+    }
+    else
+    {
+        std::cerr << "Can not find " << _monsterDB << "! Please check Monster Database!";
+    }
 }
 
 void Map::AddEvent(Event* newEvent)

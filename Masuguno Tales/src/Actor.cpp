@@ -8,7 +8,7 @@ Actor::Actor(float x, float y, std::string spriteName) : Entity::Entity()
     mCollider = new ColliderComponent(mTransform, "Player");
     mController = new KeyboardController(mTransform, mSprite);
     mName = new NameComponent(mTransform, "Tuan Duong" , "data files/font/game.ttf", 10, SDL_Color{0,0,0});
-    mStats = new StatsComponent(1,0,100,100,100,30,30,3,5,1);
+    mStats = new StatsComponent(1,0,100,100,100,30,30,10,5,1);
 }
 
 Actor::~Actor()
