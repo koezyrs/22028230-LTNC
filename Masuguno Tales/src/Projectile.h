@@ -12,7 +12,7 @@
 class Projectile: public Entity
 {
 public:
-    Projectile(float _x, float _y, int _frames, int _speed, std::string _tag);
+    Projectile(float _x, float _y ,int _frames, int _speed, std::string _tag, std::string skillName, float _damage);
     ~Projectile();
     void Update() override
     {
@@ -46,6 +46,7 @@ public:
     void Used() {used = true;}
     void destroy() {active = false;}
     std::string getTag() const {return tag;}
+    float getDamage() {return damage;}
 private:
     bool active = true;
     bool used = false;
@@ -59,6 +60,7 @@ private:
     Uint32 startTime;
     Uint32 currentTime;
     std::string tag;
+    float damage;
 };
 
 #endif // Projectile_h

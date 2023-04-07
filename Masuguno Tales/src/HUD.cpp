@@ -1,11 +1,12 @@
 #include "HUD.h"
 #include "Actor.h"
 
-HUD::HUD()
+HUD::HUD() : target(nullptr)
 {
     SDL_Color White = {255,255,255};
     HUDBase = TextureManager::GetTexture("HUDBase");
     HUDBars = TextureManager::GetTexture("HUDBars");
+    TargetHP = TextureManager::GetTexture("TargetHPBar");
     playerName = new Label("data files/font/game.ttf", "TunDuong" ,10,370, 485, White, 120, false, []{});
     playerLevel = new Label("data files/font/game.ttf", " ",10,550,485, White, 120, false, []{});
     playerHP = new Label("data files/font/game.ttf", " ",10,370,503, White, 120, false, []{});
@@ -20,6 +21,11 @@ HUD::HUD()
 
     MPSrcRect = {0,26,172,22};
     MPDestRect = {524,501,172,22};
+
+    TargetHPSrcRectBack = {0,0,210,18};
+    TargetHPDestRectBack = {407, 20,210,18};
+    TargetHPSrcRectOver = {0,22,210,18};
+    TargetHPDestRectOver = {407, 20,210,18};
 }
 
 HUD::~HUD()

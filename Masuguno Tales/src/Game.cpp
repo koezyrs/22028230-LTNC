@@ -26,6 +26,7 @@
 
 // Database
 #include "Database/MonsterDB.h"
+#include "Database/SkillDB.h"
 
 // Settings
 #include "Settings.h"
@@ -105,6 +106,9 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/HUDBase.png", "HUDBase");
     TextureManager::LoadTexture("data files/graphics/gui/Inventory.png", "Inventory");
     TextureManager::LoadTexture("data files/graphics/gui/Quest.png", "Quest");
+    TextureManager::LoadTexture("data files/graphics/gui/HPBar.png", "HPBar");
+    TextureManager::LoadTexture("data files/graphics/gui/Target.png", "Target");
+    TextureManager::LoadTexture("data files/graphics/gui/TargetHPBar.png", "TargetHPBar");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
@@ -124,8 +128,8 @@ void Game::loadResources()
     // Faces
     TextureManager::LoadTexture("data files/graphics/faces/18.png", "Face-Guard1");
 
-    // Projectile
-    TextureManager::LoadTexture("data files/graphics/animations/13.png", "Projectile-Attack");
+    // Skill
+    TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
 }
 
 void Game::loadData()
@@ -144,8 +148,11 @@ void Game::loadData()
     // Load all game dialogue
     DialogueManager::LoadDialogue();
 
-    // Load all monster database
+    // Load all monster types
     MonsterDB::LoadMonsterDatabase();
+
+    // Load all skill types
+    SkillDB::LoadSkillDatabase();
 
     // Load the begin map
     MapManager::LoadMap1();
@@ -224,26 +231,6 @@ void Game::update()
         {
             gPlayer->getTransformComponent()->position = playerPos;
         }
-
-        // Attack Monster
-        Vector2D monsterPos = monster->getTransformComponent()->position;
-        Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
-        float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
-
-        float attackRange = 10.0f;
-        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + attackRange))
-        {
-            float offsetX = 32;
-            float offsetY = 32;
-            switch(Game::event.key.keysym.sym )
-            {
-                case SDLK_LCTRL:
-                    monster->setTrigger();
-                    currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY);
-                    break;
-            }
-        }
-
     }
 
     // Collide with NPC
@@ -304,7 +291,7 @@ void Game::update()
             if(prjtile->getTag() == "Monster") continue;
             if(Collision::AABB(*prjtile->getColliderComponent(), *mon->getColliderComponent()))
             {
-                mon->applyDamage(Game::gPlayer->mStats->Damage);
+                mon->ApplyDamage(prjtile->getDamage());
                 prjtile->Used();
             }
         }
@@ -312,6 +299,7 @@ void Game::update()
         if(prjtile->getTag() == "Player") continue;
         if(Collision::AABB(*prjtile->getColliderComponent(), *Game::gPlayer->getColliderComponent()))
         {
+            Game::gPlayer->mStats->ApplyDamage(prjtile->getDamage());
             prjtile->Used();
         }
     }

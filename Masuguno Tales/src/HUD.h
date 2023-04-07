@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Label.h"
+#include "Monster.h"
 #include "Actor.h"
 
 class HUD
@@ -40,12 +41,24 @@ public:
             MPDestRect.w = MPSrcRect.w = static_cast<int>(172 * static_cast<float>(Game::gPlayer->mStats->Mana) / static_cast<float>(Game::gPlayer->mStats->MaxMana));
             MPSrcRect.x = 172 - MPSrcRect.w;
             MPDestRect.x = 524 + MPSrcRect.x;
+
+        // Target HP Bar
+            target = Game::gPlayer->getKeyboardController()->getTarget();
+            if(target != nullptr)
+            {
+                TargetHPDestRectOver.w = static_cast<int> (210* target->getHP() / target->getMaxHP());
+            }
     }
     void Render()
     {
         TextureManager::Draw(HUDBase, BaseSrcRect,BaseDestRect);
         TextureManager::Draw(HUDBars, HPSrcRect, HPDestRect);
         TextureManager::Draw(HUDBars, MPSrcRect, MPDestRect);
+        if(target != nullptr)
+        {
+            TextureManager::Draw(TargetHP, TargetHPSrcRectBack, TargetHPDestRectBack);
+            TextureManager::Draw(TargetHP, TargetHPSrcRectOver, TargetHPDestRectOver);
+        }
         playerLevel->Render();
         playerName->Render();
         playerHP->Render();
@@ -54,12 +67,16 @@ public:
     }
 
 private:
+    Monster* target;
+
     SDL_Texture* HUDBase;
     SDL_Texture* HUDBars;
+    SDL_Texture* TargetHP;
 
     SDL_Rect BaseSrcRect, BaseDestRect;
     SDL_Rect HPSrcRect, HPDestRect;
     SDL_Rect MPSrcRect, MPDestRect;
+    SDL_Rect TargetHPSrcRectBack, TargetHPDestRectBack, TargetHPSrcRectOver, TargetHPDestRectOver;
 
     Label* playerName;
     Label* playerLevel;

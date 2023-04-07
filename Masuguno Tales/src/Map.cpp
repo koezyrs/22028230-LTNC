@@ -166,9 +166,9 @@ void Map::AddNPC(float x, float y, const char* filepath, std::string name)
     npcs.emplace_back(new NPC(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
 }
 
-void Map::AddProjectile(float x, float y)
+void Map::AddProjectile(float x, float y, int frames, std::string skillSprite, float _damage)
 {
-    projectiles.emplace_back(new Projectile(x, y, 5, 100, "Player"));
+    projectiles.emplace_back(new Projectile(x, y, frames, 100, "Player", skillSprite, _damage));
 }
 
 void Map::ClearMap()

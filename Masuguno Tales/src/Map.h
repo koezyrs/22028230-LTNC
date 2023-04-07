@@ -3,8 +3,8 @@
 #ifndef Map_h
 #define Map_h
 
-#include<string>
-#include<vector>
+#include <string>
+#include <vector>
 #include <memory>
 #include "Vector2D.h"
 #include "Wall.h"
@@ -28,7 +28,7 @@ public:
     void AddMonster(float x, float y, std::string _monsterDB);
     void AddEvent(Event* newEvent);
     void AddNPC(float x, float y, const char* filepath, std::string name);
-    void AddProjectile(float x, float y);
+    void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);
     int getWidth() {return width;}
     int getHeight() {return height;}
     int getSizeX() {return sizeX;}

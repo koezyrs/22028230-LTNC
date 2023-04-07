@@ -1,6 +1,9 @@
 #include "EventManager.h"
 
 #include <iostream>
+#include <cmath>
+#include <algorithm>
+
 #include "Game.h"
 #include "Map.h"
 #include "MapManager.h"
@@ -9,6 +12,7 @@
 #include "Actor.h"
 #include "Inventory.h"
 #include "CharacterInformation.h"
+#include "Database/SkillDB.h"
 
 void EventManager::ChangeMap(int mapID)
 {
@@ -50,4 +54,47 @@ int EventManager::GetMapSizeX()
 int EventManager::GetMapSizeY()
 {
     return Game::currentMap->getSizeY();
+}
+
+void EventManager::setNearestTarget()
+{
+    int distanceToNearestTarget = 320; // Scan radious
+    Vector2D playerPos = Game::gPlayer->getTransformComponent()->position;
+    for(auto& monster : Game::currentMap->monsters)
+    {
+        Vector2D monsterPos = monster->getTransformComponent()->position;
+        int distance = playerPos.DistanceTo(monsterPos);
+        if(distance < distanceToNearestTarget)
+        {
+            distanceToNearestTarget = distance;
+            Monster* oldTarget = Game::gPlayer->getKeyboardController()->getTarget();
+            if(oldTarget != nullptr) oldTarget->unTargeted();
+            Game::gPlayer->getKeyboardController()->setTarget(monster);
+            monster->setTargeted();
+        }
+    }
+}
+
+void EventManager::PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName)
+{
+    if(monster == nullptr) return;
+    SkillType sk = SkillDB::skillDatabase[skillName];
+    if(sk.skillName.empty())
+    {
+        std::cerr << "No skill as " << skillName << "! Please check Skill Database";
+    }else
+    {
+        // Attack Monster
+        Vector2D monsterPos = monster->getTransformComponent()->position;
+        float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
+
+        float skillRange = sk.skillRange;
+        if( (distance <= GAME_PIXELS + skillRange) && (monster->isTargeted()) )
+        {
+            float offsetX = 32;
+            float offsetY = 32;
+            monster->setTrigger();
+            Game::currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY, sk.skillFrames, sk.skillSprite, sk.damage);
+        }
+    }
 }
