@@ -40,21 +40,15 @@ public:
         mName->Update();
 
         // HP Bar
-        if(trigger)
-        {
             hpDestRectBack.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
             hpDestRectBack.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
             hpDestRectOver.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
             hpDestRectOver.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
             hpDestRectOver.w = static_cast<int>(32 * health/maxhealth);
-        }
 
-        // Being targeted
-        if(targeted)
-        {
+        // Targeted dest rect
             targetedDestRect.x = static_cast<int>(mTransform->position.x + 24 - Game::gCamera.x);
             targetedDestRect.y = static_cast<int>(mTransform->position.y - 3  - Game::gCamera.y);
-        }
 
     }
     void Render() override
@@ -84,6 +78,7 @@ public:
     void setTargeted() {targeted = true;}
     void unTargeted() {targeted = false;}
     bool isTargeted() {return targeted;}
+    std::string getMonsterName() {return monsterName;}
 private:
     Vector2D startPosition;
     TransformComponent* mTransform;

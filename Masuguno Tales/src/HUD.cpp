@@ -3,7 +3,6 @@
 
 HUD::HUD() : target(nullptr)
 {
-    SDL_Color White = {255,255,255};
     HUDBase = TextureManager::GetTexture("HUDBase");
     HUDBars = TextureManager::GetTexture("HUDBars");
     TargetHP = TextureManager::GetTexture("TargetHPBar");
@@ -12,6 +11,9 @@ HUD::HUD() : target(nullptr)
     playerHP = new Label("data files/font/game.ttf", " ",10,370,503, White, 120, false, []{});
     playerMP = new Label("data files/font/game.ttf", " ",10,570,503, White, 120, false, []{});
     playerExperience = new Label("data files/font/game.ttf", " ",10,495,495, White, 120, false, []{});
+    targetName = new Label("data files/font/game.ttf", " ", 10, 420, 47, White, 120, false, []{});
+    targetHP = new Label("data files/font/game.ttf", " ", 10, 440, 53, White, 120, false, []{});
+    systemMessage = new Label("data files/font/game.ttf", " ", 10, 460, 80, Black, 360, false, []{});
 
     BaseSrcRect = {0,0,365,48};
     BaseDestRect = {329,478,365,48};
@@ -23,9 +25,9 @@ HUD::HUD() : target(nullptr)
     MPDestRect = {524,501,172,22};
 
     TargetHPSrcRectBack = {0,0,210,18};
-    TargetHPDestRectBack = {407, 20,210,18};
+    TargetHPDestRectBack = {407, 50,210,18};
     TargetHPSrcRectOver = {0,22,210,18};
-    TargetHPDestRectOver = {407, 20,210,18};
+    TargetHPDestRectOver = {407, 50,210,18};
 }
 
 HUD::~HUD()
@@ -38,4 +40,11 @@ HUD::~HUD()
 
     HUDBars = NULL;
     HUDBase = NULL;
+}
+
+void HUD::setSystemMessage(std::string _message, Uint64 timeout)
+{
+    systemMessage->Reset();
+    systemMessage = new Label("data files/font/game.ttf", _message.c_str(), 10, 460, 80, Black, 360, false, []{});
+    systemMessageTimeout = SDL_GetTicks64() + timeout;
 }

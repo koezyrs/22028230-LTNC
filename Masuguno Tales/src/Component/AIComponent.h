@@ -50,7 +50,6 @@ public:
         mTransform = trans;
         mTransform->speed = roamSpeed;
         roamPosition = startPostion;
-        nextAttackTime =  SDL_GetTicks64() + attackSpeed;
 
         int sizeX = EventManager::GetMapSizeX();
         int sizeY = EventManager::GetMapSizeY();
@@ -185,6 +184,16 @@ public:
         }
     }
 
+    void FindTarget()
+    {
+        float targetRange = 96.0f;
+        if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) < targetRange)
+        {
+            nextAttackTime = SDL_GetTicks64() + attackSpeed;
+            monsterState = CHASETARGET;
+        }
+    }
+
     void setTargetAndCalculateFlowField(int targetNewX, int targetNewY) {
         if(targetX != targetNewX || targetY != targetNewY)
         {
@@ -290,14 +299,6 @@ public:
 
     }
 
-    void FindTarget()
-    {
-        float targetRange = 96.0f;
-        if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) < targetRange)
-        {
-            monsterState = CHASETARGET;
-        }
-    }
 
 
 

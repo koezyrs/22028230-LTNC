@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <string>
 
 #include "Game.h"
 #include "Map.h"
@@ -10,10 +11,12 @@
 #include "Vector2D.h"
 
 #include "Actor.h"
+#include "HUD.h"
 #include "Inventory.h"
 #include "CharacterInformation.h"
-#include "Database/SkillDB.h"
 
+
+#include "Database/SkillDB.h"
 void EventManager::ChangeMap(int mapID)
 {
     switch(mapID){
@@ -73,15 +76,22 @@ void EventManager::setNearestTarget()
             monster->setTargeted();
         }
     }
+    if(distanceToNearestTarget == 320)
+    {
+        Monster* oldTarget = Game::gPlayer->getKeyboardController()->getTarget();
+        if(oldTarget != nullptr) oldTarget->unTargeted();
+        Game::gPlayer->getKeyboardController()->setTarget(nullptr);
+    }
 }
 
-void EventManager::PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName)
+bool EventManager::PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName)
 {
-    if(monster == nullptr) return;
+    if(monster == nullptr) return false;
     SkillType sk = SkillDB::skillDatabase[skillName];
     if(sk.skillName.empty())
     {
         std::cerr << "No skill as " << skillName << "! Please check Skill Database";
+        return false;
     }else
     {
         // Attack Monster
@@ -95,6 +105,12 @@ void EventManager::PerformSkill(Monster* monster, Vector2D currentplayerPos, std
             float offsetY = 32;
             monster->setTrigger();
             Game::currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY, sk.skillFrames, sk.skillSprite, sk.damage);
-        }
+        }else return false;
     }
+    return true;
+}
+
+void EventManager::SetSystemMessage(std::string _message, Uint64 timeout)
+{
+    Game::gHUD->setSystemMessage(_message, timeout);
 }

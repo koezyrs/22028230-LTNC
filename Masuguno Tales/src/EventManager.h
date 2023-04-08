@@ -21,7 +21,8 @@ public:
     static int GetMapSizeX();
     static int GetMapSizeY();
     static void setNearestTarget();
-    static void PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName);
+    static bool PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName);
+    static void SetSystemMessage(std::string _message, Uint64 timeout);
 
 };
 #endif // EventManager_h
