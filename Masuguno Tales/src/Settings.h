@@ -3,7 +3,7 @@
 #ifndef Settings_h
 #define Settings_h
 const char GAME_TITLE[] = "Masuguno Tales";
-const char GAME_FONT[] = "font/game.ttf";
+const char GAME_FONT[] = "data files/font/game.ttf";
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
 const int GAME_PIXELS = 32;

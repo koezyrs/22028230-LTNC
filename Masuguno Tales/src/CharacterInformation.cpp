@@ -1,11 +1,31 @@
 #include "CharacterInformation.h"
+#include "Settings.h"
 
 CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _height)
 : Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height)
 {
     CharacterInformationBox = TextureManager::GetTexture("CharacterInformation");
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 190, _y + 4, 13, 13, [this]{Window::hideWindow(); });
-    characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
+    characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, White, false, []{});
+
+    // Information tab
+    std::string playerName = Game::gPlayer->getNameComponent()->mName;
+    name = new Label(GAME_FONT, playerName.c_str(), 10, _x + 58, _y + 62, Black, 90, false, []{});
+    playerClass = new Label(GAME_FONT, "Adventure", 10, _x + 58, _y + 83, Black, 90, false, []{});
+    level = new Label(GAME_FONT, " ", 10, _x + 58, _y + 104, Black, 90, false, []{});
+    damage = new Label(GAME_FONT, " ", 10, _x + 68, _y + 127, Black, 90, false, []{});
+    defense = new Label(GAME_FONT, " ", 10,_x + 68, _y + 150, Black, 74, false,  []{});
+    health = new Label(GAME_FONT, " ", 10,_x + 60, _y + 175, Black, 90, false, []{});
+    mana = new Label(GAME_FONT, " ", 10,_x + 60, _y + 198, Black, 90, false, []{});
+    attackSpeed = new Label(GAME_FONT, " ", 10,_x + 90, _y + 218, Black, 64, false, []{});
+
+    // Attribute tab
+    strength = new Label(GAME_FONT, " ", 10, _x + 38, _y + 261, White, 64, false, []{});
+    dexterity = new Label(GAME_FONT, " ", 10, _x + 38, _y + 284, White, 64, false, []{});
+    intelligence = new Label(GAME_FONT, " ", 10, _x + 38, _y + 307, White, 64, false, []{});
+    vitality = new Label(GAME_FONT, " ", 10, _x + 38, _y + 330, White, 64, false, []{});
+    agility = new Label(GAME_FONT, " ", 10, _x + 38, _y + 353, White, 64, false, []{});
+
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
 
@@ -130,24 +150,22 @@ CharacterInformation::~CharacterInformation()
 {
     delete characterInformationTitle;
     delete closeButton;
-    /*
-    delete information;
+
     delete name;
     delete playerClass;
     delete level;
-    delete guild;
+    delete damage;
+    delete defense;
     delete health;
     delete mana;
-    delete exp;
-    delete premium;
-    delete attribute;
+    delete attackSpeed;
     delete strength;
     delete dexterity;
     delete intelligence;
     delete vitality;
     delete agility;
-    delete avaliblePoints;
-    delete pointsText;
-    */
+    //delete avaliblePoints;
+    //delete pointsText;
+
     CharacterInformationBox = NULL;
 }

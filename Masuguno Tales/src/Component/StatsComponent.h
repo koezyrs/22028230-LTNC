@@ -7,14 +7,30 @@
 class StatsComponent
 {
 public:
-    StatsComponent(int _level, int _experience, int _experienceToNextLevel, int _maxHealth, int _health, int _maxMana, int _mana, int _damage, int _defense, int _attackSpeed)
-    : Level(_level), Experience(_experience), ExperienceToNextLevel(_experienceToNextLevel), Health(_health), MaxHealth(_maxHealth),
-    Mana(_mana), MaxMana(_maxMana), Damage(_damage), Defense(_defense), AttackSpeed(_attackSpeed)
-    {}
+    StatsComponent(int _level, int _experience, int _experienceToNextLevel,int _strength, int _dexterity, int _intelligence,
+                   int _vitality, int _agility)
+    : Level(_level), Experience(_experience), ExperienceToNextLevel(_experienceToNextLevel), Strength(_strength),
+    Dexterity(_dexterity), Intelligence(_intelligence), Vitality(_vitality), Agility(_agility)
+    {
+        Damage = _strength*2;
+        Defense = _dexterity*0.5;
+        MaxMana = _intelligence*3;
+        MaxHealth = _vitality*5;
+        AttackSpeed = _agility;
+
+        Mana = MaxMana;
+        Health = MaxHealth;
+    }
     ~StatsComponent() {}
 
     void Update()
     {
+        Damage = Strength*2;
+        Defense = Dexterity*0.5;
+        MaxMana = Intelligence*3;
+        MaxHealth = Vitality*5;
+        AttackSpeed = Agility;
+
         if(Health <= 0) Health = 0;
         if(Mana <= 0) Mana = 0;
         if(Health >= MaxHealth) Health = MaxHealth;
@@ -45,9 +61,11 @@ public:
         if(Health - healthLose <= 0) Health = 0;
         else Health -= healthLose;
     }
+
     int Level = 0;
     int Experience = 0;
     int ExperienceToNextLevel = 0;
+
     int Health = 0;
     int MaxHealth = 0;
     int Mana = 0;
@@ -55,6 +73,12 @@ public:
     int Damage = 0;
     int Defense = 0;
     int AttackSpeed = 0;
+
+    int Strength = 0;
+    int Dexterity = 0;
+    int Intelligence = 0;
+    int Vitality = 0;
+    int Agility = 0;
 };
 
 #endif // StatsComponent_h
