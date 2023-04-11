@@ -5,7 +5,8 @@
 #include <vector>
 
 #include "../Game.h"
-#include "Component.h"
+#include "TransformComponent.h"
+#include "SpriteComponent.h"
 #include "../Entity.h"
 #include "../Vector2D.h"
 #include "../EventManager.h"
@@ -22,99 +23,10 @@ private:
     Uint64 cooldownBasicAttack;
 public:
     KeyboardController();
-    KeyboardController(TransformComponent* trans, SpriteComponent* sprite)
-    : cooldownBasicAttack(0)
-    {
-        mSprite = sprite;
-        mTransform = trans;
-        target = nullptr;
-    }
-
-    Monster* getTarget() {return target;}
-
-    void setTarget(Monster* _tar) {target = _tar;}
-
-    void Update()
-    {
-        if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
-        {
-            switch(Game::event.key.keysym.sym)
-            {
-            case SDLK_UP:
-                mTransform->velocity.y -= mTransform->speed;
-                break;
-            case SDLK_DOWN:
-                mTransform->velocity.y += mTransform->speed;
-                break;
-            case SDLK_LEFT:
-                mTransform->velocity.x -= mTransform->speed;
-                break;
-            case SDLK_RIGHT:
-                mTransform->velocity.x += mTransform->speed;
-                break;
-            default:
-                break;
-            }
-        }
-
-        if(Game::event.type == SDL_KEYUP && Game::event.key.repeat == 0)
-        {
-            switch(Game::event.key.keysym.sym)
-            {
-            case SDLK_UP:
-                mTransform->velocity.y += mTransform->speed;
-                break;
-            case SDLK_DOWN:
-                mTransform->velocity.y -= mTransform->speed;
-                break;
-            case SDLK_LEFT:
-                mTransform->velocity.x += mTransform->speed;
-                break;
-            case SDLK_RIGHT:
-                mTransform->velocity.x -= mTransform->speed;
-                break;
-            default:
-                break;
-            }
-        }
-
-        if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
-        {
-            switch(Game::event.key.keysym.sym)
-            {
-            case SDLK_TAB:
-                {
-                    EventManager::setNearestTarget();
-                    break;
-                }
-
-            case SDLK_LCTRL:
-                {
-                    SkillType sk = SkillDB::skillDatabase["BasicAttack"];
-                    if(SDL_GetTicks64() > cooldownBasicAttack)
-                    {
-                        if(EventManager::PerformSkill(target, mTransform->position, "BasicAttack"))
-                        {
-                            cooldownBasicAttack = SDL_GetTicks64() + sk.cooldown;
-                            EventManager::SetSystemMessage(" ", 0);
-                        }
-                    }else
-                    {
-                        std::string _message = "Wait " +  to_string((float)(cooldownBasicAttack - SDL_GetTicks64())/1000) + "s for the next attack!";
-                        EventManager::SetSystemMessage(_message, 2000);
-                    }
-                    break;
-                }
-
-            case SDLK_1:
-                {
-                    break;
-                }
-
-            }
-        }
-
-    }
+    KeyboardController(TransformComponent* trans, SpriteComponent* sprite);
+    Monster* getTarget();
+    void setTarget(Monster* _tar);
+    void Update();
 };
 
 #endif // KeyboardController_h

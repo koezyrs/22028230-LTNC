@@ -4,15 +4,30 @@
 #define Map_h
 
 #include <string>
+#include <fstream>
 #include <vector>
 #include <memory>
-#include "Vector2D.h"
-#include "Wall.h"
+#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <iomanip>
+
+#include "Game.h"
+#include "Actor.h"
 #include "Monster.h"
-#include "Event.h"
 #include "NPC.h"
-#include "Tile.h"
+#include "Wall.h"
 #include "Projectile.h"
+#include "Event.h"
+#include "Event/EventType.h"
+#include "Tile.h"
+
+#include "Vector2D.h"
+#include "TextureManager.h"
+#include "Settings.h"
+
+// Database
+#include "Database/MonsterDB.h"
 
 class Map
 {
@@ -29,10 +44,10 @@ public:
     void AddEvent(Event* newEvent);
     void AddNPC(float x, float y, const char* filepath, std::string name);
     void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);
-    int getWidth() {return width;}
-    int getHeight() {return height;}
-    int getSizeX() {return sizeX;}
-    int getSizeY() {return sizeY;}
+    int getWidth();
+    int getHeight();
+    int getSizeX();
+    int getSizeY();
     void ClearMap();
     void Refresh();
     void Update();

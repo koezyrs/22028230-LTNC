@@ -1,5 +1,4 @@
 #include "Label.h"
-#include "TextureManager.h"
 
 Label::Label(const char* fontFile, const char* textContent, int fontSize, float x, float y, SDL_Color textColor, Uint32 wrapLength, bool isFunc , std::function<void()> func)
 :  isFunctional(isFunc), position(x,y), LabelFunction([this, func]{func();}), textOut(NULL), textOver(NULL)

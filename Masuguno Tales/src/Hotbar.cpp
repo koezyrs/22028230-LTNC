@@ -1,5 +1,4 @@
 #include "Hotbar.h"
-#include "TextureManager.h"
 
 Hotbar::Hotbar()
 {
@@ -11,4 +10,14 @@ Hotbar::Hotbar()
 Hotbar::~Hotbar()
 {
     HotbarTex = NULL;
+}
+
+void Hotbar::Update()
+{
+
+}
+
+void Hotbar::Render()
+{
+    TextureManager::Draw(HotbarTex, srcRect,destRect);
 }

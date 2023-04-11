@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "TextureManager.h"
 
 Button::Button(std::string spriteOut, std::string spriteOver, int x, int y, int _width, int _height, std::function<void()> func)
 : position(x, y), Width(_width), Height(_height), ButtonFunction([this, func]{func();}), ButtonSpriteOut(nullptr), ButtonSpriteOver(nullptr)

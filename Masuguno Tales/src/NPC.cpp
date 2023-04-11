@@ -1,7 +1,4 @@
-#include <iostream>
 #include "NPC.h"
-#include "Game.h"
-#include "DialogueManager.h"
 NPC::NPC(float _x, float _y, int _width, int _height, int _scale, std::string spriteName, std::string name)
 : position(_x,_y), npcName(name)
 {
@@ -10,6 +7,28 @@ NPC::NPC(float _x, float _y, int _width, int _height, int _scale, std::string sp
     mCollider = new ColliderComponent(mTransform, "NPC");
     mName = new NameComponent(mTransform, name, "data files/font/game.ttf", 10, SDL_Color{255,255,255});
 }
+
+void NPC::Update()
+{
+    mTransform->position.x = position.x;
+    mTransform->position.y = position.y;
+    mTransform->Update();
+    mCollider->Update();
+    mSprite->Update();
+    mName->Update();
+}
+void NPC::Render()
+{
+    mSprite->Render();
+    mName->Render();
+}
+
+TransformComponent* NPC::getTransformComponent() {return mTransform;}
+ColliderComponent* NPC::getColliderComponent() {return mCollider;}
+SpriteComponent* NPC::getSpriteComponent() {return mSprite;}
+NameComponent* NPC::getNameComponent() {return mName;}
+bool NPC::isActive() {return active;}
+void NPC::destroy() {active = false;}
 
 NPC::~NPC()
 {

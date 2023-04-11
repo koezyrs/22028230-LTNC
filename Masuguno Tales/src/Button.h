@@ -6,6 +6,7 @@
 #include <functional>
 #include "Vector2D.h"
 #include "Window.h"
+#include "TextureManager.h"
 
 class Button
 {

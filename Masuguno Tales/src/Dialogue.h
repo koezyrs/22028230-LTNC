@@ -5,11 +5,11 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
-#include "Window.h"
 #include "Game.h"
-#include "Component/Component.h"
+#include "Window.h"
 #include "Button.h"
 #include "Label.h"
+#include "TextureManager.h"
 
 class Dialogue : public Window
 {
@@ -17,33 +17,8 @@ public:
     Dialogue(int _x, int _y, int _width, int _height, const char* title, std::string facefile, const char* content);
 
     ~Dialogue();
-    void Update() override
-    {
-        if(!isHide())
-        {
-            closeButton->handleEvent(&Game::event);
-            dialogueOption1->handleEvent(&Game::event);
-            dialogueOption2->handleEvent(&Game::event);
-            dialogueOption3->handleEvent(&Game::event);
-            dialogueOption4->handleEvent(&Game::event);
-        }
-    }
-
-    void Render() override
-    {
-        if(!isHide())
-        {
-            TextureManager::Draw(DialogueBox, srcRect, destRect);
-            TextureManager::Draw(Face, faceSrcRect, faceDestRect);
-            dialogueTitle->Render();
-            dialogueContent->Render();
-            dialogueOption1->Render();
-            dialogueOption2->Render();
-            dialogueOption3->Render();
-            dialogueOption4->Render();
-            closeButton->Render();
-        }
-    }
+    void Update() override;
+    void Render() override;
 
     void setFace(std::string facePath);
     void setTitleLabel(const char* title);

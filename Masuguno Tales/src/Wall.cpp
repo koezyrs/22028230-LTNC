@@ -8,6 +8,20 @@ Wall::Wall(float x, float y)
     mCollider = new ColliderComponent(mTransform, "Wall");
 }
 
+void Wall::Update()
+{
+    mTransform->position.x = position.x;
+    mTransform->position.y = position.y;
+    mCollider->Update();
+}
+
+void Wall::Render() {}
+Vector2D Wall::getPosition() {return position;}
+TransformComponent* Wall::getTransformComponent() {return mTransform;}
+ColliderComponent* Wall::getColliderComponent() {return mCollider;}
+bool Wall::isActive() {return active;}
+void Wall::destroy() {active = false;}
+
 Wall::~Wall()
 {
     position.Zero();

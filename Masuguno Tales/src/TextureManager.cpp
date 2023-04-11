@@ -1,4 +1,3 @@
-#include <SDL_ttf.h>
 #include "TextureManager.h"
 
 std::map<std::string,SDL_Texture*> TextureManager::textures;

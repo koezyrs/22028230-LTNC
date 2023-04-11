@@ -8,40 +8,35 @@
 #include "Game.h"
 #include "Entity.h"
 #include "TextureManager.h"
-#include "Component/Component.h"
+
+// Component
+#include "Component/TransformComponent.h"
+#include "Component/ColliderComponent.h"
+#include "Component/KeyboardController.h"
+#include "Component/SpriteComponent.h"
+#include "Component/NameComponent.h"
+#include "Component/StatsComponent.h"
+
 #include "Vector2D.h"
 #include "Settings.h"
-#include "Inventory.h"
 
 class Actor : public Entity
 {
 public:
     Actor(float x, float y, std::string spriteName);
     ~Actor();
-    void Update() override
-    {
-        mController->Update();
-        mTransform->Update();
-        mCollider->Update();
-        mStats->Update();
-        mSprite->Update();
-        mName->Update();
-    }
-    void Render() override
-    {
-        mSprite->Render();
-        mName->Render();
-    }
-    TransformComponent* getTransformComponent() {return mTransform;}
-    ColliderComponent* getColliderComponent() {return mCollider;}
-    KeyboardController* getKeyboardController() {return mController;}
-    SpriteComponent* getSpriteComponent() {return mSprite;}
-    NameComponent* getNameComponent() {return mName;}
+    void Update() override;
+    void Render() override;
+    TransformComponent* getTransformComponent();
+    ColliderComponent* getColliderComponent();
+    KeyboardController* getKeyboardController();
+    SpriteComponent* getSpriteComponent();
+    NameComponent* getNameComponent();
 
     StatsComponent* mStats;
 
-    bool isActive() const {return active;}
-    void destroy() {active = false;}
+    bool isActive() const;
+    void destroy();
 
 private:
     bool active = true;

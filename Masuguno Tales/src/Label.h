@@ -4,8 +4,9 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include "Vector2D.h"
 #include <functional>
+#include "Vector2D.h"
+#include "TextureManager.h"
 
 class Label
 {

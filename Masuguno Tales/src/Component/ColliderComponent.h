@@ -4,7 +4,9 @@
 
 #include <string>
 #include <SDL.h>
-#include "Component.h"
+
+#include "../Game.h"
+#include "TransformComponent.h"
 
 class ColliderComponent
 {
@@ -13,26 +15,9 @@ public:
     TransformComponent* mTransform;
     SDL_Rect mCollider;
     std::string tag;
-    ColliderComponent(TransformComponent* trans)
-    {
-        mTransform = trans;
-        tag = "";
-    }
-
-    ColliderComponent(TransformComponent* trans, std::string _tag)
-    {
-        mTransform = trans;
-        tag = _tag;
-    }
-
-    void Update()
-    {
-        mCollider.x = static_cast<int>(mTransform->position.x) - Game::gCamera.x;
-        mCollider.y = static_cast<int>(mTransform->position.y) - Game::gCamera.y;
-        mCollider.w = mTransform->width * mTransform->scale;
-        mCollider.h = mTransform->height * mTransform->scale;
-    }
-
+    ColliderComponent(TransformComponent* trans);
+    ColliderComponent(TransformComponent* trans, std::string _tag);
+    void Update();
 };
 
 #endif // ColliderComponent_h

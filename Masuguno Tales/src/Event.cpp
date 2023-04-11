@@ -1,7 +1,5 @@
-#include <iostream>
 #include "Event.h"
-#include "EventManager.h"
-#include "Settings.h"
+
 Event::Event(float x, float y)
 {
     position.x = x;
@@ -14,4 +12,27 @@ Event::~Event()
 {
     delete mTransform;
     delete mCollider;
+}
+
+void Event::Update()
+{
+    mTransform->position.x = position.x;
+    mTransform->position.y = position.y;
+    mCollider->Update();
+}
+TransformComponent* Event::getTransformComponent()
+{
+    return mTransform;
+}
+ColliderComponent* Event::getColliderComponent()
+{
+    return mCollider;
+}
+bool Event::isActive()
+{
+    return active;
+}
+void Event::destroy()
+{
+    active = false;
 }

@@ -5,7 +5,6 @@
 
 #include "../Vector2D.h"
 #include "../Settings.h"
-#include "Component.h"
 
 class TransformComponent
 {
@@ -17,47 +16,13 @@ public:
     int scale = 1;
     float speed = 2;
 
-    TransformComponent()
-    {
-        position.Zero();
-        velocity.Zero();
-    }
+    TransformComponent();
+    TransformComponent(int _scale);
+    TransformComponent(float _x, float _y);
+    TransformComponent(float _x, float _y, int _width, int _height, int _scale);
 
-    TransformComponent(int _scale)
-    {
-        position.Zero();
-        velocity.Zero();
-        scale = _scale;
-    }
-
-    TransformComponent(float _x, float _y)
-    {
-        position.x = _x;
-        position.y = _y;
-        velocity.Zero();
-    }
-
-    TransformComponent(float _x, float _y, int _width, int _height, int _scale)
-    {
-        position.x = _x;
-        position.y = _y;
-        width = _width;
-        height = _height;
-        scale = _scale;
-        velocity.Zero();
-    }
-
-    ~TransformComponent()
-    {
-        position.Zero();
-        velocity.Zero();
-        width = height = scale = speed = 0;
-    }
-    void Update()
-    {
-        position.x += velocity.x;
-        position.y += velocity.y;
-    }
+    ~TransformComponent();
+    void Update();
 };
 
 #endif // TransformComponent_h

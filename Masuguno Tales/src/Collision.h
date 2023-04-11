@@ -3,8 +3,8 @@
 #define Collision_h
 
 #include <SDL.h>
+#include <iostream>
 #include "Component/ColliderComponent.h"
-class ColliderComponent;
 
 class Collision
 {

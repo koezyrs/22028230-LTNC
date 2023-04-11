@@ -3,19 +3,14 @@
 #define Hotbar_h
 
 #include "TextureManager.h"
+
 class Hotbar
 {
 public:
     Hotbar();
     ~Hotbar();
-    void Update()
-    {
-
-    }
-    void Render()
-    {
-        TextureManager::Draw(HotbarTex, srcRect,destRect);
-    }
+    void Update();
+    void Render();
 private:
     SDL_Texture* HotbarTex;
     SDL_Rect srcRect, destRect;

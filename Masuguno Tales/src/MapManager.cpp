@@ -1,10 +1,4 @@
-#include "Game.h"
-#include "Actor.h"
-#include "Map.h"
 #include "MapManager.h"
-#include "Event.h"
-#include "Event/EventType.h"
-#include "Settings.h"
 
 void MapManager::LoadMap1()
 {

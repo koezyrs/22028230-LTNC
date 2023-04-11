@@ -2,24 +2,23 @@
 #ifndef Event_h
 #define Event_h
 
+#include <iostream>
 #include "Game.h"
-#include "Component/Component.h"
+#include "Component/TransformComponent.h"
+#include "Component/ColliderComponent.h"
+#include "EventManager.h"
+#include "Settings.h"
 class Event
 {
 public:
     Event(float x, float y);
     virtual ~Event();
     virtual void Perform() = 0;
-    void Update()
-    {
-        mTransform->position.x = position.x;
-        mTransform->position.y = position.y;
-        mCollider->Update();
-    }
-    TransformComponent* getTransformComponent() {return mTransform;}
-    ColliderComponent* getColliderComponent() {return mCollider;}
-    bool isActive() {return active;}
-    void destroy() {active = false;}
+    void Update();
+    TransformComponent* getTransformComponent();
+    ColliderComponent* getColliderComponent();
+    bool isActive();
+    void destroy();
 private:
     bool active = true;
     Vector2D position;

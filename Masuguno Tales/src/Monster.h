@@ -6,7 +6,9 @@
 #include "Actor.h"
 #include "Vector2D.h"
 #include "Entity.h"
-#include "Component/Component.h"
+#include "Component/TransformComponent.h"
+#include "Component/ColliderComponent.h"
+#include "Component/SpriteComponent.h"
 #include "Component/AIComponent.h"
 #include "Collision.h"
 #include "TextureManager.h"
@@ -18,67 +20,21 @@ public:
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed);
     ~Monster();
-    void Update() override
-    {
-        // Check if HP <= 0
-        if(health <= 0) {
-            destroy();
-            Game::gPlayer->getKeyboardController()->setTarget(nullptr);
-            return;
-        }
-
-        // Update component
-        Vector2D monsterPos = mTransform->position;
-        mAI->Update();
-        mTransform->Update();
-        if(Collision::AABB(*mCollider, *Game::gPlayer->getColliderComponent()))
-        {
-            mTransform->position = monsterPos;
-        }
-        mCollider->Update();
-        mSprite->Update();
-        mName->Update();
-
-        // HP Bar
-            hpDestRectBack.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
-            hpDestRectBack.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
-            hpDestRectOver.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
-            hpDestRectOver.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
-            hpDestRectOver.w = static_cast<int>(32 * health/maxhealth);
-
-        // Targeted dest rect
-            targetedDestRect.x = static_cast<int>(mTransform->position.x + 24 - Game::gCamera.x);
-            targetedDestRect.y = static_cast<int>(mTransform->position.y - 3  - Game::gCamera.y);
-
-    }
-    void Render() override
-    {
-        mSprite->Render();
-        mName->Render();
-        if(trigger)
-        {
-            TextureManager::Draw(HPBarTexture, hpSourceRectBack, hpDestRectBack);
-            TextureManager::Draw(HPBarTexture, hpSourceRectOver, hpDestRectOver);
-        }
-
-        if(targeted)
-        {
-            TextureManager::Draw(targetedTexture, targetedSrcRect, targetedDestRect);
-        }
-    }
-    TransformComponent* getTransformComponent() {return mTransform;}
-    ColliderComponent* getColliderComponent() {return mCollider;}
-    SpriteComponent* getSpriteComponent() {return mSprite;}
-    bool isActive() const {return active;}
-    void setTrigger() {trigger = true;}
-    void destroy() {active = false;}
+    void Update() override;
+    void Render() override;
+    TransformComponent* getTransformComponent();
+    ColliderComponent* getColliderComponent();
+    SpriteComponent* getSpriteComponent();
+    bool isActive() const;
+    void setTrigger();
+    void destroy();
     void ApplyDamage(float _damage);
-    float getHP() {return health;}
-    float getMaxHP() {return maxhealth;}
-    void setTargeted() {targeted = true;}
-    void unTargeted() {targeted = false;}
-    bool isTargeted() {return targeted;}
-    std::string getMonsterName() {return monsterName;}
+    float getHP();
+    float getMaxHP();
+    void setTargeted();
+    void unTargeted();
+    bool isTargeted();
+    std::string getMonsterName();
 private:
     Vector2D startPosition;
     TransformComponent* mTransform;

@@ -31,6 +31,34 @@ Dialogue::~Dialogue()
     DialogueBox = NULL;
 }
 
+void Dialogue::Update()
+{
+    if(!isHide())
+    {
+        closeButton->handleEvent(&Game::event);
+        dialogueOption1->handleEvent(&Game::event);
+        dialogueOption2->handleEvent(&Game::event);
+        dialogueOption3->handleEvent(&Game::event);
+        dialogueOption4->handleEvent(&Game::event);
+    }
+}
+
+void Dialogue::Render()
+{
+    if(!isHide())
+    {
+        TextureManager::Draw(DialogueBox, srcRect, destRect);
+        TextureManager::Draw(Face, faceSrcRect, faceDestRect);
+        dialogueTitle->Render();
+        dialogueContent->Render();
+        dialogueOption1->Render();
+        dialogueOption2->Render();
+        dialogueOption3->Render();
+        dialogueOption4->Render();
+        closeButton->Render();
+    }
+}
+
 void Dialogue::setFace(std::string faceImg)
 {
     Face = NULL;

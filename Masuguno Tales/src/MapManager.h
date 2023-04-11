@@ -2,6 +2,14 @@
 #ifndef MapManager_h
 #define MapManager_h
 
+#include "Game.h"
+#include "Map.h"
+#include "Actor.h"
+#include "Event.h"
+#include "Event/EventType.h"
+#include "Settings.h"
+
+
 class MapManager
 {
 public:

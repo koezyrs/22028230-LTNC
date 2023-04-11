@@ -5,6 +5,8 @@
 #include <SDL.h>
 #include <string>
 #include <functional>
+
+#include "TextureManager.h"
 #include "Settings.h"
 
 class Equipment
@@ -12,9 +14,9 @@ class Equipment
 public:
     Equipment(int _id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName, int _maxHealth, int _maxMana, int _damage, int _defense, int _attackSpeed);
     ~Equipment();
-    SDL_Texture* getEquipmentSprite() {return equipmentSprite;}
-    bool isActive() {return active;}
-    void destroy() {active = false;}
+    SDL_Texture* getEquipmentSprite();
+    bool isActive();
+    void destroy();
     int id;
     EQUIPMENT_TAG equipmentTag;
     const char* description;

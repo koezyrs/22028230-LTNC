@@ -4,7 +4,8 @@
 
 #include "Vector2D.h"
 #include "Entity.h"
-#include "Component/Component.h"
+#include "Component/TransformComponent.h"
+#include "Component/ColliderComponent.h"
 #include "Settings.h"
 
 class Wall : public Entity
@@ -13,21 +14,13 @@ public:
     Wall(float x, float y);
     ~Wall();
 
-    void Update() override
-    {
-        mTransform->position.x = position.x;
-        mTransform->position.y = position.y;
-        mCollider->Update();
-    }
-
-    void Render() override
-    {
-    }
-    Vector2D getPosition() {return position;}
-    TransformComponent* getTransformComponent() {return mTransform;}
-    ColliderComponent* getColliderComponent() {return mCollider;}
-    bool isActive() {return active;}
-    void destroy() {active = false;}
+    void Update() override;
+    void Render() override;
+    Vector2D getPosition();
+    TransformComponent* getTransformComponent();
+    ColliderComponent* getColliderComponent();
+    bool isActive();
+    void destroy();
 private:
     bool active = true;
     Vector2D position;

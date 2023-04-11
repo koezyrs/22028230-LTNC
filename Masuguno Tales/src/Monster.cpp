@@ -1,5 +1,4 @@
 #include "Monster.h"
-#include "TextureManager.h"
 
 Monster::Monster(float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
@@ -38,6 +37,69 @@ void Monster::ApplyDamage(float _damage)
     if(health - healthLose <= 0) health = 0;
     else health -= healthLose;
 }
+
+void Monster::Update()
+{
+    // Check if HP <= 0
+    if(health <= 0) {
+        destroy();
+        Game::gPlayer->getKeyboardController()->setTarget(nullptr);
+        return;
+    }
+
+    // Update component
+    Vector2D monsterPos = mTransform->position;
+    mAI->Update();
+    mTransform->Update();
+    if(Collision::AABB(*mCollider, *Game::gPlayer->getColliderComponent()))
+    {
+        mTransform->position = monsterPos;
+    }
+    mCollider->Update();
+    mSprite->Update();
+    mName->Update();
+
+    // HP Bar
+        hpDestRectBack.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
+        hpDestRectBack.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
+        hpDestRectOver.x = static_cast<int>(mTransform->position.x - Game::gCamera.x);
+        hpDestRectOver.y = static_cast<int>(mTransform->position.y + 37 - Game::gCamera.y);
+        hpDestRectOver.w = static_cast<int>(32 * health/maxhealth);
+
+    // Targeted dest rect
+        targetedDestRect.x = static_cast<int>(mTransform->position.x + 24 - Game::gCamera.x);
+        targetedDestRect.y = static_cast<int>(mTransform->position.y - 3  - Game::gCamera.y);
+
+}
+void Monster::Render()
+{
+    mSprite->Render();
+    mName->Render();
+    if(trigger)
+    {
+        TextureManager::Draw(HPBarTexture, hpSourceRectBack, hpDestRectBack);
+        TextureManager::Draw(HPBarTexture, hpSourceRectOver, hpDestRectOver);
+    }
+
+    if(targeted)
+    {
+        TextureManager::Draw(targetedTexture, targetedSrcRect, targetedDestRect);
+    }
+}
+
+TransformComponent* Monster::getTransformComponent() {return mTransform;}
+ColliderComponent* Monster::getColliderComponent() {return mCollider;}
+SpriteComponent* Monster::getSpriteComponent() {return mSprite;}
+bool Monster::isActive() const {return active;}
+void Monster::setTrigger() {trigger = true;}
+void Monster::destroy() {active = false;}
+void Monster::ApplyDamage(float _damage);
+float Monster::getHP() {return health;}
+float Monster::getMaxHP() {return maxhealth;}
+void Monster::setTargeted() {targeted = true;}
+void Monster::unTargeted() {targeted = false;}
+bool Monster::isTargeted() {return targeted;}
+std::string Monster::getMonsterName() {return monsterName;}
 
 Monster::~Monster()
 {

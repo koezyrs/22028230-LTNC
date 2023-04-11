@@ -5,7 +5,6 @@
 #include "Game.h"
 #include "EventManager.h"
 #include "TextureManager.h"
-#include "Component/Component.h"
 #include "Map.h"
 #include "MapManager.h"
 #include "Collision.h"
@@ -141,9 +140,9 @@ void Game::loadData()
     // Initialize GUI
     gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "EmptyFace", " ");
     gInventory = new Inventory(790, 130, 198, 314);
+    gCharacterInformation = new CharacterInformation(50,110, 206, 418);
     gHUD = new HUD();
     gHotbar = new Hotbar();
-    gCharacterInformation = new CharacterInformation(50,110, 206, 418);
 
     // Load all game dialogue
     DialogueManager::LoadDialogue();

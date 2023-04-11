@@ -8,9 +8,9 @@
 class Tile
 {
 public:
-    Tile() {}
+    Tile();
     Tile(float x, float y, bool _isWall);
-    ~Tile() {}
+    ~Tile();
     Vector2D position;
     int flowDirectionX;
     int flowDirectionY;

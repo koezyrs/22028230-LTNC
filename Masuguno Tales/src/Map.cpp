@@ -1,19 +1,4 @@
-#include <string>
-#include <fstream>
-#include <algorithm>
-#include <iostream>
-#include <queue>
-#include <iomanip>
-#include "Game.h"
 #include "Map.h"
-#include "Actor.h"
-#include "TextureManager.h"
-#include "Settings.h"
-#include "Event/EventType.h"
-#include "Component/Component.h"
-
-// Database
-#include "Database/MonsterDB.h"
 
 Map::Map()
 : width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
@@ -171,6 +156,22 @@ void Map::AddProjectile(float x, float y, int frames, std::string skillSprite, f
     projectiles.emplace_back(new Projectile(x, y, frames, 100, "Player", skillSprite, _damage));
 }
 
+int Map::getWidth()
+{
+    return width;
+}
+int Map::getHeight()
+{
+    return height;
+}
+int Map::getSizeX()
+{
+    return sizeX;
+}
+int Map::getSizeY()
+{
+    return sizeY;
+}
 void Map::ClearMap()
 {
     for(int i = 0; i < sizeY; i++)
