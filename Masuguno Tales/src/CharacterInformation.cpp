@@ -7,6 +7,7 @@ struct EquipmentSlot
     {
         srcRect = {0,0,32,32};
         destRect = {_x, _y,32,32};
+        lastClick = 0;
     }
 
     void handleEvent(SDL_Event* e)
@@ -24,13 +25,19 @@ struct EquipmentSlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-                if(AddEquipmentToInventory(equipment))
+                if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
-                    equipment->destroy();
-                    Reset();
+                    if(AddEquipmentToInventory(equipment))
+                    {
+                        std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
+                        equipment->destroy();
+                        Reset();
+                    }
+                }else                                       // Single Click
+                {
+                    // Show info
                 }
-
+                lastClick = SDL_GetTicks64();
             }
 
         }
@@ -66,6 +73,7 @@ struct EquipmentSlot
     bool isFull = false;
     Equipment* equipment = NULL;
     SDL_Rect srcRect, destRect;
+    Uint64 lastClick;
 };
 
 CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _height)

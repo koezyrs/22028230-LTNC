@@ -9,6 +9,7 @@ struct InventorySlot
         stackLabel = new Label("data files/font/game.ttf", " ", 10, _x + 26, _y + 24, White, 20, false, []{});
         srcRect = {0,0,32,32};
         destRect = {_x, _y,32,32};
+        lastClick = 0;
     }
 
     void handleEvent(SDL_Event* e)
@@ -34,25 +35,38 @@ struct InventorySlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && item != NULL)
             {
-                std::cout << "You have use the " << item->itemName << "!" << std::endl;
-                item->Perform();
-                item->currentStack = item->currentStack - 1;
-                if(item->currentStack <= 0)
+                if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    item->destroy();
-                    Reset();
+                    std::cout << "You have use the " << item->itemName << "!" << std::endl;
+                    item->Perform();
+                    item->currentStack = item->currentStack - 1;
+                    if(item->currentStack <= 0)
+                    {
+                        item->destroy();
+                        Reset();
+                    }
+                }else                                       // Single Click
+                {
+                    // Show info
                 }
+                lastClick = SDL_GetTicks64();
             }
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-                if(AddEquipmentToCharacterInformation(equipment))
+                if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    std::cout << "You have equip the " << equipment->equipmentName << "!" << std::endl;
-                    equipment->destroy();
-                    Reset();
+                    if(AddEquipmentToCharacterInformation(equipment))
+                    {
+                        std::cout << "You have equip the " << equipment->equipmentName << "!" << std::endl;
+                        equipment->destroy();
+                        Reset();
+                    }
+                }else                                       // Single Click
+                {
+                    // Show info
                 }
-
+                lastClick = SDL_GetTicks64();
             }
 
         }
@@ -99,6 +113,7 @@ struct InventorySlot
     Equipment* equipment = NULL;
     Label* stackLabel;
     SDL_Rect srcRect, destRect;
+    Uint64 lastClick;
 };
 
 Inventory::Inventory(int _x, int _y, int _width, int _height)
