@@ -14,6 +14,7 @@
 #include "Button.h"
 #include "Label.h"
 #include "Equipment.h"
+#include "Inventory.h"
 
 #include "EventManager.h"
 #include "Settings.h"

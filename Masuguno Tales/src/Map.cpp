@@ -253,8 +253,8 @@ void Map::calculateDistances() {
 
 void Map::calculateFlowDirections() {
     //The offset of the neighboring tiles to be checked.
-    int moveX[8] = {0,0,-1,1,-1,1,1,-1};
-    int moveY[8] = {-1,1,0,0,1,1,-1,-1};
+    int moveX[8] = {0,0,-1,1};
+    int moveY[8] = {-1,1,0,0};
 
     for(int i = 0; i < sizeY; i++)
     {
@@ -262,7 +262,7 @@ void Map::calculateFlowDirections() {
         {
             if(tiles[i][j].flowDistance == flowDistanceMax) continue;
             unsigned char flowFieldBest = tiles[i][j].flowDistance;
-            for(int k = 0; k < 8; k++)
+            for(int k = 0; k < 4; k++)
             {
                 int neighborX = j + moveX[k];
                 int neighborY = i + moveY[k];

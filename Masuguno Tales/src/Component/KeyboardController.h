@@ -3,6 +3,7 @@
 #define KeyboardController_h
 
 #include <vector>
+#include <cmath>
 
 #include "../Game.h"
 #include "TransformComponent.h"
@@ -17,15 +18,25 @@ class Monster;
 class KeyboardController
 {
 private:
+    enum DIRECTION{
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        NONE
+    };
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     Monster* target;
     Uint64 cooldownBasicAttack;
+    DIRECTION state;
 public:
     KeyboardController();
     KeyboardController(TransformComponent* trans, SpriteComponent* sprite);
     Monster* getTarget();
     void setTarget(Monster* _tar);
+    void setNearestTarget();
+    void PerformSkill(std::string skillDatabaseName, Uint64 &_cooldown);
     void Update();
 };
 

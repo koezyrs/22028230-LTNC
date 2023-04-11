@@ -1,5 +1,6 @@
 #include "AIComponent.h"
 
+#include "../Map.h" // Must be included here
 AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
@@ -11,8 +12,8 @@ AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _da
     mTransform->speed = roamSpeed;
     roamPosition = startPostion;
 
-    int sizeX = EventManager::GetMapSizeX();
-    int sizeY = EventManager::GetMapSizeY();
+    int sizeX = Game::currentMap->getSizeX();
+    int sizeY = Game::currentMap->getSizeY();
     tiles = new Tile*[sizeY];
     for(int i = 0; i < sizeY; i++) tiles[i] = new Tile[sizeX];
 
@@ -23,16 +24,16 @@ AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _da
             tiles[i][j].flowDirectionX = 0;
             tiles[i][j].flowDirectionY = 0;
             tiles[i][j].flowDistance = flowDistanceMax;
-            tiles[i][j].position.x = EventManager::getMapTiles()[i][j].position.x;
-            tiles[i][j].position.y = EventManager::getMapTiles()[i][j].position.y;
-            tiles[i][j].isWall = EventManager::getMapTiles()[i][j].isWall;
+            tiles[i][j].position.x = Game::currentMap->tiles[i][j].position.x;
+            tiles[i][j].position.y = Game::currentMap->tiles[i][j].position.y;
+            tiles[i][j].isWall = Game::currentMap->tiles[i][j].isWall;
         }
     }
 }
 
 AIComponent::~AIComponent()
 {
-    int sizeY = EventManager::GetMapSizeY();
+    int sizeY = Game::currentMap->getSizeY();
 
     for(int i = 0; i < sizeY; i++) if(tiles[i] != NULL) delete[] tiles[i];
     if(tiles != NULL) delete[] tiles;
@@ -91,8 +92,8 @@ void AIComponent::Update()
 
             int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
             int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
-            mTransform->velocity.x = mTransform->speed * static_cast<float>(EventManager::getMapTiles()[coordinateY][coordinateX].flowDirectionX);
-            mTransform->velocity.y = mTransform->speed * static_cast<float>(EventManager::getMapTiles()[coordinateY][coordinateX].flowDirectionY);
+            mTransform->velocity.x = mTransform->speed * static_cast<float>(Game::currentMap->tiles[coordinateY][coordinateX].flowDirectionX);
+            mTransform->velocity.y = mTransform->speed * static_cast<float>(Game::currentMap->tiles[coordinateY][coordinateX].flowDirectionY);
 
 
             if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) < attackRange)
@@ -160,8 +161,8 @@ void AIComponent::setTargetAndCalculateFlowField(int targetNewX, int targetNewY)
         targetX = targetNewX;
         targetY = targetNewY;
         // Get Map size
-        int sizeX = EventManager::GetMapSizeX();
-        int sizeY = EventManager::GetMapSizeY();
+        int sizeX = Game::currentMap->getSizeX();
+        int sizeY = Game::currentMap->getSizeY();
 
         //Ensure the target is in bounds.
         if ((targetX >=0) && (targetX < sizeX) &&
@@ -187,8 +188,8 @@ void AIComponent::setTargetAndCalculateFlowField(int targetNewX, int targetNewY)
 
 void AIComponent::calculateDistances(int targetX, int targetY) {
     // Get map size
-    int sizeX = EventManager::GetMapSizeX();
-    int sizeY = EventManager::GetMapSizeY();
+    int sizeX = Game::currentMap->getSizeX();
+    int sizeY = Game::currentMap->getSizeY();
 
     //Create a queue that will contain the indices to be checked.
     std::queue<Tile> listTilesToCheck;
@@ -228,8 +229,8 @@ void AIComponent::calculateDistances(int targetX, int targetY) {
 
 void AIComponent::calculateFlowDirections() {
     // Get map size
-    int sizeX = EventManager::GetMapSizeX();
-    int sizeY = EventManager::GetMapSizeY();
+    int sizeX = Game::currentMap->getSizeX();
+    int sizeY = Game::currentMap->getSizeY();
 
     //The offset of the neighboring tiles to be checked.
     int moveX[4] = {0,0,-1,1};

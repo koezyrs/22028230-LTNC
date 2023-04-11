@@ -24,7 +24,7 @@ struct EquipmentSlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-                if(EventManager::AddEquipmentToInventory(equipment))
+                if(AddEquipmentToInventory(equipment))
                 {
                     std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
                     equipment->destroy();
@@ -47,6 +47,11 @@ struct EquipmentSlot
         Reset();
         equipment = _equipment;
         isFull = true;
+    }
+
+    bool AddEquipmentToInventory(Equipment* _equipment)
+    {
+        return Game::gInventory->AddEquipment(_equipment);
     }
 
     bool isFull = false;

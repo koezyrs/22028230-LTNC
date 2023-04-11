@@ -14,6 +14,8 @@
 #include "Label.h"
 #include "Item.h"
 #include "Equipment.h"
+#include "CharacterInformation.h"
+
 #include "Settings.h"
 #include "EventManager.h"
 #include "TextureManager.h"

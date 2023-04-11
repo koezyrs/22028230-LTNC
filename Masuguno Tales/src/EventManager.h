@@ -14,14 +14,6 @@ class EventManager
 {
 public:
     static void ChangeMap(int mapID);
-    static bool AddEquipmentToInventory(Equipment* _equipment);
-    static bool AddEquipmentToCharacterInformation(Equipment* _equipment);
-    static bool AddItemToInventory(Item* _item);
-    static Tile** getMapTiles();
-    static int GetMapSizeX();
-    static int GetMapSizeY();
-    static void setNearestTarget();
-    static bool PerformSkill(Monster* monster, Vector2D currentplayerPos, std::string skillName);
     static void SetSystemMessage(std::string _message, Uint64 timeout);
 
 };
