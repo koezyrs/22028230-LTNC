@@ -160,7 +160,7 @@ void Game::loadData()
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
 
     // Add test Item
-    gInventory->AddEquipment(new Equipment(1,"Equip-AssasinDagger",WEAPON, "Assasin Dagger", 0, 0, 10, 0, 2) );
+    gInventory->AddEquipment(new Equipment(1,"Equip-AssasinDagger",WEAPON, "Assasin Dagger", 10, 2, 10, 20, 1500) );
 
     return;
 }

@@ -51,7 +51,16 @@ struct EquipmentSlot
 
     bool AddEquipmentToInventory(Equipment* _equipment)
     {
-        return Game::gInventory->AddEquipment(_equipment);
+        if(Game::gInventory->AddEquipment(_equipment))
+        {
+            Game::gPlayer->mStats->Strength -= _equipment->Strength;
+            Game::gPlayer->mStats->Dexterity -= _equipment->Dexterity;
+            Game::gPlayer->mStats->Intelligence -= _equipment->Intelligence;
+            Game::gPlayer->mStats->Vitality -= _equipment->Vitality;
+            Game::gPlayer->mStats->Agility -= _equipment->Agility;
+            return true;
+        }
+        return false;
     }
 
     bool isFull = false;

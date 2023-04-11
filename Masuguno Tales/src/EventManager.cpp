@@ -9,14 +9,6 @@
 #include "Map.h"
 #include "MapManager.h"
 #include "Vector2D.h"
-
-#include "Actor.h"
-#include "HUD.h"
-#include "Inventory.h"
-#include "CharacterInformation.h"
-
-
-#include "Database/SkillDB.h"
 void EventManager::ChangeMap(int mapID)
 {
     switch(mapID){
@@ -27,9 +19,4 @@ void EventManager::ChangeMap(int mapID)
         MapManager::LoadMap2();
         break;
     }
-}
-
-void EventManager::SetSystemMessage(std::string _message, Uint64 timeout)
-{
-    Game::gHUD->setSystemMessage(_message, timeout);
 }
