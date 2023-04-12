@@ -55,9 +55,10 @@ void KeyboardController::PerformSkill(std::string skillDatabaseName, Uint64 &_co
         return;
     }
 
-    if(SDL_GetTicks64() <= _cooldown)
+    float pAS = Game::gPlayer->mStats->AttackSpeed;
+    if(SDL_GetTicks64() <= _cooldown - pAS * sk.percentAS)
     {
-        std::string _message = "Wait " +  to_string((float)(_cooldown - SDL_GetTicks64())/1000) + "s for the next attack!";
+        std::string _message = "Wait " +  to_string((float)(_cooldown - pAS - SDL_GetTicks64())/1000) + "s for the next attack!";
         Game::gHUD->setSystemMessage(_message, 2000);
         return;
     }
@@ -73,7 +74,8 @@ void KeyboardController::PerformSkill(std::string skillDatabaseName, Uint64 &_co
         float offsetX = 32;
         float offsetY = 32;
         target->setTrigger();
-        Game::currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY, sk.skillFrames, sk.skillSprite, sk.damage);
+        int pDamage = Game::gPlayer->mStats->Damage;
+        Game::currentMap->AddProjectile(monsterPos.x - offsetX, monsterPos.y - offsetY, sk.skillFrames, sk.skillSprite, sk.damage + pDamage * sk.percentDamage);
         success = true;
     }
 

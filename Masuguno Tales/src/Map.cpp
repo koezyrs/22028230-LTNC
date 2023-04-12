@@ -48,6 +48,7 @@ void Map::LoadMap(std::string maptex, const char* mapfile, int _sizeX, int _size
 
 void Map::Refresh()
 {
+
     walls.erase(std::remove_if(walls.begin(), walls.end(),
         [](Wall* theWall){return !theWall->isActive();}), walls.end());
 
@@ -179,11 +180,19 @@ void Map::ClearMap()
         if(tiles[i] != NULL) delete[] tiles[i];
     }
     if(tiles != NULL) delete[] tiles;
+    /*
     for(auto& w : walls) {w->destroy();}
     for(auto& m : monsters) {m->destroy();}
     for(auto& e : events) {e->destroy();}
     for(auto& n : npcs) {n->destroy();}
     for(auto& p : projectiles) {p->destroy();}
+    */
+    walls.clear();
+    monsters.clear();
+    events.clear();
+    npcs.clear();
+    projectiles.clear();
+    Game::gPlayer->getKeyboardController()->setTarget(nullptr);
     mTexture = NULL;
     Refresh();
 }

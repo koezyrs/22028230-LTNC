@@ -70,7 +70,6 @@
 		<Unit filename="src/Equipment.h" />
 		<Unit filename="src/Event.cpp" />
 		<Unit filename="src/Event.h" />
-		<Unit filename="src/EventManager.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
 		<Unit filename="src/HUD.cpp" />
@@ -93,6 +92,8 @@
 		<Unit filename="src/NPC.h" />
 		<Unit filename="src/Projectile.cpp" />
 		<Unit filename="src/Projectile.h" />
+		<Unit filename="src/Quest.cpp" />
+		<Unit filename="src/Quest.h" />
 		<Unit filename="src/Settings.h" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/TextureManager.h" />
