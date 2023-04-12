@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 #include "Game.h"
-#include "EventManager.h"
 #include "TextureManager.h"
 #include "Map.h"
 #include "MapManager.h"

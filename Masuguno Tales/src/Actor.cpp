@@ -57,3 +57,8 @@ bool Actor::isActive() const{
 void Actor::destroy() {
     active = false;
 }
+
+void Actor::setPosition(float x, float y)
+{
+    mTransform->position = Vector2D(x,y);
+}

@@ -6,7 +6,6 @@
 #include "Map.h"
 #include "Actor.h"
 #include "Event.h"
-#include "Event/EventType.h"
 #include "Settings.h"
 
 

@@ -71,9 +71,6 @@
 		<Unit filename="src/Event.cpp" />
 		<Unit filename="src/Event.h" />
 		<Unit filename="src/EventManager.cpp" />
-		<Unit filename="src/EventManager.h" />
-		<Unit filename="src/Event/ChangeMapEvent.h" />
-		<Unit filename="src/Event/EventType.h" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.h" />
 		<Unit filename="src/HUD.cpp" />

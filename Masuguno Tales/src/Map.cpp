@@ -141,9 +141,9 @@ void Map::AddMonster(float x, float y, std::string _monsterDB)
     }
 }
 
-void Map::AddEvent(Event* newEvent)
+void Map::AddEvent(float x, float y, std::function<void()> func)
 {
-    events.emplace_back(newEvent);
+    events.emplace_back(new Event(x,y, func));
 }
 
 void Map::AddNPC(float x, float y, const char* filepath, std::string name)

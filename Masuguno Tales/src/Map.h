@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <functional>
 #include <memory>
 #include <algorithm>
 #include <iostream>
@@ -19,7 +20,6 @@
 #include "Wall.h"
 #include "Projectile.h"
 #include "Event.h"
-#include "Event/EventType.h"
 #include "Tile.h"
 
 #include "Vector2D.h"
@@ -41,7 +41,7 @@ public:
     void LoadMap(std::string maptex, const char* mapfile, int sizeX, int sizeY);
     void AddWall(int x, int y);
     void AddMonster(float x, float y, std::string _monsterDB);
-    void AddEvent(Event* newEvent);
+    void AddEvent(float x, float y, std::function<void()> func = []{});
     void AddNPC(float x, float y, const char* filepath, std::string name);
     void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);
     int getWidth();

@@ -17,7 +17,6 @@
 #include "CharacterInformation.h"
 
 #include "Settings.h"
-#include "EventManager.h"
 #include "TextureManager.h"
 
 struct InventorySlot;

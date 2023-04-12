@@ -10,7 +10,6 @@
 #include "SpriteComponent.h"
 #include "../Entity.h"
 #include "../Vector2D.h"
-#include "../EventManager.h"
 #include "../Database/SkillDB.h"
 
 class Monster;

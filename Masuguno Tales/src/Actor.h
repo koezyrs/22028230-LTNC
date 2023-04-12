@@ -37,7 +37,7 @@ public:
 
     bool isActive() const;
     void destroy();
-
+    void setPosition(float x, float y);
 private:
     bool active = true;
     TransformComponent* mTransform;

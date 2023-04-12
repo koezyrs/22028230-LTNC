@@ -16,7 +16,6 @@
 #include "Equipment.h"
 #include "Inventory.h"
 
-#include "EventManager.h"
 #include "Settings.h"
 
 struct EquipmentSlot;

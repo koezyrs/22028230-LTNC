@@ -11,7 +11,6 @@
 #include "../Game.h"
 #include "../Actor.h"
 #include "../Tile.h"
-#include "../EventManager.h"
 
 #include "TransformComponent.h"
 
