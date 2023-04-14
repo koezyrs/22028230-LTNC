@@ -47,11 +47,15 @@ private:
 
     Label *strength, *dexterity, *intelligence, *vitality, *agility;
 
-    //Label* avaliblePoints, pointsText;
 
     std::string LevelStr, DamageStr, DefenseStr, HPStr, MPStr, ASStr;
     std::string strengthStr, dexterityStr, intelligenceStr, vitalityStr, agilityStr;
     Button* closeButton;
+    Button *addStrength, *addDexterity, *addIntelligence, *addVitality, *addAgility;
+
+    //Power points + avalible points
+    Label *powerPoint, *avaliblePoints;
+    std::string PowerStr, AvalibleStr;
 };
 
 #endif // CharacterInformation_h

@@ -83,6 +83,36 @@ CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _heig
     equipSlot = new EquipmentSlot[MAX_EQUIPMENT_SLOTS];
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 190, _y + 4, 13, 13, [this]{Window::hideWindow(); });
     characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, White, false, []{});
+    addStrength = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 259, 16, 16,
+                             []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
+                                 Game::gPlayer->mStats->Strength += 1;
+                                 Game::gPlayer->mStats->StatsUsed += 1;
+                                 Game::gPlayer->mStats->StatsAvailable -= 1;
+                                 });
+    addDexterity = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 282, 16, 16,
+                              []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
+                                 Game::gPlayer->mStats->Dexterity += 1;
+                                 Game::gPlayer->mStats->StatsUsed += 1;
+                                 Game::gPlayer->mStats->StatsAvailable -= 1;
+                                 });
+    addIntelligence = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 305, 16, 16,
+                                 []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
+                                 Game::gPlayer->mStats->Intelligence += 1;
+                                 Game::gPlayer->mStats->StatsUsed += 1;
+                                 Game::gPlayer->mStats->StatsAvailable -= 1;
+                                 });
+    addVitality = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 327, 16, 16,
+                             []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
+                                 Game::gPlayer->mStats->Vitality += 1;
+                                 Game::gPlayer->mStats->StatsUsed += 1;
+                                 Game::gPlayer->mStats->StatsAvailable -= 1;
+                                 });
+    addAgility = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 350, 16, 16,
+                            []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
+                                 Game::gPlayer->mStats->Agility += 1;
+                                 Game::gPlayer->mStats->StatsUsed += 1;
+                                 Game::gPlayer->mStats->StatsAvailable -= 1;
+                                 });
 
     // Information tab
     std::string playerName = Game::gPlayer->getNameComponent()->mName;
@@ -101,6 +131,10 @@ CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _heig
     intelligence = new Label(GAME_FONT, " ", 10, _x + 38, _y + 307, White, 64, false, []{});
     vitality = new Label(GAME_FONT, " ", 10, _x + 38, _y + 330, White, 64, false, []{});
     agility = new Label(GAME_FONT, " ", 10, _x + 38, _y + 353, White, 64, false, []{});
+
+    // Power + Points
+    powerPoint = new Label(GAME_FONT, " ", 10, _x + 55, _y + 369, Black, 94, false, []{});
+    avaliblePoints = new Label(GAME_FONT, " ", 10, _x + 139, _y + 386, Black, 30, false, []{});
 
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
@@ -142,6 +176,14 @@ void CharacterInformation::Update()
                [](Equipment* theEquipment){return !theEquipment->isActive();}), equipmentList.end());
 
     closeButton->handleEvent(&Game::event);
+    if(Game::gPlayer->mStats->StatsAvailable > 0)
+    {
+        addStrength->handleEvent(&Game::event);
+        addDexterity->handleEvent(&Game::event);
+        addIntelligence->handleEvent(&Game::event);
+        addVitality->handleEvent(&Game::event);
+        addAgility->handleEvent(&Game::event);
+    }
 
     for(int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
     {
@@ -239,6 +281,22 @@ void CharacterInformation::Update()
         agility = new Label(GAME_FONT, agilityStr.c_str(), 10, position.x + 38, position.y + 353, White, 64, false, []{});
     }
 
+    std::string newPower = to_string(Game::gPlayer->mStats->Power);
+    if(PowerStr != newPower)
+    {
+        powerPoint->Reset();
+        PowerStr = newPower;
+        powerPoint = new Label(GAME_FONT, PowerStr.c_str(), 10, position.x + 55, position.y + 369, Black, 94, false, []{});
+    }
+
+    std::string newAvalible = to_string(Game::gPlayer->mStats->StatsAvailable);
+    if(AvalibleStr != newAvalible)
+    {
+        avaliblePoints->Reset();
+        AvalibleStr = newAvalible;
+        avaliblePoints = new Label(GAME_FONT, AvalibleStr.c_str(), 10, position.x + 139, position.y + 386, Black, 30, false, []{});
+    }
+
 }
 
 void CharacterInformation::Render()
@@ -247,6 +305,14 @@ void CharacterInformation::Render()
     TextureManager::Draw(CharacterInformationBox, srcRect, destRect);
     characterInformationTitle->Render();
     closeButton->Render();
+    if(Game::gPlayer->mStats->StatsAvailable > 0)
+    {
+        addStrength->Render();
+        addDexterity->Render();
+        addIntelligence->Render();
+        addVitality->Render();
+        addAgility->Render();
+    }
 
     for(int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
     {
@@ -270,6 +336,9 @@ void CharacterInformation::Render()
     intelligence->Render();
     vitality->Render();
     agility->Render();
+
+    powerPoint->Render();
+    avaliblePoints->Render();
 }
 
 bool CharacterInformation::AddEquipment(Equipment* _equipment)

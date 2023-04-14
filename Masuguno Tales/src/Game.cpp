@@ -107,6 +107,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/HPBar.png", "HPBar");
     TextureManager::LoadTexture("data files/graphics/gui/Target.png", "Target");
     TextureManager::LoadTexture("data files/graphics/gui/TargetHPBar.png", "TargetHPBar");
+    TextureManager::LoadTexture("data files/graphics/gui/48.png", "AddButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/49.png", "AddButtonOver");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");

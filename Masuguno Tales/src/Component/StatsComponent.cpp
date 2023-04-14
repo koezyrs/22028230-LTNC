@@ -1,18 +1,18 @@
 #include "StatsComponent.h"
 
 StatsComponent::StatsComponent(int _level, int _experience, int _experienceToNextLevel,int _strength, int _dexterity, int _intelligence,
-                   int _vitality, int _agility)
+                   int _vitality, int _agility, int _statsUsed, int _statsAvailable)
 : Level(_level), Experience(_experience), ExperienceToNextLevel(_experienceToNextLevel), Strength(_strength),
-Dexterity(_dexterity), Intelligence(_intelligence), Vitality(_vitality), Agility(_agility)
+Dexterity(_dexterity), Intelligence(_intelligence), Vitality(_vitality), Agility(_agility), StatsUsed(_statsUsed), StatsAvailable(_statsAvailable)
 {
     Damage = _strength*2;
     Defense = _dexterity*0.5;
     MaxMana = _intelligence*3;
     MaxHealth = _vitality*5;
     AttackSpeed = _agility;
-
     Mana = MaxMana;
     Health = MaxHealth;
+    Power = Strength*3+Dexterity*3+Intelligence*2+Vitality*2+Agility*5;
 }
 
 StatsComponent::~StatsComponent() {}
@@ -24,6 +24,7 @@ void StatsComponent::Update()
     MaxMana = Intelligence*3;
     MaxHealth = Vitality*5;
     AttackSpeed = Agility;
+    Power = Strength*3+Dexterity*3+Intelligence*2+Vitality*2+Agility*5;
 
     if(Health <= 0) Health = 0;
     if(Mana <= 0) Mana = 0;
@@ -40,6 +41,8 @@ void StatsComponent::Update()
             Experience = Experience - ExperienceToNextLevel;
             Level = Level + 1;
             ExperienceToNextLevel = ExperienceToNextLevel + ExperienceToNextLevel*NEXT_LEVEL_EXP_RATE;
+            int rewardStatsForLevelUp = 5;
+            StatsAvailable += rewardStatsForLevelUp;
         }
     }
 }

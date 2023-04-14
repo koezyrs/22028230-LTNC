@@ -9,7 +9,7 @@ class StatsComponent
 {
 public:
     StatsComponent(int _level, int _experience, int _experienceToNextLevel,int _strength, int _dexterity, int _intelligence,
-                   int _vitality, int _agility);
+                   int _vitality, int _agility, int _statsUsed, int _statsAvailable);
     ~StatsComponent();
     void Update();
     void ApplyDamage(int _damage);
@@ -31,6 +31,11 @@ public:
     int Intelligence = 0;
     int Vitality = 0;
     int Agility = 0;
+
+    int StatsUsed = 0;
+    int StatsAvailable = 0;
+
+    int Power = 0;
 };
 
 #endif // StatsComponent_h
