@@ -140,43 +140,42 @@ Inventory::Inventory(int _x, int _y, int _width, int _height)
 
 void Inventory::Update()
 {
-    if(!isHide())
+    if(isHide()) return;
+    itemList.erase(std::remove_if(itemList.begin(), itemList.end(),
+                [](Item* theItem){return !theItem->isActive();}), itemList.end());
+
+    equipmentList.erase(std::remove_if(equipmentList.begin(), equipmentList.end(),
+                [](Equipment* theEquipment){return !theEquipment->isActive();}), equipmentList.end());
+
+    closeButton->handleEvent(&Game::event);
+
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
-        itemList.erase(std::remove_if(itemList.begin(), itemList.end(),
-                    [](Item* theItem){return !theItem->isActive();}), itemList.end());
-
-        equipmentList.erase(std::remove_if(equipmentList.begin(), equipmentList.end(),
-                    [](Equipment* theEquipment){return !theEquipment->isActive();}), equipmentList.end());
-
-        closeButton->handleEvent(&Game::event);
-
-        for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
-        {
-            invSlot[i].handleEvent(&Game::event);
-        }
-
+        invSlot[i].handleEvent(&Game::event);
     }
+
+
 }
 
 void Inventory::Render()
 {
-    if(!isHide())
+    if(isHide()) return;
+
+    TextureManager::Draw(InventoryBox, srcRect, destRect);
+    inventoryTitle->Render();
+    closeButton->Render();
+
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
-        TextureManager::Draw(InventoryBox, srcRect, destRect);
-        inventoryTitle->Render();
-        closeButton->Render();
-
-        for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+        if(invSlot[i].isFull)
         {
-            if(invSlot[i].isFull)
-            {
-                if(invSlot[i].item != NULL) TextureManager::Draw(invSlot[i].item->getItemSprite(), invSlot[i].srcRect, invSlot[i].destRect);
-                if(invSlot[i].equipment != NULL) TextureManager::Draw(invSlot[i].equipment->getEquipmentSprite(), invSlot[i].srcRect, invSlot[i].destRect);
-                if(invSlot[i].stackLabel != NULL) invSlot[i].stackLabel->Render();
-            }
+            if(invSlot[i].item != NULL) TextureManager::Draw(invSlot[i].item->getItemSprite(), invSlot[i].srcRect, invSlot[i].destRect);
+            if(invSlot[i].equipment != NULL) TextureManager::Draw(invSlot[i].equipment->getEquipmentSprite(), invSlot[i].srcRect, invSlot[i].destRect);
+            if(invSlot[i].stackLabel != NULL) invSlot[i].stackLabel->Render();
         }
-
     }
+
+
 }
 
 bool Inventory::AddItem(Item* _item)

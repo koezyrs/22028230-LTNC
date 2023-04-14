@@ -76,6 +76,8 @@
 		<Unit filename="src/HUD.h" />
 		<Unit filename="src/Hotbar.cpp" />
 		<Unit filename="src/Hotbar.h" />
+		<Unit filename="src/InputBox.cpp" />
+		<Unit filename="src/InputBox.h" />
 		<Unit filename="src/Inventory.cpp" />
 		<Unit filename="src/Inventory.h" />
 		<Unit filename="src/Item.cpp" />
