@@ -5,7 +5,7 @@ Monster::Monster(float _x, float _y, int _width, int _height, int _scale,  std::
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed)
 : startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
-    stopChaseRange(_stopChaseRange)
+    stopChaseRange(_stopChaseRange), timeSpawn(0)
 {
     mTransform = new TransformComponent(_x, _y, _width, _height, _scale);
     mSprite = new SpriteComponent(monsterSprite, mTransform, true);
@@ -40,10 +40,29 @@ void Monster::ApplyDamage(float _damage)
 
 void Monster::Update()
 {
+    // Wait for spawn
+    if(!active)
+    {
+        if(SDL_GetTicks64() > timeSpawn)
+        {
+            setPosition(startPosition.x, startPosition.y);
+            health = maxhealth;
+            active = true;
+        }
+        return;
+    }
+
     // Check if HP <= 0
     if(health <= 0) {
-        destroy();
+        active = false;
+        Game::gPlayer->mStats->Experience += 20;
         Game::gPlayer->getKeyboardController()->setTarget(nullptr);
+        targeted = false;
+        trigger = false;
+        float spawnWaitTime = 10000;
+        timeSpawn = SDL_GetTicks64() + spawnWaitTime;
+        mTransform->position = Vector2D(-100,-100); // The deadzone
+        mCollider->Update();
         return;
     }
 
@@ -73,6 +92,7 @@ void Monster::Update()
 }
 void Monster::Render()
 {
+    if(!active) return;
     mSprite->Render();
     mName->Render();
     if(trigger)
@@ -100,7 +120,7 @@ void Monster::setTargeted() {targeted = true;}
 void Monster::unTargeted() {targeted = false;}
 bool Monster::isTargeted() {return targeted;}
 std::string Monster::getMonsterName() {return monsterName;}
-
+void Monster::setPosition(float x, float y) {mTransform->position = Vector2D(x,y);}
 Monster::~Monster()
 {
     delete mTransform;

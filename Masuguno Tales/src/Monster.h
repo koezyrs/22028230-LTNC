@@ -35,6 +35,7 @@ public:
     void unTargeted();
     bool isTargeted();
     std::string getMonsterName();
+    void setPosition(float x, float y);
 private:
     Vector2D startPosition;
     TransformComponent* mTransform;
@@ -66,6 +67,9 @@ private:
     // Targeted icon
     SDL_Texture* targetedTexture;
     SDL_Rect targetedSrcRect, targetedDestRect;
+
+    // Spawn time
+    Uint64 timeSpawn;
 };
 
 #endif // Monster_h

@@ -52,9 +52,10 @@ void Map::Refresh()
     walls.erase(std::remove_if(walls.begin(), walls.end(),
         [](Wall* theWall){return !theWall->isActive();}), walls.end());
 
+    /*
     monsters.erase(std::remove_if(monsters.begin(), monsters.end(),
         [](Monster* theMonster){return !theMonster->isActive();}), monsters.end());
-
+    */
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(),
         [](NPC* theNPC) {return !theNPC->isActive();}), npcs.end());
 
