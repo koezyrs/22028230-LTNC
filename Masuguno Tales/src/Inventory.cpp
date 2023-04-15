@@ -10,6 +10,7 @@ struct InventorySlot
         srcRect = {0,0,32,32};
         destRect = {_x, _y,32,32};
         lastClick = 0;
+        lastUpdateStack = 0;
     }
 
     void handleEvent(SDL_Event* e)
@@ -24,14 +25,6 @@ struct InventorySlot
             // check if the mouse is in the button
             if((x < destRect.x) || (x > destRect.x + 32) || (y < destRect.y) || (y > destRect.y + 32)) inside = false;
             else inside = true;
-
-            if(item != NULL)
-            {
-                std::string tmp = std::to_string(item->currentStack);
-                SDL_Color White = {255, 255, 255};
-                stackLabel->Reset();
-                stackLabel = new Label("data files/font/game.ttf", tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
-            }
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && item != NULL)
             {
@@ -70,12 +63,25 @@ struct InventorySlot
             }
 
         }
+
+        if(item != NULL)
+        {
+            if(lastUpdateStack != item->currentStack)
+            {
+                std::string tmp = std::to_string(item->currentStack);
+                SDL_Color White = {255, 255, 255};
+                lastUpdateStack = item->currentStack;
+                stackLabel->Reset();
+                stackLabel = new Label("data files/font/game.ttf", tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
+            }
+        }
     }
 
     void Reset()
     {
         item = NULL;
         equipment = NULL;
+        lastUpdateStack = 0;
         stackLabel->Reset();
         isFull = false;
     }
@@ -113,6 +119,7 @@ struct InventorySlot
     Item* item = NULL;
     Equipment* equipment = NULL;
     Label* stackLabel;
+    int lastUpdateStack;
     SDL_Rect srcRect, destRect;
     Uint64 lastClick;
 };
@@ -240,3 +247,42 @@ Inventory::~Inventory()
     InventoryBox = NULL;
 }
 
+bool Inventory::FindItem(int item_id, int item_amount)
+{
+    int amount = 0;
+    bool success = false;
+
+    ItemType itemTemp = ItemDB::itemDatabase[item_id];
+    if(itemTemp.itemName.empty())
+    {
+        std::cerr << "Not found item id: " << item_id << std::endl;
+        return false;
+    }
+
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        if(amount >= item_amount) {success = true; break;}
+        if(!invSlot[i].isFull) continue;
+        if(invSlot[i].item == NULL) continue;
+        if(invSlot[i].item->item_id == itemTemp.item_id) amount = amount + invSlot[i].item->currentStack;
+    }
+
+    return success;
+}
+
+bool Inventory::FindEquip(int equip_id, int equip_amount)
+{
+    int amount = 0;
+    bool success = false;
+
+    EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equip_id];
+
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        if(amount >= equip_amount) {success = true; break;}
+        if(!invSlot[i].isFull) continue;
+        if(invSlot[i].equipment == NULL) continue;
+        if(invSlot[i].equipment->equipment_id == equipTemp.equipment_id) amount = amount + 1;
+    }
+    return success;
+}

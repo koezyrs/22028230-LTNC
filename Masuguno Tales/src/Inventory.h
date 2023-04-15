@@ -34,6 +34,8 @@ public:
 
     bool AddItem(int item_id);
     bool AddEquipment(int equipment_id);
+    bool FindItem(int item_id, int item_amount);
+    bool FindEquip(int equip_id, int equip_amount);
 private:
     Vector2D position;
     int mWidth, mHeight;
