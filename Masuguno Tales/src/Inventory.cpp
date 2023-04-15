@@ -56,9 +56,9 @@ struct InventorySlot
             {
                 if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    if(AddEquipmentToCharacterInformation(equipment))
+                    if(AddEquipmentToCharacterInformation(equipment->equipment_id))
                     {
-                        std::cout << "You have equip the " << equipment->equipmentName << "!" << std::endl;
+                        std::cerr << "You have equip the " << equipment->equipmentName << "!" << std::endl;
                         equipment->destroy();
                         Reset();
                     }
@@ -94,15 +94,16 @@ struct InventorySlot
         isFull = true;
     }
 
-    bool AddEquipmentToCharacterInformation(Equipment* _equipment)
+    bool AddEquipmentToCharacterInformation(int equipment_id)
     {
-        if(Game::gCharacterInformation->AddEquipment(_equipment))
+        EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
+        if(Game::gCharacterInformation->AddEquipment(equipment_id))
         {
-            Game::gPlayer->mStats->Strength += _equipment->Strength;
-            Game::gPlayer->mStats->Dexterity += _equipment->Dexterity;
-            Game::gPlayer->mStats->Intelligence += _equipment->Intelligence;
-            Game::gPlayer->mStats->Vitality += _equipment->Vitality;
-            Game::gPlayer->mStats->Agility += _equipment->Agility;
+            Game::gPlayer->mStats->Strength += equipTemp.Strength;
+            Game::gPlayer->mStats->Dexterity += equipTemp.Dexterity;
+            Game::gPlayer->mStats->Intelligence += equipTemp.Intelligence;
+            Game::gPlayer->mStats->Vitality += equipTemp.Vitality;
+            Game::gPlayer->mStats->Agility += equipTemp.Agility;
             return true;
         }
         return false;
@@ -178,13 +179,18 @@ void Inventory::Render()
 
 }
 
-bool Inventory::AddItem(Item* _item)
+bool Inventory::AddItem(int item_id)
 {
+    ItemType itemTemp = ItemDB::itemDatabase[item_id];
+    if(itemTemp.itemName.empty())
+    {
+        std::cerr << "Not found item id: " << item_id << std::endl;
+        return false;
+    }
     for(auto& theItem : itemList)
     {
-        if(theItem->itemName == _item->itemName && theItem->currentStack < theItem->maxStack)
+        if(theItem->itemName == itemTemp.itemName && theItem->currentStack < theItem->maxStack)
         {
-            delete _item;
             theItem->currentStack = theItem->currentStack + 1;
             return true;
         }
@@ -194,9 +200,9 @@ bool Inventory::AddItem(Item* _item)
     {
         if(invSlot[i].isFull == false)
         {
-            itemList.emplace_back(_item);
-            invSlot[i].AddItemToSlot(_item);
-            std::cout << "Added " << _item->itemName << " to the Inventory!" << std::endl;
+            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName,itemTemp.ItemFunc));
+            invSlot[i].AddItemToSlot(itemList.back());
+            std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;
             return true;
         }
     }
@@ -204,15 +210,18 @@ bool Inventory::AddItem(Item* _item)
     return false;
 }
 
-bool Inventory::AddEquipment(Equipment* _equipment)
+bool Inventory::AddEquipment(int equipment_id)
 {
+    EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
     for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
         if(invSlot[i].isFull == false)
         {
-            equipmentList.emplace_back(_equipment);
-            invSlot[i].AddEquipmentToSlot(_equipment);
-            std::cout << "Added " << _equipment->equipmentName << " to the Inventory!" << std::endl;
+            equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
+                                                     equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
+                                                     equipTemp.Vitality, equipTemp.Agility));
+            invSlot[i].AddEquipmentToSlot(equipmentList.back());
+            std::cout << "Added " << equipTemp.equipmentName << " to the Inventory!" << std::endl;
             return true;
             break;
         }

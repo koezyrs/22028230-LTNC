@@ -28,7 +28,7 @@ public:
     ~CharacterInformation();
     void Update() override;
     void Render() override;
-    bool AddEquipment(Equipment* _equipment);
+    bool AddEquipment(int equipment_id);
 private:
     SDL_Color White = {255,255,255};
     SDL_Color Black = {0,0,0};

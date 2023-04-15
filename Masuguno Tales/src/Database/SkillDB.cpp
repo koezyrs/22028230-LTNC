@@ -1,8 +1,8 @@
 #include "SkillDB.h"
 
-std::map<std::string, SkillType> SkillDB::skillDatabase;
+std::map<int , SkillType> SkillDB::skillDatabase;
 
 void SkillDB::LoadSkillDatabase()
 {
-    skillDatabase["BasicAttack"] = SkillType("Basic Attack", "Icon-Basick Attack", "Skill-Basic Attack", 5, 0, 0, 2000, 46, 1, 1);
+    skillDatabase[1] = SkillType("Basic Attack", "Icon-Basick Attack", "Skill-Basic Attack", 5, 0, 0, 2000, 46, 1, 1);
 }

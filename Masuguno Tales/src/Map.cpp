@@ -128,9 +128,9 @@ void Map::AddWall(int x, int y)
     walls.emplace_back(new Wall(static_cast<float>(x), static_cast<float>(y)));
 }
 
-void Map::AddMonster(float x, float y, std::string _monsterDB)
+void Map::AddMonster(float x, float y, int monster_id)
 {
-    MonsterType monster = MonsterDB::monsterDatabase[_monsterDB];
+    MonsterType monster = MonsterDB::monsterDatabase[monster_id];
     if(!monster.monsterSprite.empty())
     {
         monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
@@ -139,7 +139,7 @@ void Map::AddMonster(float x, float y, std::string _monsterDB)
     }
     else
     {
-        std::cerr << "Can not find " << _monsterDB << "! Please check Monster Database!";
+        std::cerr << "Can not find monster id " << monster_id << "! Please check Monster Database!";
     }
 }
 

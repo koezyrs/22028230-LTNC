@@ -14,11 +14,11 @@ void MapManager::LoadMap1()
     Game::currentMap->AddEvent(17 * 32, 0, []{LoadMap2();});
     Game::currentMap->AddEvent(18 * 32, 0, []{LoadMap2();});
     Game::currentMap->AddEvent(19 * 32, 0, []{LoadMap2();});
-    Game::currentMap->AddMonster(5 * GAME_PIXELS, 5 * GAME_PIXELS, "Monster01");
-    Game::currentMap->AddMonster(5 * GAME_PIXELS, 10 * GAME_PIXELS, "Monster01");
-    Game::currentMap->AddMonster(5 * GAME_PIXELS, 15 * GAME_PIXELS, "Monster01");
-    Game::currentMap->AddMonster(5 * GAME_PIXELS, 20 * GAME_PIXELS, "Monster01");
-    Game::currentMap->AddMonster(10 * GAME_PIXELS, 5 * GAME_PIXELS, "Monster01");
+    Game::currentMap->AddMonster(5 * GAME_PIXELS, 5 * GAME_PIXELS, 1);
+    Game::currentMap->AddMonster(5 * GAME_PIXELS, 10 * GAME_PIXELS, 1);
+    Game::currentMap->AddMonster(5 * GAME_PIXELS, 15 * GAME_PIXELS, 1);
+    Game::currentMap->AddMonster(5 * GAME_PIXELS, 20 * GAME_PIXELS, 1);
+    Game::currentMap->AddMonster(10 * GAME_PIXELS, 5 * GAME_PIXELS, 1);
 }
 
 void MapManager::LoadMap2()

@@ -38,6 +38,9 @@ public:
     bool isActive() const;
     void destroy();
     void setPosition(float x, float y);
+
+    std::map<int,int> mVariable;
+
 private:
     bool active = true;
     TransformComponent* mTransform;

@@ -40,7 +40,7 @@ public:
     void calculateFlowDirections();
     void LoadMap(std::string maptex, const char* mapfile, int sizeX, int sizeY);
     void AddWall(int x, int y);
-    void AddMonster(float x, float y, std::string _monsterDB);
+    void AddMonster(float x, float y, int monster_id);
     void AddEvent(float x, float y, std::function<void()> func = []{});
     void AddNPC(float x, float y, const char* filepath, std::string name);
     void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);

@@ -35,7 +35,7 @@ public:
     Monster* getTarget();
     void setTarget(Monster* _tar);
     void setNearestTarget();
-    void PerformSkill(std::string skillDatabaseName, Uint64 &_cooldown);
+    void PerformSkill(int skill_id, Uint64 &_cooldown);
     void Update();
 };
 

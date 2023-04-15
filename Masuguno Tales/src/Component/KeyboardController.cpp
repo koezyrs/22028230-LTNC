@@ -45,13 +45,13 @@ void KeyboardController::setNearestTarget()
     }
 }
 
-void KeyboardController::PerformSkill(std::string skillDatabaseName, Uint64 &_cooldown)
+void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown)
 {
     if(target == nullptr) return;
-    SkillType sk = SkillDB::skillDatabase[skillDatabaseName];
+    SkillType sk = SkillDB::skillDatabase[skill_id];
     if(sk.skillName.empty())
     {
-        std::cerr << "No skill as " << skillDatabaseName << "! Please check Skill Database" << std::endl;
+        std::cerr << "No skill id as " << skill_id << "! Please check Skill Database" << std::endl;
         return;
     }
 
@@ -138,7 +138,7 @@ void KeyboardController::Update()
 
         case SDLK_LCTRL:
             {
-                PerformSkill("BasicAttack", cooldownBasicAttack);
+                PerformSkill(1, cooldownBasicAttack);
                 break;
             }
 

@@ -12,13 +12,13 @@
 class Equipment
 {
 public:
-    Equipment(int _id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName,
+    Equipment(int equipment_id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName,
                      int _strength, int _dexterity, int _intelligence, int _vitality, int _agility);
     ~Equipment();
     SDL_Texture* getEquipmentSprite();
     bool isActive();
     void destroy();
-    int id;
+    int equipment_id;
     EQUIPMENT_TAG equipmentTag;
     const char* description;
     std::string equipmentName;

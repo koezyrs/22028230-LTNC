@@ -25,7 +25,7 @@ class SkillDB
 {
 public:
     static void LoadSkillDatabase();
-    static std::map<std::string, SkillType> skillDatabase;
+    static std::map<int, SkillType> skillDatabase;
 };
 
 #endif // SkillDB_h

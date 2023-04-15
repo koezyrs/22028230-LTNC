@@ -10,13 +10,13 @@
 class Item
 {
 public:
-    Item(int _id, std::string spriteName, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func = []{});
+    Item(int _item_id, std::string spriteName, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func = []{});
     ~Item();
     SDL_Texture* getItemSprite();
     void Perform();
     bool isActive();
     void destroy();
-    int id;
+    int item_id;
     int maxStack;
     int currentStack;
     const char* itemTag;

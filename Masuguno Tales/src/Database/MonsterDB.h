@@ -24,7 +24,7 @@ class MonsterDB
 {
 public:
     static void LoadMonsterDatabase();
-    static std::map<std::string, MonsterType> monsterDatabase;
+    static std::map<int, MonsterType> monsterDatabase;
 };
 
 #endif // MonsterDB_h

@@ -46,14 +46,14 @@ void DialogueManager::LoadDialogue()
 {
     dialogueList["The Guard Introduction"] = DialogueType("Conversation with the Guard",
                                              "You at no where to be found hahaah!",
-                                             "1. Shit",
+                                             "1. Add Potion",
                                              "2. Decrease Mana (-10MP)",
                                              "3. Regen Mana (+10MP)",
-                                             NULL,
-                                             []{Game::gDialogue->hideWindow();},
+                                             "4. Add Weapon",
+                                             []{Game::gInventory->AddItem(1);},
                                              []{Game::gPlayer->mStats->Mana -= 10;},
                                              []{Game::gPlayer->mStats->Mana += 10;},
-                                             []{},
+                                             []{Game::gInventory->AddEquipment(1);},
                                              "Face-Guard1");
 
 

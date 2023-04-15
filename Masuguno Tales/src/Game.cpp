@@ -124,6 +124,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
 
     // Item
+    TextureManager::LoadTexture("data files/graphics/items/14.png", "Item-HPPotion");
 
     // Faces
     TextureManager::LoadTexture("data files/graphics/faces/18.png", "Face-Guard1");
@@ -154,6 +155,12 @@ void Game::loadData()
     // Load all skill types
     SkillDB::LoadSkillDatabase();
 
+    // Load all item types
+    ItemDB::LoadItemDatabase();
+
+    // Load all equipment types
+    EquipmentDB::LoadEquipmentDatabase();
+
     // Load the begin map
     MapManager::LoadMap1();
 
@@ -161,7 +168,8 @@ void Game::loadData()
     gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
 
     // Add test Item
-    gInventory->AddEquipment(new Equipment(1,"Equip-AssasinDagger",WEAPON, "Assasin Dagger", 10, 2, 10, 20, 1500) );
+    gInventory->AddEquipment(1);
+    for(int i = 0; i < 40; i ++) gInventory->AddItem(1);
 
     return;
 }

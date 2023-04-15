@@ -57,6 +57,8 @@
 		<Unit filename="src/Component/TransformComponent.h" />
 		<Unit filename="src/Database/MonsterDB.cpp" />
 		<Unit filename="src/Database/MonsterDB.h" />
+		<Unit filename="src/Database/QuestDB.cpp" />
+		<Unit filename="src/Database/QuestDB.h" />
 		<Unit filename="src/Database/SkillDB.cpp" />
 		<Unit filename="src/Database/SkillDB.h" />
 		<Unit filename="src/Dialogue.cpp" />

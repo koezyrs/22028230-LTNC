@@ -15,6 +15,8 @@
 #include "Item.h"
 #include "Equipment.h"
 #include "CharacterInformation.h"
+#include "Database/ItemDB.h"
+#include "Database/EquipmentDB.h"
 
 #include "Settings.h"
 #include "TextureManager.h"
@@ -30,8 +32,8 @@ public:
     void Update() override;
     void Render() override;
 
-    bool AddItem(Item* _item);
-    bool AddEquipment(Equipment* _equipment);
+    bool AddItem(int item_id);
+    bool AddEquipment(int equipment_id);
 private:
     Vector2D position;
     int mWidth, mHeight;

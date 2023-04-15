@@ -27,7 +27,7 @@ struct EquipmentSlot
             {
                 if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    if(AddEquipmentToInventory(equipment))
+                    if(AddEquipmentToInventory(equipment->equipment_id))
                     {
                         std::cout << "You have unequip the " << equipment->equipmentName << "!" << std::endl;
                         equipment->destroy();
@@ -56,15 +56,16 @@ struct EquipmentSlot
         isFull = true;
     }
 
-    bool AddEquipmentToInventory(Equipment* _equipment)
+    bool AddEquipmentToInventory(int equipment_id)
     {
-        if(Game::gInventory->AddEquipment(_equipment))
+        EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
+        if(Game::gInventory->AddEquipment(equipment_id))
         {
-            Game::gPlayer->mStats->Strength -= _equipment->Strength;
-            Game::gPlayer->mStats->Dexterity -= _equipment->Dexterity;
-            Game::gPlayer->mStats->Intelligence -= _equipment->Intelligence;
-            Game::gPlayer->mStats->Vitality -= _equipment->Vitality;
-            Game::gPlayer->mStats->Agility -= _equipment->Agility;
+            Game::gPlayer->mStats->Strength -= equipTemp.Strength;
+            Game::gPlayer->mStats->Dexterity -= equipTemp.Dexterity;
+            Game::gPlayer->mStats->Intelligence -= equipTemp.Intelligence;
+            Game::gPlayer->mStats->Vitality -= equipTemp.Vitality;
+            Game::gPlayer->mStats->Agility -= equipTemp.Agility;
             return true;
         }
         return false;
@@ -341,109 +342,115 @@ void CharacterInformation::Render()
     avaliblePoints->Render();
 }
 
-bool CharacterInformation::AddEquipment(Equipment* _equipment)
+bool CharacterInformation::AddEquipment(int equipment_id)
 {
-    EQUIPMENT_TAG equipmentTag = _equipment->equipmentTag;
+    EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
+    if(equipTemp.equipmentName.empty())
+    {
+        std::cerr << "Not found equipment id: " << equipment_id << std::endl;
+        return false;
+    }
+    EQUIPMENT_TAG equipmentTag = equipTemp.equipmentTag;
     switch(equipmentTag)
     {
     case WEAPON:
         if(equipSlot[0].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip weapon!" << std::endl;
             return false;
         }
-        equipSlot[0].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[0].Equip(equipmentList.back());
         return true;
         break;
     case SHIELD:
         if(equipSlot[1].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip shield!" << std::endl;
             return false;
         }
-        equipSlot[1].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[1].Equip(equipmentList.back());
         return true;
         break;
     case HELMET:
         if(equipSlot[2].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip helmet!" << std::endl;
             return false;
         }
-        equipSlot[2].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[2].Equip(equipmentList.back());
         return true;
         break;
     case ARMOR:
         if(equipSlot[3].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip armor!" << std::endl;
             return false;
         }
-        equipSlot[3].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[3].Equip(equipmentList.back());
         return true;
         break;
     case GLOVE:
         if(equipSlot[4].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip glove!" << std::endl;
             return false;
         }
-        equipSlot[4].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[4].Equip(equipmentList.back());
         return true;
         break;
     case SHOES:
         if(equipSlot[5].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip shoes!" << std::endl;
             return false;
         }
-        equipSlot[5].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[5].Equip(equipmentList.back());
         return true;
         break;
     case CAPE:
         if(equipSlot[6].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip cape!" << std::endl;
             return false;
         }
-        equipSlot[6].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[6].Equip(equipmentList.back());
         return true;
         break;
     case RING:
         if(equipSlot[7].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip ring!" << std::endl;
             return false;
         }
-        equipSlot[7].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[7].Equip(equipmentList.back());
         return true;
         break;
     case NECKLACE:
         if(equipSlot[8].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip necklace!" << std::endl;
             return false;
         }
-        equipSlot[8].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[8].Equip(equipmentList.back());
         return true;
         break;
     case MEDAL:
         if(equipSlot[9].isFull)
         {
-            equipmentList.emplace_back(_equipment);
             std::cout << "Already equip medal!" << std::endl;
             return false;
         }
-        equipSlot[9].Equip(_equipment);
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility));
+        equipSlot[9].Equip(equipmentList.back());
         return true;
         break;
     default:
