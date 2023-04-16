@@ -103,6 +103,12 @@ struct InventorySlot
     bool AddEquipmentToCharacterInformation(int equipment_id)
     {
         EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
+        if(equipTemp.equipmentName.empty())
+        {
+            std::cerr << "Can not find equipment id: " << equipment_id << std::endl;
+            return false;
+        }
+
         if(Game::gCharacterInformation->AddEquipment(equipment_id))
         {
             Game::gPlayer->mStats->Strength += equipTemp.Strength;

@@ -44,29 +44,70 @@ void DialogueManager::Play(std::string dialogueName)
 
 void DialogueManager::LoadDialogue()
 {
-    dialogueList["The Guard Introduction"] = DialogueType("Conversation with the Guard",
-                                             "You at no where to be found hahaah!",
-                                             "1. Add Potion",
-                                             "2. Decrease Mana (-10MP)",
-                                             "3. Regen Mana (+10MP)",
-                                             "4. Add Weapon",
-                                             []{Game::gInventory->AddItem(1);},
-                                             []{Game::gPlayer->mStats->Mana -= 10;},
-                                             []{Game::gPlayer->mStats->Mana += 10;},
-                                             []{Game::gInventory->AddEquipment(1);},
-                                             "Face-Guard1");
-
 
     dialogueList["The Guard"] = DialogueType("Conversation with the Guard",
-                                             "Bipbom",
-                                             "1. Where Am I?",
+                                             "Kill 10 cow!",
+                                             "1. Ok let me do the quest",
                                              "2. I don't care!",
-                                             "3. Attack me (-10 HP)",
-                                             "4. Heal me (+10 HP)",
-                                             []{DialogueManager::Play("The Guard Introduction");},
+                                             "3. I've done the quest!",
+                                             NULL,
+                                             []{
+                                                 if(QuestLog::giveQuest(1)) Play("The Guard Introduction");
+                                                 else Play("Failed to give quest");
+                                                },
                                              []{Game::gDialogue->hideWindow();},
-                                             []{Game::gPlayer->mStats->Health -= 10;},
-                                             []{Game::gPlayer->mStats->Health += 10;},
+                                             []{
+                                                 if(QuestLog::checkQuest(1)) Play("Good Job");
+                                                    else Play("Finish the quest bro");
+                                                 },
+                                             []{},
+                                             "Face-Guard1");
+
+    dialogueList["Failed to give quest"] = DialogueType("Conversation with the Guard",
+                                             "You have received this quest before!",
+                                             "1. Ok that's fine",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Guard1");
+
+    dialogueList["The Guard Introduction"] = DialogueType("Conversation with the Guard",
+                                             "Good luck at your quest",
+                                             "1. Thanks I will do my best",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{Game::gDialogue->hideWindow();},
+                                             "Face-Guard1");
+
+    dialogueList["Good Job"] = DialogueType("Conversation with the Guard",
+                                             "Nice this is some reward for you!",
+                                             "1. Thanks",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Guard1");
+    dialogueList["Finish the quest bro"] = DialogueType("Conversation with the Guard",
+                                             "You haven't finished the quest!",
+                                             "1. Ok let's me do it!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{Game::gDialogue->hideWindow();},
+                                             []{},
+                                             []{},
+                                             []{},
                                              "Face-Guard1");
 }
 

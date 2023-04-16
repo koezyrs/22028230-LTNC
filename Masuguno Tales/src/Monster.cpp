@@ -1,9 +1,9 @@
 #include "Monster.h"
 
-Monster::Monster(float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
+Monster::Monster(int _monster_id,float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed)
-: startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
+: monster_id(_monster_id),startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
     stopChaseRange(_stopChaseRange), timeSpawn(0)
 {
@@ -63,6 +63,7 @@ void Monster::Update()
         timeSpawn = SDL_GetTicks64() + spawnWaitTime;
         mTransform->position = Vector2D(-100,-100); // The deadzone
         mCollider->Update();
+        Game::gQuestLog->totalMonsterKilled[monster_id] = Game::gQuestLog->totalMonsterKilled[monster_id] + 1;
         return;
     }
 

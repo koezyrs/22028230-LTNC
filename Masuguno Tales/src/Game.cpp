@@ -21,6 +21,7 @@
 #include "CharacterInformation.h"
 #include "HUD.h"
 #include "Hotbar.h"
+#include "QuestLog.h"
 
 // Database
 #include "Database/MonsterDB.h"
@@ -40,6 +41,7 @@ Inventory* Game::gInventory;
 HUD* Game::gHUD;
 Hotbar* Game::gHotbar;
 CharacterInformation* Game::gCharacterInformation;
+QuestLog* Game::gQuestLog;
 
 Game::Game(){};
 
@@ -145,6 +147,7 @@ void Game::loadData()
     gCharacterInformation = new CharacterInformation(50,110, 206, 418);
     gHUD = new HUD();
     gHotbar = new Hotbar();
+    gQuestLog = new QuestLog();
 
     // Load all game dialogue
     DialogueManager::LoadDialogue();
@@ -161,6 +164,9 @@ void Game::loadData()
     // Load all equipment types
     EquipmentDB::LoadEquipmentDatabase();
 
+    // Load all quest
+    QuestDB::LoadQuestDatabase();
+
     // Load the begin map
     MapManager::LoadMap1();
 
@@ -169,8 +175,7 @@ void Game::loadData()
 
     // Add test Item
     gInventory->AddEquipment(1);
-    for(int i = 0; i < 40; i ++) gInventory->AddItem(1);
-
+    for(int i = 1; i <= 5 ; i++) gInventory->AddItem(1);
     return;
 }
 

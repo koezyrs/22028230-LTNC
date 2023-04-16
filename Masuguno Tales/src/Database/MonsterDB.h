@@ -6,15 +6,16 @@
 #include <string>
 
 struct MonsterType{
+    int monster_id;
     std::string monsterName;
     std::string monsterSprite;
     float damage, health, attackSpeed;
     float chaseSpeed, roamSpeed;
     float attackRange, stopChaseRange;
     MonsterType() {}
-    MonsterType(std::string _monsterName, std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
+    MonsterType(int _monster_id, std::string _monsterName, std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                 float _chaseSpeed, float _roamSpeed, float _attackRange, float _stopChaseRange)
-    : monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health),
+    : monster_id(_monster_id), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
     stopChaseRange(_stopChaseRange)
     {}

@@ -12,11 +12,12 @@
 #include "Component/AIComponent.h"
 #include "Collision.h"
 #include "TextureManager.h"
+#include "QuestLog.h"
 
 class Monster : public Entity
 {
 public:
-    Monster(float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
+    Monster(int _monster_id, float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed);
     ~Monster();
@@ -37,6 +38,7 @@ public:
     std::string getMonsterName();
     void setPosition(float x, float y);
 private:
+    int monster_id;
     Vector2D startPosition;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;

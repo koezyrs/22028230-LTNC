@@ -133,7 +133,7 @@ void Map::AddMonster(float x, float y, int monster_id)
     MonsterType monster = MonsterDB::monsterDatabase[monster_id];
     if(!monster.monsterSprite.empty())
     {
-        monsters.emplace_back(new Monster(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
+        monsters.emplace_back(new Monster(monster.monster_id, x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
                                           , monster.monsterSprite, monster.damage, monster.health, monster.attackSpeed,
                                           monster.attackRange, monster.stopChaseRange, monster.chaseSpeed, monster.roamSpeed));
     }

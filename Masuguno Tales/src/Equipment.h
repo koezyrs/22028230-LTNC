@@ -29,7 +29,7 @@ public:
     int Agility = 0;
 private:
     bool active = true;
-    SDL_Texture* equipmentSprite;;
+    SDL_Texture* equipmentSprite;
 };
 
 #endif // Equipment

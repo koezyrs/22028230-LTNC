@@ -55,6 +55,10 @@
 		<Unit filename="src/Component/StatsComponent.h" />
 		<Unit filename="src/Component/TransformComponent.cpp" />
 		<Unit filename="src/Component/TransformComponent.h" />
+		<Unit filename="src/Database/EquipmentDB.cpp" />
+		<Unit filename="src/Database/EquipmentDB.h" />
+		<Unit filename="src/Database/ItemDB.cpp" />
+		<Unit filename="src/Database/ItemDB.h" />
 		<Unit filename="src/Database/MonsterDB.cpp" />
 		<Unit filename="src/Database/MonsterDB.h" />
 		<Unit filename="src/Database/QuestDB.cpp" />
@@ -97,6 +101,8 @@
 		<Unit filename="src/Projectile.h" />
 		<Unit filename="src/Quest.cpp" />
 		<Unit filename="src/Quest.h" />
+		<Unit filename="src/QuestLog.cpp" />
+		<Unit filename="src/QuestLog.h" />
 		<Unit filename="src/Settings.h" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/TextureManager.h" />

@@ -1,9 +1,10 @@
 #include "Quest.h"
 Quest::Quest() {}
-Quest::Quest(std::string name, std::string desc, int variable_id, int variable_amount, int item_id, int item_amount,
+Quest::Quest(int _id, std::string name, std::string desc, int variable_id, int variable_amount, int item_id, int item_amount,
             int equip_id, int equip_amount, int enemy_id, int enemy_amount, int reward_exp, int reward_gold,
             int reward_item_id, int reward_item_amount, int reward_equip_id, int reward_equip_amount, bool repeat)
 {
+    this->id = _id;
     this->name = name;
     this->desc = desc;
     this->variable_id = variable_id;

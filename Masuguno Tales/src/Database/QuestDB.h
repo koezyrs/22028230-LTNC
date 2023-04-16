@@ -7,14 +7,12 @@
 #include "../Actor.h"
 #include "../Quest.h"
 #include "../Inventory.h"
+#include "../QuestLog.h"
 
 class QuestDB
 {
 public:
     static void LoadQuestDatabase();
-    static void giveQuest(int quest_id);
-    static void dropQuest(int quest_id);
-    static bool checkQuest(int quest_id);
     static std::map<int, Quest> questDatabase;
 };
 

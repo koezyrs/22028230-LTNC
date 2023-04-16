@@ -18,6 +18,7 @@ class Inventory;
 class CharacterInformation;
 class HUD;
 class Hotbar;
+class QuestLog;
 
 using namespace std;
 
@@ -44,6 +45,7 @@ public:
     static CharacterInformation* gCharacterInformation;
     static HUD* gHUD;
     static Hotbar* gHotbar;
+    static QuestLog* gQuestLog;
 
     static SDL_Rect gCamera;
 private:
