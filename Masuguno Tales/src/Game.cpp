@@ -2,6 +2,7 @@
 #include <math.h>
 #include <cstdlib>
 #include <ctime>
+
 #include "Game.h"
 #include "TextureManager.h"
 #include "Map.h"
@@ -43,34 +44,33 @@ Hotbar* Game::gHotbar;
 CharacterInformation* Game::gCharacterInformation;
 QuestLog* Game::gQuestLog;
 
-Game::Game(){};
+Game::Game(): session(INIT){};
 
 Game::~Game(){};
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height)
 {
-    isRunning = true;
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
         cout << "Unable to initialize SDL! SDL_Error: " << SDL_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
 
     if(IMG_Init(IMG_INIT_PNG) < 0){
         cout << "Unable to initialize IMG! IMG_Error: " << IMG_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
 
     if(TTF_Init() < 0){
         cout << "Unable to initialize TTF! TTF_Error: " << TTF_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
 
     if(Mix_Init(MIX_INIT_OGG) < 0){
         cout << "Unable to initialize Mixer! Mix_Error: " << Mix_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
 
@@ -78,7 +78,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     gWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
     if(gWindow == NULL){
         cout << "Unable to create Window! SDL_Error: " << SDL_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
 
@@ -86,11 +86,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(gRenderer == NULL){
         cout << "Unable to create Renderer! SDL_Error: " << SDL_GetError() << endl;
-        isRunning = false;
+        session = CLEAR;
         return;
     }
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
     srand(time(0));
+    session = LOAD_RESOURCES;
     return;
 }
 
@@ -133,6 +134,23 @@ void Game::loadResources()
 
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
+
+    session = LOGIN;
+}
+
+void Game::Login()
+{
+    conn = mysql_init(0);
+    conn = mysql_real_connect(conn, "192.168.6.102", "admin", "admin", "test", 3306, NULL, 0);
+    if(!conn)
+    {
+        std::cerr << "Can not connect to database! " << std::endl;
+        session = CLEAR;
+        return;
+    }else{
+        std::cerr << "Connect to database successfully! " << std::endl;
+    }
+    session = LOAD_DATA;
 }
 
 void Game::loadData()
@@ -171,12 +189,12 @@ void Game::loadData()
     MapManager::LoadMap1();
 
     // Set player position
-    gPlayer->getTransformComponent()->position = Vector2D{15 * GAME_PIXELS, 10 * GAME_PIXELS};
+    gPlayer->setPosition(15 * GAME_PIXELS, 10 * GAME_PIXELS);
 
     // Add test Item
     gInventory->AddEquipment(1);
     for(int i = 1; i <= 5 ; i++) gInventory->AddItem(1);
-    return;
+    session = RUNNING;
 }
 
 void Game::handleEvents()
@@ -184,7 +202,7 @@ void Game::handleEvents()
     while(SDL_PollEvent(&event) != 0){
         switch(event.type){
         case SDL_QUIT:
-            isRunning = false;
+            session = SAVE_DATA;
             break;
         default:
             break;
@@ -354,10 +372,10 @@ void Game::render()
     return;
 }
 
-
-bool Game::running()
+void Game::saveData()
 {
-    return isRunning;
+    std::cout << "Player data was saved!" << std::endl;
+    session = CLEAR;
 }
 
 void Game::clean()

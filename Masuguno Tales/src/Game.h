@@ -7,6 +7,8 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <windows.h>
+#include <mysql.h>
 #include <vector>
 #include <string>
 #include "Settings.h"
@@ -22,18 +24,30 @@ class QuestLog;
 
 using namespace std;
 
+enum SESSION_GAME
+    {
+        INIT,
+        LOAD_RESOURCES,
+        LOGIN,
+        LOAD_DATA,
+        RUNNING,
+        SAVE_DATA,
+        CLEAR
+    };
+
 class Game{
 public:
     Game();
     ~Game();
     void init(const char* titile, int xpos, int ypos, int width, int height);
     void loadResources();
+    void Login();
     void loadData();
     void handleEvents();
     void update();
     void render();
+    void saveData();
     void clean();
-    bool running();
 
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
@@ -48,9 +62,10 @@ public:
     static QuestLog* gQuestLog;
 
     static SDL_Rect gCamera;
+    SESSION_GAME session;
 private:
-    bool isRunning;
     SDL_Window* gWindow;
+    MYSQL* conn;
 
 };
 #endif // Game_h
