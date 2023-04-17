@@ -1,7 +1,7 @@
 #include "Map.h"
 
-Map::Map()
-: width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
+Map::Map(int _id)
+: id(_id), width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
 
 Map::~Map()
 {

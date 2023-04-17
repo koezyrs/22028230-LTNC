@@ -23,7 +23,9 @@
 class Actor : public Entity
 {
 public:
-    Actor(float x, float y, std::string spriteName);
+    Actor(std::string characterName, int level, int exp, int next_level_exp,
+          int strength, int dexterity, int intelligence, int vitality, int agility,
+          int stats_used, int stats_available, float x, float y, std::string skin);
     ~Actor();
     void Update() override;
     void Render() override;

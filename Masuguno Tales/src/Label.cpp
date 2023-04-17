@@ -66,3 +66,13 @@ void Label::Reset()
     textOut = NULL;
     textOver = NULL;
 }
+
+int Label::getWidth()
+{
+    return Width;
+}
+
+int Label::getHeight()
+{
+    return Height;
+}

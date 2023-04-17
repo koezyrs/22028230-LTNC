@@ -135,7 +135,7 @@ Inventory::Inventory(int _x, int _y, int _width, int _height)
 {
     InventoryBox = TextureManager::GetTexture("Inventory");
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 181, _y + 3, 13, 13, [this]{Window::hideWindow(); });
-    inventoryTitle = new Label("data files/font/game.ttf", "Inventory", 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
+    inventoryTitle = new Label(GAME_FONT, "Inventory", 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
     invSlot = new InventorySlot[MAX_INVENTORY_SLOTS];
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};

@@ -18,6 +18,8 @@ public:
     void Render();
     void Perform();
     void Reset();
+    int getWidth();
+    int getHeight();
 private:
     bool isFunctional = false;
     bool inside = false;

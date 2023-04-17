@@ -32,8 +32,9 @@
 class Map
 {
 public:
-    Map();
+    Map(int _id);
     ~Map();
+    int id;
     Tile** tiles;
     void setTargetAndCalculateFlowField(int targetXNew, int targetYNew);
     void calculateDistances();

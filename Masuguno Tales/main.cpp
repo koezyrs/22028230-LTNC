@@ -19,7 +19,7 @@ int main(int argc, char* args[]){
             game->loadResources();
             break;
         case LOGIN:
-            game->Login();
+            game->loginProcess();
             break;
         case LOAD_DATA:
             game->loadData();

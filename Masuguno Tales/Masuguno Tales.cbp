@@ -93,6 +93,8 @@
 		<Unit filename="src/Item.h" />
 		<Unit filename="src/Label.cpp" />
 		<Unit filename="src/Label.h" />
+		<Unit filename="src/Login/Login.cpp" />
+		<Unit filename="src/Login/Login.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/MapManager.cpp" />

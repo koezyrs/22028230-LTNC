@@ -1,13 +1,17 @@
 #include "Actor.h"
 
-Actor::Actor(float x, float y, std::string spriteName) : Entity::Entity()
+Actor::Actor(std::string characterName, int level, int exp, int next_level_exp,
+          int strength, int dexterity, int intelligence, int vitality, int agility,
+          int stats_used, int stats_available, float x, float y, std::string skin)
+: Entity::Entity()
 {
     mTransform = new TransformComponent(x, y, PLAYER_WIDTH, PLAYER_HEIGHT, GAME_SCALE);
-    mSprite = new SpriteComponent(spriteName, mTransform, true);
+    mSprite = new SpriteComponent(skin, mTransform, true);
     mCollider = new ColliderComponent(mTransform, "Player");
     mController = new KeyboardController(mTransform, mSprite);
-    mName = new NameComponent(mTransform, "Tuan Duong" , GAME_FONT, 10, SDL_Color{0,0,0});
-    mStats = new StatsComponent(1,0,100,5,2,10,20,5,0,10);
+    mName = new NameComponent(mTransform, characterName , GAME_FONT, 10, SDL_Color{0,0,0});
+    mStats = new StatsComponent(level, exp, next_level_exp, strength, dexterity, intelligence, vitality, agility,
+                                stats_used, stats_available);
 }
 
 Actor::~Actor()

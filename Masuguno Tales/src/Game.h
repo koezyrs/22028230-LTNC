@@ -13,6 +13,7 @@
 #include <string>
 #include "Settings.h"
 
+class Login;
 class Map;
 class Actor;
 class Dialogue;
@@ -41,7 +42,7 @@ public:
     ~Game();
     void init(const char* titile, int xpos, int ypos, int width, int height);
     void loadResources();
-    void Login();
+    void loginProcess();
     void loadData();
     void handleEvents();
     void update();
@@ -52,6 +53,7 @@ public:
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
 
+    static MYSQL* conn;
     static Map* currentMap;
     static Actor* gPlayer;
     static Dialogue* gDialogue;
@@ -62,10 +64,10 @@ public:
     static QuestLog* gQuestLog;
 
     static SDL_Rect gCamera;
-    SESSION_GAME session;
+    static SESSION_GAME session;
 private:
     SDL_Window* gWindow;
-    MYSQL* conn;
+    Login* loginPanel;
 
 };
 #endif // Game_h

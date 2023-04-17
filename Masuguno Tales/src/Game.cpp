@@ -4,6 +4,7 @@
 #include <ctime>
 
 #include "Game.h"
+#include "Login/Login.h"
 #include "TextureManager.h"
 #include "Map.h"
 #include "MapManager.h"
@@ -31,6 +32,8 @@
 // Settings
 #include "Settings.h"
 
+SESSION_GAME Game::session;
+MYSQL* Game::conn;
 SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer = NULL;
 SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -44,7 +47,9 @@ Hotbar* Game::gHotbar;
 CharacterInformation* Game::gCharacterInformation;
 QuestLog* Game::gQuestLog;
 
-Game::Game(): session(INIT){};
+Game::Game() {
+    session = INIT;
+};
 
 Game::~Game(){};
 
@@ -91,6 +96,18 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     }
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
     srand(time(0));
+
+    conn = mysql_init(0);
+    conn = mysql_real_connect(conn, "192.168.6.102", "admin", "admin", "test", 3306, NULL, 0);
+    if(!conn)
+    {
+        std::cerr << "Can not connect to database! " << std::endl;
+        session = CLEAR;
+        return;
+    }else{
+        std::cerr << "Connect to database successfully! " << std::endl;
+    }
+
     session = LOAD_RESOURCES;
     return;
 }
@@ -98,6 +115,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
 void Game::loadResources()
 {
     // GUI
+    TextureManager::LoadTexture("data files/graphics/gui/Login.png", "Login");
+    TextureManager::LoadTexture("data files/graphics/gui/LoginButtonOut.png", "LoginButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/LoginButtonOver.png", "LoginButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/ExitButtonOut.png", "ExitButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/ExitButtonOver.png", "ExitButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/8.png", "CloseButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/9.png", "CloseButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/Dialogue.png", "Dialogue");
@@ -118,7 +140,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/maps/map02.png", "Map02");
 
     // Sprite
-    TextureManager::LoadTexture("data files/graphics/player.png", "Sprite-Player");
+    TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
     TextureManager::LoadTexture("data files/graphics/characters/158.png", "Sprite-Guard1");
     TextureManager::LoadTexture("data files/graphics/characters/159.png", "Sprite-Guard2");
     TextureManager::LoadTexture("data files/graphics/characters/17.png", "Sprite-MonsterCow");
@@ -134,39 +156,19 @@ void Game::loadResources()
 
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
-
+    loginPanel = new Login();
     session = LOGIN;
 }
 
-void Game::Login()
+void Game::loginProcess()
 {
-    conn = mysql_init(0);
-    conn = mysql_real_connect(conn, "192.168.6.102", "admin", "admin", "test", 3306, NULL, 0);
-    if(!conn)
-    {
-        std::cerr << "Can not connect to database! " << std::endl;
-        session = CLEAR;
-        return;
-    }else{
-        std::cerr << "Connect to database successfully! " << std::endl;
-    }
-    session = LOAD_DATA;
+    loginPanel->HandleEvent();
+    loginPanel->Update();
+    loginPanel->Render();
 }
 
 void Game::loadData()
 {
-    // Initialize Game Object Here
-    currentMap = new Map();
-    gPlayer = new Actor(100, 100, "Sprite-Player");
-
-    // Initialize GUI
-    gDialogue = new Dialogue((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "EmptyFace", " ");
-    gInventory = new Inventory(790, 130, 198, 314);
-    gCharacterInformation = new CharacterInformation(50,110, 206, 418);
-    gHUD = new HUD();
-    gHotbar = new Hotbar();
-    gQuestLog = new QuestLog();
-
     // Load all game dialogue
     DialogueManager::LoadDialogue();
 
@@ -387,6 +389,7 @@ void Game::clean()
     gWindow = NULL;
     gRenderer = NULL;
 
+    delete loginPanel;
     delete currentMap;
     delete gPlayer;
     delete gDialogue;
@@ -394,6 +397,7 @@ void Game::clean()
     delete gHUD;
     delete gHotbar;
     delete gCharacterInformation;
+    delete gQuestLog;
 
     cout << "Game cleaned" << endl;
 
