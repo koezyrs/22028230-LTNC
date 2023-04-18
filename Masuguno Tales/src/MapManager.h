@@ -12,6 +12,8 @@
 class MapManager
 {
 public:
+    static void LoadMap(int map_id);
+private:
     static void LoadMap1();
     static void LoadMap2();
 };

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 17, 2023 lúc 07:42 PM
+-- Thời gian đã tạo: Th4 18, 2023 lúc 02:03 PM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
 
@@ -75,7 +75,7 @@ CREATE TABLE `actors` (
 --
 
 INSERT INTO `actors` (`id`, `account_id`, `character_name`, `level`, `experience`, `experience_to_next_level`, `strength`, `dexterity`, `intelligence`, `vitality`, `agility`, `stats_used`, `stats_available`, `map_id`, `x`, `y`, `gold`, `skin`) VALUES
-(1, 3, 'Tuan Duong', 1, 0, 100, 9, 6, 10, 10, 0, 0, 0, 1, 14, 14, 0, 'Sprite-Player');
+(1, 3, 'abc', 1, 0, 100, 5, 4, 10, 20, 0, 0, 0, 1, 14, 14, 0, 'Sprite-Player');
 
 -- --------------------------------------------------------
 
@@ -89,6 +89,13 @@ CREATE TABLE `actor_character_information` (
   `slot_id` int(11) NOT NULL,
   `equipment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `actor_character_information`
+--
+
+INSERT INTO `actor_character_information` (`id`, `actor_id`, `slot_id`, `equipment_id`) VALUES
+(1, 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +111,14 @@ CREATE TABLE `actor_inventory` (
   `item_id` int(11) NOT NULL,
   `item_amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `actor_inventory`
+--
+
+INSERT INTO `actor_inventory` (`id`, `actor_id`, `slot_id`, `equipment_id`, `item_id`, `item_amount`) VALUES
+(1, 3, 0, 1, 0, 0),
+(2, 3, 1, 0, 1, 20);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -153,13 +168,13 @@ ALTER TABLE `actors`
 -- AUTO_INCREMENT cho bảng `actor_character_information`
 --
 ALTER TABLE `actor_character_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `actor_inventory`
 --
 ALTER TABLE `actor_inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

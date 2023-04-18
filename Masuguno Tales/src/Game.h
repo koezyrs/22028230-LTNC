@@ -14,6 +14,7 @@
 #include "Settings.h"
 
 class Login;
+class Register;
 class Map;
 class Actor;
 class Dialogue;
@@ -30,6 +31,7 @@ enum SESSION_GAME
         INIT,
         LOAD_RESOURCES,
         LOGIN,
+        REGISTER,
         LOAD_DATA,
         RUNNING,
         SAVE_DATA,
@@ -43,6 +45,7 @@ public:
     void init(const char* titile, int xpos, int ypos, int width, int height);
     void loadResources();
     void loginProcess();
+    void registProcess();
     void loadData();
     void handleEvents();
     void update();
@@ -68,6 +71,7 @@ public:
 private:
     SDL_Window* gWindow;
     Login* loginPanel;
+    Register* registerPanel;
 
 };
 #endif // Game_h

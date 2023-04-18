@@ -1,5 +1,18 @@
 #include "MapManager.h"
 
+void MapManager::LoadMap(int map_id)
+{
+    switch(map_id)
+    {
+    case 1:
+        LoadMap1();
+        break;
+    case 2:
+        LoadMap2();
+        break;
+    }
+}
+
 void MapManager::LoadMap1()
 {
     Game::currentMap->ClearMap();

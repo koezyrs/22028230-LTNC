@@ -109,6 +109,8 @@
 		<Unit filename="src/Quest.h" />
 		<Unit filename="src/QuestLog.cpp" />
 		<Unit filename="src/QuestLog.h" />
+		<Unit filename="src/Register/Register.cpp" />
+		<Unit filename="src/Register/Register.h" />
 		<Unit filename="src/Settings.h" />
 		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/TextureManager.h" />

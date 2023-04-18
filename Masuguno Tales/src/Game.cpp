@@ -5,6 +5,7 @@
 
 #include "Game.h"
 #include "Login/Login.h"
+#include "Register/Register.h"
 #include "TextureManager.h"
 #include "Map.h"
 #include "MapManager.h"
@@ -120,6 +121,11 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/LoginButtonOver.png", "LoginButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/ExitButtonOut.png", "ExitButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/ExitButtonOver.png", "ExitButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/Register.png", "Register");
+    TextureManager::LoadTexture("data files/graphics/gui/RegistButtonOut.png", "RegistButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/RegistButtonOver.png", "RegistButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/BackButtonOut.png", "BackButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/BackButtonOver.png", "BackButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/8.png", "CloseButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/9.png", "CloseButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/Dialogue.png", "Dialogue");
@@ -156,15 +162,8 @@ void Game::loadResources()
 
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
-    loginPanel = new Login();
-    session = LOGIN;
-}
 
-void Game::loginProcess()
-{
-    loginPanel->HandleEvent();
-    loginPanel->Update();
-    loginPanel->Render();
+    session = LOAD_DATA;
 }
 
 void Game::loadData()
@@ -187,16 +186,23 @@ void Game::loadData()
     // Load all quest
     QuestDB::LoadQuestDatabase();
 
-    // Load the begin map
-    MapManager::LoadMap1();
+    loginPanel = new Login();
+    registerPanel = new Register();
+    session = LOGIN;
+}
 
-    // Set player position
-    gPlayer->setPosition(15 * GAME_PIXELS, 10 * GAME_PIXELS);
+void Game::loginProcess()
+{
+    loginPanel->HandleEvent();
+    loginPanel->Update();
+    loginPanel->Render();
+}
 
-    // Add test Item
-    gInventory->AddEquipment(1);
-    for(int i = 1; i <= 5 ; i++) gInventory->AddItem(1);
-    session = RUNNING;
+void Game::registProcess()
+{
+    registerPanel->HandleEvent();
+    registerPanel->Update();
+    registerPanel->Render();
 }
 
 void Game::handleEvents()

@@ -18,11 +18,14 @@ int main(int argc, char* args[]){
         case LOAD_RESOURCES:
             game->loadResources();
             break;
+        case LOAD_DATA:
+            game->loadData();
+            break;
         case LOGIN:
             game->loginProcess();
             break;
-        case LOAD_DATA:
-            game->loadData();
+        case REGISTER:
+            game->registProcess();
             break;
         case RUNNING:
             frameStart = SDL_GetTicks();
