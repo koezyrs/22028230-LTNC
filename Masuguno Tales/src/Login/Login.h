@@ -30,7 +30,7 @@ private:
     void LoginButon();
     void ExitButton();
     void RegistButton();
-    void LoadGameDatabase(int account_id);
+    void LoadGameDatabase(std::string _account_id);
     SDL_Texture* loginPanelTexture;
     InputBox* username_input;
     InputBox* password_input;

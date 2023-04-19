@@ -36,17 +36,17 @@
 SESSION_GAME Game::session;
 MYSQL* Game::conn;
 SDL_Event Game::event;
-SDL_Renderer* Game::gRenderer = NULL;
+SDL_Renderer* Game::gRenderer;
 SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-Actor* Game::gPlayer;
-Map* Game::currentMap;
-Dialogue* Game::gDialogue;
-Inventory* Game::gInventory;
-HUD* Game::gHUD;
-Hotbar* Game::gHotbar;
-CharacterInformation* Game::gCharacterInformation;
-QuestLog* Game::gQuestLog;
+std::unique_ptr<Actor> Game::gPlayer;
+std::unique_ptr<Map> Game::currentMap;
+std::unique_ptr<Dialogue> Game::gDialogue;
+std::unique_ptr<Inventory> Game::gInventory;
+std::unique_ptr<HUD> Game::gHUD;
+std::unique_ptr<Hotbar> Game::gHotbar;
+std::unique_ptr<CharacterInformation> Game::gCharacterInformation;
+std::unique_ptr<QuestLog> Game::gQuestLog;
 
 Game::Game() {
     session = INIT;
@@ -242,6 +242,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    currentMap->Refresh();
     // Saved the last position after taking the next move
     Vector2D playerPos = gPlayer->getTransformComponent()->position;
 
@@ -363,7 +364,6 @@ void Game::render()
     SDL_RenderClear(gRenderer);
 
     // Draw here
-    currentMap->Refresh();
     currentMap->RenderBottomLayer();
     gPlayer->Render();
     currentMap->RenderUpperLayer();
@@ -391,20 +391,14 @@ void Game::clean()
     TextureManager::CleanTexture();
     SDL_DestroyWindow(gWindow);
     SDL_DestroyRenderer(gRenderer);
+    mysql_close(conn);
 
     gWindow = NULL;
     gRenderer = NULL;
+    conn = NULL;
 
     delete loginPanel;
-    delete currentMap;
-    delete gPlayer;
-    delete gDialogue;
-    delete gInventory;
-    delete gHUD;
-    delete gHotbar;
-    delete gCharacterInformation;
-    delete gQuestLog;
-
+    delete registerPanel;
     cout << "Game cleaned" << endl;
 
     return;

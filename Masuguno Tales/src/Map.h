@@ -54,11 +54,11 @@ public:
     void Update();
     void RenderBottomLayer();
     void RenderUpperLayer();
-    std::vector<Event*> events;
-    std::vector<Wall*> walls;
-    std::vector<Monster*> monsters;
-    std::vector<NPC*> npcs;
-    std::vector<Projectile*> projectiles;
+    std::vector<std::shared_ptr<Event>> events;
+    std::vector<std::shared_ptr<Wall>> walls;
+    std::vector<std::shared_ptr<Monster>> monsters;
+    std::vector<std::shared_ptr<NPC>> npcs;
+    std::vector<std::shared_ptr<Projectile>> projectiles;
 private:
     int width;
     int height;

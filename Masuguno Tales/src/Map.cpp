@@ -48,22 +48,23 @@ void Map::LoadMap(std::string maptex, const char* mapfile, int _sizeX, int _size
 
 void Map::Refresh()
 {
-
     walls.erase(std::remove_if(walls.begin(), walls.end(),
-        [](Wall* theWall){return !theWall->isActive();}), walls.end());
+        [](auto& theWall){return !theWall->isActive();}), walls.end());
 
     /*
     monsters.erase(std::remove_if(monsters.begin(), monsters.end(),
         [](Monster* theMonster){return !theMonster->isActive();}), monsters.end());
     */
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(),
-        [](NPC* theNPC) {return !theNPC->isActive();}), npcs.end());
+        [](auto& theNPC) {return !theNPC->isActive();}), npcs.end());
 
     events.erase(std::remove_if(events.begin(), events.end(),
-        [](Event* theEvent){return !theEvent->isActive();}), events.end());
+        [](auto& theEvent){return !theEvent->isActive();}), events.end());
+
 
     projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(),
-        [](Projectile* theProjectile){return !theProjectile->isActive();}), projectiles.end());
+        [](auto& theProjectile){return !theProjectile->isActive();}), projectiles.end());
+
 }
 
 void Map::Update()
@@ -125,7 +126,7 @@ void Map::RenderUpperLayer()
 }
 void Map::AddWall(int x, int y)
 {
-    walls.emplace_back(new Wall(static_cast<float>(x), static_cast<float>(y)));
+    walls.emplace_back(std::make_shared<Wall>(static_cast<float>(x), static_cast<float>(y)));
 }
 
 void Map::AddMonster(float x, float y, int monster_id)
@@ -133,7 +134,7 @@ void Map::AddMonster(float x, float y, int monster_id)
     MonsterType monster = MonsterDB::monsterDatabase[monster_id];
     if(!monster.monsterSprite.empty())
     {
-        monsters.emplace_back(new Monster(monster.monster_id, x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
+        monsters.emplace_back(std::make_shared<Monster>(monster.monster_id, x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
                                           , monster.monsterSprite, monster.damage, monster.health, monster.attackSpeed,
                                           monster.attackRange, monster.stopChaseRange, monster.chaseSpeed, monster.roamSpeed));
     }
@@ -145,17 +146,17 @@ void Map::AddMonster(float x, float y, int monster_id)
 
 void Map::AddEvent(float x, float y, std::function<void()> func)
 {
-    events.emplace_back(new Event(x,y, func));
+    events.emplace_back(std::make_shared<Event>(x,y, func));
 }
 
 void Map::AddNPC(float x, float y, const char* filepath, std::string name)
 {
-    npcs.emplace_back(new NPC(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
+    npcs.emplace_back(std::make_shared<NPC>(x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, filepath, name));
 }
 
 void Map::AddProjectile(float x, float y, int frames, std::string skillSprite, float _damage)
 {
-    projectiles.emplace_back(new Projectile(x, y, frames, 100, "Player", skillSprite, _damage));
+    projectiles.emplace_back(std::make_shared<Projectile>(x, y, frames, 100, "Player", skillSprite, _damage));
 }
 
 int Map::getWidth()
@@ -193,9 +194,8 @@ void Map::ClearMap()
     events.clear();
     npcs.clear();
     projectiles.clear();
-    Game::gPlayer->getKeyboardController()->setTarget(nullptr);
+    Game::gPlayer->getKeyboardController()->unsetTarget();
     mTexture = NULL;
-    Refresh();
 }
 
 void Map::setTargetAndCalculateFlowField(int targetXNew, int targetYNew) {

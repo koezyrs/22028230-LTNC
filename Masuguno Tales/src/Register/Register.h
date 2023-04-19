@@ -18,8 +18,11 @@ public:
     void Update();
     void Render();
 private:
+    SDL_Color Black = {0,0,0};
     void RegistButon();
     void BackButton();
+    void setMessage(std::string text);
+    bool checkSpecialSymbol(std::string text);
     SDL_Texture* registPanelTexture;
     InputBox* username_input;
     InputBox* password_input;
@@ -27,6 +30,7 @@ private:
     InputBox* email_input;
     Button* button_regist;
     Button* button_back;
+    Label* systemMessageText;
 };
 
 #endif // Register_h

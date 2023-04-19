@@ -26,14 +26,15 @@ private:
     };
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
-    Monster* target;
+    std::shared_ptr<Monster> target;
     Uint64 cooldownBasicAttack;
     DIRECTION state;
 public:
     KeyboardController();
     KeyboardController(TransformComponent* trans, SpriteComponent* sprite);
-    Monster* getTarget();
-    void setTarget(Monster* _tar);
+    std::shared_ptr<Monster> const& getTarget() const;
+    void setTarget(std::shared_ptr<Monster>& _tar);
+    void unsetTarget();
     void setNearestTarget();
     void PerformSkill(int skill_id, Uint64 &_cooldown);
     void Update();

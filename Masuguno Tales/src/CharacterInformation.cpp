@@ -164,8 +164,8 @@ CharacterInformation::~CharacterInformation()
     delete intelligence;
     delete vitality;
     delete agility;
-    //delete avaliblePoints;
-    //delete pointsText;
+    delete powerPoint;
+    delete avaliblePoints;
 
     CharacterInformationBox = NULL;
 }

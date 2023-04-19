@@ -188,8 +188,6 @@ void Inventory::Render()
             if(invSlot[i].stackLabel != NULL) invSlot[i].stackLabel->Render();
         }
     }
-
-
 }
 
 bool Inventory::AddItem(int item_id)
@@ -291,4 +289,34 @@ bool Inventory::FindEquip(int equip_id, int equip_amount)
         if(invSlot[i].equipment->equipment_id == equipTemp.equipment_id) amount = amount + 1;
     }
     return success;
+}
+
+void Inventory::AddEquipmentToSlot(int slot_id, int equipment_id)
+{
+    EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_id];
+    if(equipTemp.equipmentName.empty())
+    {
+        std::cerr << "Not found equip id: " << equipment_id << std::endl;
+        return;
+    }
+    equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
+                                            equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
+                                            equipTemp.Vitality, equipTemp.Agility));
+    invSlot[slot_id].AddEquipmentToSlot(equipmentList.back());
+    std::cout << "Added " << equipTemp.equipmentName << " to the Inventory!" << std::endl;
+}
+
+void Inventory::AddItemToSlot(int slot_id, int item_id, int item_amount)
+{
+    ItemType itemTemp = ItemDB::itemDatabase[item_id];
+    if(itemTemp.itemName.empty())
+    {
+        std::cerr << "Not found item id: " << item_id << std::endl;
+        return;
+    }
+
+    itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName,itemTemp.ItemFunc));
+    itemList.back()->currentStack = itemList.back()->currentStack + item_amount - 1;
+    invSlot[slot_id].AddItemToSlot(itemList.back());
+    std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;
 }

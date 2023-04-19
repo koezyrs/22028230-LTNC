@@ -5,8 +5,9 @@ Actor::Actor(std::string characterName, int level, int exp, int next_level_exp,
           int stats_used, int stats_available, float x, float y, std::string skin)
 : Entity::Entity()
 {
+    std::string skinSprite = "Sprite-" + skin;
     mTransform = new TransformComponent(x, y, PLAYER_WIDTH, PLAYER_HEIGHT, GAME_SCALE);
-    mSprite = new SpriteComponent(skin, mTransform, true);
+    mSprite = new SpriteComponent(skinSprite, mTransform, true);
     mCollider = new ColliderComponent(mTransform, "Player");
     mController = new KeyboardController(mTransform, mSprite);
     mName = new NameComponent(mTransform, characterName , GAME_FONT, 10, SDL_Color{0,0,0});
@@ -18,10 +19,10 @@ Actor::~Actor()
 {
     delete mController;
     delete mTransform;
-    delete mSprite;
     delete mCollider;
-    delete mName;
     delete mStats;
+    delete mSprite;
+    delete mName;
 }
 
 void Actor::Update()

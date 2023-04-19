@@ -35,8 +35,8 @@ private:
     SDL_Rect srcRect, destRect;
     TransformComponent* mTransform;
     ColliderComponent* mCollider;
-    Uint32 startTime;
-    Uint32 currentTime;
+    Uint64 startTime;
+    Uint64 currentTime;
     std::string tag;
     float damage;
 };

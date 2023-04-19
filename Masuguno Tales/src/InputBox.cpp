@@ -112,3 +112,12 @@ void InputBox::toogle()
 {
     active = !active;
 }
+
+void InputBox::Reset()
+{
+    inputValue = "";
+    tempPassword = "";
+    inputText->Reset();
+    isFocusText->Reset();
+    isFocusText = new Label(GAME_FONT, "|", 10, position.x , position.y, Black, 5, false, []{});
+}

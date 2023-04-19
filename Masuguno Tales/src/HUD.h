@@ -25,7 +25,7 @@ private:
     SDL_Color Black = {0,0,0};
 
     // Target
-    Monster* target;
+    std::shared_ptr<Monster> target;
 
     // GUI
     SDL_Texture* HUDBase;

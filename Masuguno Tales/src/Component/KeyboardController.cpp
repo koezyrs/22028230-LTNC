@@ -13,13 +13,17 @@ KeyboardController::KeyboardController(TransformComponent* trans, SpriteComponen
     target = nullptr;
 }
 
-Monster* KeyboardController::getTarget()
+std::shared_ptr<Monster>const& KeyboardController::getTarget() const
 {
     return target;
 }
 
-void KeyboardController::setTarget(Monster* _tar) {
+void KeyboardController::setTarget(std::shared_ptr<Monster>& _tar) {
     target = _tar;
+}
+
+void KeyboardController::unsetTarget() {
+    target.reset();
 }
 
 void KeyboardController::setNearestTarget()
@@ -33,21 +37,21 @@ void KeyboardController::setNearestTarget()
         if(distance < distanceToNearestTarget)
         {
             distanceToNearestTarget = distance;
-            if(target != nullptr) target->unTargeted();
+            if(target) target->unTargeted();
             target = monster;
             target->setTargeted();
         }
     }
     if(distanceToNearestTarget == 320)
     {
-        if(target != nullptr) target->unTargeted();
-        target = nullptr;
+        if(target) target->unTargeted();
+        target.reset();
     }
 }
 
 void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown)
 {
-    if(target == nullptr) return;
+    if(!target) return;
     SkillType sk = SkillDB::skillDatabase[skill_id];
     if(sk.skillName.empty())
     {

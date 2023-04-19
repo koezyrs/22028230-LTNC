@@ -5,14 +5,14 @@ HUD::HUD() : target(nullptr)
     HUDBase = TextureManager::GetTexture("HUDBase");
     HUDBars = TextureManager::GetTexture("HUDBars");
     TargetHP = TextureManager::GetTexture("TargetHPBar");
-    playerName = new Label("data files/font/game.ttf", "TunDuong" ,10,370, 485, White, 120, false, []{});
-    playerLevel = new Label("data files/font/game.ttf", " ",10,550,485, White, 120, false, []{});
-    playerHP = new Label("data files/font/game.ttf", " ",10,370,503, White, 120, false, []{});
-    playerMP = new Label("data files/font/game.ttf", " ",10,570,503, White, 120, false, []{});
-    playerExperience = new Label("data files/font/game.ttf", " ",10,495,495, White, 120, false, []{});
-    targetName = new Label("data files/font/game.ttf", " ", 10, 420, 47, White, 120, false, []{});
-    targetHP = new Label("data files/font/game.ttf", " ", 10, 440, 53, White, 120, false, []{});
-    systemMessage = new Label("data files/font/game.ttf", " ", 10, 460, 80, Black, 360, false, []{});
+    playerName = new Label(GAME_FONT, Game::gPlayer->getNameComponent()->mName.c_str()  ,10,370, 485, White, 120, false, []{});
+    playerLevel = new Label(GAME_FONT, " ",10,550,485, White, 120, false, []{});
+    playerHP = new Label(GAME_FONT, " ",10,370,503, White, 120, false, []{});
+    playerMP = new Label(GAME_FONT, " ",10,570,503, White, 120, false, []{});
+    playerExperience = new Label(GAME_FONT, " ",10,495,495, White, 120, false, []{});
+    targetName = new Label(GAME_FONT, " ", 10, 420, 47, White, 120, false, []{});
+    targetHP = new Label(GAME_FONT, " ", 10, 440, 53, White, 120, false, []{});
+    systemMessage = new Label(GAME_FONT, " ", 10, 460, 80, Black, 360, false, []{});
 
     BaseSrcRect = {0,0,365,48};
     BaseDestRect = {329,478,365,48};

@@ -36,6 +36,10 @@ public:
     bool AddEquipment(int equipment_id);
     bool FindItem(int item_id, int item_amount);
     bool FindEquip(int equip_id, int equip_amount);
+    // Use for register only
+    void AddEquipmentToSlot(int slot_id, int equipment_id);
+    void AddItemToSlot(int slot_id, int item_id, int item_amount);
+    // </>
 private:
     Vector2D position;
     int mWidth, mHeight;

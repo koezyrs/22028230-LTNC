@@ -15,6 +15,7 @@ public:
     void setPosition(int x, int y);
     void handleEvent(SDL_Event* e);
     void Render();
+    void Reset();
     void setActive();
     void deActive();
     bool isActive();

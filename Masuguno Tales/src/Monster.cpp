@@ -56,7 +56,7 @@ void Monster::Update()
     if(health <= 0) {
         active = false;
         Game::gPlayer->mStats->Experience += 20;
-        Game::gPlayer->getKeyboardController()->setTarget(nullptr);
+        Game::gPlayer->getKeyboardController()->unsetTarget();
         targeted = false;
         trigger = false;
         float spawnWaitTime = 10000;

@@ -9,7 +9,7 @@ Projectile::Projectile(float _x, float _y ,int _frames, int _speed, std::string 
     SDL_QueryTexture(mTexture, NULL, NULL, &Width, &Height);
     srcRect = {0,0,192,192};
     destRect = {0,0,0,0};
-    startTime = SDL_GetTicks();
+    startTime = SDL_GetTicks64();
 }
 
 void Projectile::Update()
@@ -19,18 +19,14 @@ void Projectile::Update()
         destroy();
         return;
     }
-    currentTime = SDL_GetTicks() - startTime;
+    currentTime = SDL_GetTicks64() - startTime;
     mTransform->Update();
     mCollider->Update();
 }
 void Projectile::Render()
 {
     srcRect.x = srcRect.w * static_cast<int>((currentTime / speed) % (frames + 1));
-    if(srcRect.x >= Width)
-    {
-        destroy();
-        return;
-    }
+    if(srcRect.x >= Width) return;
     destRect.x = static_cast<int>(mTransform->position.x) - Game::gCamera.x;
     destRect.y = static_cast<int>(mTransform->position.y) - Game::gCamera.y;
     destRect.w = 96 * mTransform->scale;

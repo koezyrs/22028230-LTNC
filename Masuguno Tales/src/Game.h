@@ -9,6 +9,7 @@
 #include <SDL_mixer.h>
 #include <windows.h>
 #include <mysql.h>
+#include <memory>
 #include <vector>
 #include <string>
 #include "Settings.h"
@@ -55,16 +56,15 @@ public:
 
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
-
     static MYSQL* conn;
-    static Map* currentMap;
-    static Actor* gPlayer;
-    static Dialogue* gDialogue;
-    static Inventory* gInventory;
-    static CharacterInformation* gCharacterInformation;
-    static HUD* gHUD;
-    static Hotbar* gHotbar;
-    static QuestLog* gQuestLog;
+    static std::unique_ptr<Map> currentMap;
+    static std::unique_ptr<Actor> gPlayer;
+    static std::unique_ptr<Dialogue> gDialogue;
+    static std::unique_ptr<Inventory> gInventory;
+    static std::unique_ptr<CharacterInformation> gCharacterInformation;
+    static std::unique_ptr<HUD> gHUD;
+    static std::unique_ptr<Hotbar> gHotbar;
+    static std::unique_ptr<QuestLog> gQuestLog;
 
     static SDL_Rect gCamera;
     static SESSION_GAME session;
