@@ -4,6 +4,11 @@
 #define Settings_h
 const char GAME_TITLE[] = "Masuguno Tales";
 const char GAME_FONT[] = "data files/font/game.ttf";
+const char HOST[] = "192.168.6.102";
+const char DBUSERNAME[] = "admin";
+const char DBPASSWORD[] = "admin";
+const char DATABASE[] = "test";
+const int HOSTPORT = 3306;
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
 const int GAME_PIXELS = 32;

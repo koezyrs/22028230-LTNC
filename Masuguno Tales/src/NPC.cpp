@@ -5,7 +5,7 @@ NPC::NPC(float _x, float _y, int _width, int _height, int _scale, std::string sp
     mTransform = new TransformComponent(_x, _y, _width, _height, _scale);
     mSprite = new SpriteComponent(spriteName, mTransform, true);
     mCollider = new ColliderComponent(mTransform, "NPC");
-    mName = new NameComponent(mTransform, name, "data files/font/game.ttf", 10, SDL_Color{255,255,255});
+    mName = new NameComponent(mTransform, name, GAME_FONT, 10, SDL_Color{255,255,255});
 }
 
 void NPC::Update()

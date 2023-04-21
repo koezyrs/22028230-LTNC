@@ -25,8 +25,11 @@ private:
         CHASETARGET,
         RECALL
     };
+    void FindTarget();
+    void setTargetAndCalculateFlowField(int targetNewX, int targetNewY);
+    void calculateDistances(int targetX, int targetY);
+    void calculateFlowDirections();
 
-    Tile** tiles;
     TransformComponent* mTransform;
     Vector2D startPostion;
     bool* trigger;
@@ -40,18 +43,13 @@ private:
     Vector2D roamPosition;
     int targetX, targetY;
     Uint64 timeout;
+    std::vector<std::vector<Tile>> tiles;
+    int getRandomRange(int n);
 public:
     AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
-    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger);
+    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase);
     ~AIComponent();
-
-
     void Update();
-    int getRandomRange(int n);
-    void FindTarget();
-    void setTargetAndCalculateFlowField(int targetNewX, int targetNewY);
-    void calculateDistances(int targetX, int targetY);
-    void calculateFlowDirections();
 };
 
 #endif // AIComponent_h

@@ -9,7 +9,7 @@ Register::Register()
     email_input = new InputBox(450,334, 122, 10, 50);
     button_regist = new Button("RegistButtonOut","RegistButtonOver",446,355,56,21, [this]{RegistButon();});
     button_back = new Button("BackButtonOut","BackButtonOver",523,356,56,21, [this]{BackButton();});
-    systemMessageText = new Label(GAME_FONT, " ", 12, 420, 150, Black, 204);
+    systemMessageText = new Label(GAME_FONT, " ", 12, 420, 150, Black, 300);
     username_input->setActive();
 }
 
@@ -78,6 +78,15 @@ void Register::Render()
 
 void Register::RegistButon()
 {
+    Game::conn = mysql_init(0);
+    Game::conn = mysql_real_connect(Game::conn, HOST, DBUSERNAME, DBPASSWORD, DATABASE, HOSTPORT, NULL, 0);
+    if(!Game::conn)
+    {
+        setMessage("Can't connect to database! ");
+        std::cerr << "Can not connect to database! " << std::endl;
+        return;
+    }
+
     MYSQL_ROW row;
     MYSQL_RES* res;
     std::string qstr;
@@ -157,7 +166,7 @@ void Register::RegistButon()
 
 
     // Them actor moi
-    qstr = "INSERT INTO actors(account_id,character_name,level,experience,experience_to_next_level,strength,dexterity,intelligence,vitality,agility,stats_used,stats_available,map_id,x,y,gold,skin) VALUES(" + account_id + ",'" + username_input->inputValue + "',1,0,100,3,6,10,20,15,0,5,1,10,10,0,'Player')";
+    qstr = "INSERT INTO actors(account_id,character_name,level,experience,experience_to_next_level,strength,dexterity,intelligence,vitality,agility,stats_used,stats_available,map_id,x,y,gold,skin) VALUES(" + account_id + ",'" + username_input->inputValue + "',1,0,100,3,6,10,20,15,0,5,2,100,100,0,'Player')";
 
     qstate = mysql_query(Game::conn, qstr.c_str());
     if(qstate)

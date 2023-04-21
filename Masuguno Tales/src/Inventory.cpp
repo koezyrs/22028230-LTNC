@@ -320,3 +320,26 @@ void Inventory::AddItemToSlot(int slot_id, int item_id, int item_amount)
     invSlot[slot_id].AddItemToSlot(itemList.back());
     std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;
 }
+
+void Inventory::FindItemAtSlot(int slot_id, int* item_id, int* item_amount)
+{
+    if(!invSlot[slot_id].item)
+    {
+        *item_id = 0;
+        *item_amount = 0;
+    }else
+    {
+        *item_id = invSlot[slot_id].item->item_id;
+        *item_amount = invSlot[slot_id].item->currentStack;
+    }
+}
+void Inventory::FindEquipmentAtSlot(int slot_id, int* equipment_id)
+{
+    if(!invSlot[slot_id].equipment)
+    {
+        *equipment_id = 0;
+    }else
+    {
+        *equipment_id = invSlot[slot_id].equipment->equipment_id;
+    }
+}

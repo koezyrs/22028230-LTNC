@@ -2,16 +2,16 @@
 
 Monster::Monster(int _monster_id,float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
-                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed)
+                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase)
 : monster_id(_monster_id),startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
-    stopChaseRange(_stopChaseRange), timeSpawn(0)
+    stopChaseRange(_stopChaseRange) ,timeSpawn(0)
 {
     mTransform = new TransformComponent(_x, _y, _width, _height, _scale);
     mSprite = new SpriteComponent(monsterSprite, mTransform, true);
     mCollider = new ColliderComponent(mTransform, "Monster");
-    mName = new NameComponent(mTransform, monsterName, "data files/font/game.ttf", 10, SDL_Color{255,255,255});
-    mAI = new AIComponent(mTransform, startPosition, damage, attackSpeed, attackRange, stopChaseRange, chaseSpeed, roamSpeed, &trigger);
+    mName = new NameComponent(mTransform, monsterName, GAME_FONT, 10, SDL_Color{255,255,255});
+    mAI = new AIComponent(mTransform, startPosition, damage, attackSpeed, attackRange, stopChaseRange, chaseSpeed, roamSpeed, &trigger, mapBase);
 
     // HP Bar
     HPBarTexture = TextureManager::GetTexture("HPBar");
@@ -128,5 +128,5 @@ Monster::~Monster()
     delete mSprite;
     delete mCollider;
     delete mName;
-    delete mAI;
+//    delete mAI;
 }

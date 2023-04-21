@@ -40,6 +40,11 @@ public:
     void AddEquipmentToSlot(int slot_id, int equipment_id);
     void AddItemToSlot(int slot_id, int item_id, int item_amount);
     // </>
+
+    // Use for save data only
+    void FindItemAtSlot(int slot_id, int* item_id, int* item_amount);
+    void FindEquipmentAtSlot(int slot_id, int* equipment_id);
+    // </>
 private:
     Vector2D position;
     int mWidth, mHeight;

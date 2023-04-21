@@ -1,43 +1,23 @@
 #include "AIComponent.h"
-
-#include "../Map.h" // Must be included here
 AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
-    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger)
+    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
     roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
-    targetX(0), targetY(0)
+    targetX(0), targetY(0), tiles(mapBase)
 {
     trigger = _trigger;
     mTransform = trans;
     mTransform->speed = roamSpeed;
     roamPosition = startPostion;
 
-    int sizeX = Game::currentMap->getSizeX();
-    int sizeY = Game::currentMap->getSizeY();
-    tiles = new Tile*[sizeY];
-    for(int i = 0; i < sizeY; i++) tiles[i] = new Tile[sizeX];
-
-    for(int i = 0; i < sizeY; i++)
+    if(tiles.empty())
     {
-        for(int j = 0; j < sizeX; j++)
-        {
-            tiles[i][j].flowDirectionX = 0;
-            tiles[i][j].flowDirectionY = 0;
-            tiles[i][j].flowDistance = flowDistanceMax;
-            tiles[i][j].position.x = Game::currentMap->tiles[i][j].position.x;
-            tiles[i][j].position.y = Game::currentMap->tiles[i][j].position.y;
-            tiles[i][j].isWall = Game::currentMap->tiles[i][j].isWall;
-        }
+        std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
+        return;
     }
 }
 
-AIComponent::~AIComponent()
-{
-    int sizeY = Game::currentMap->getSizeY();
-
-    for(int i = 0; i < sizeY; i++) if(tiles[i] != NULL) delete[] tiles[i];
-    if(tiles != NULL) delete[] tiles;
-}
+AIComponent::~AIComponent(){}
 
 int AIComponent::getRandomRange(int n)
 {
@@ -47,6 +27,11 @@ int AIComponent::getRandomRange(int n)
 
 void AIComponent::Update()
 {
+    if(tiles.empty())
+    {
+        std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
+        return;
+    }
     switch(monsterState)
     {
     case ROAMING:
@@ -88,12 +73,17 @@ void AIComponent::Update()
 
     case CHASETARGET:
         {
+            // Set target
+            int playerPosX = static_cast<int>(Game::gPlayer->getTransformComponent()->position.x + GAME_PIXELS/2) / GAME_PIXELS;
+            int playerPosY = static_cast<int>(Game::gPlayer->getTransformComponent()->position.y + GAME_PIXELS/2) / GAME_PIXELS;
+            setTargetAndCalculateFlowField(playerPosX, playerPosY);
+
             mTransform->speed = chaseSpeed;
 
             int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
             int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
-            mTransform->velocity.x = mTransform->speed * static_cast<float>(Game::currentMap->tiles[coordinateY][coordinateX].flowDirectionX);
-            mTransform->velocity.y = mTransform->speed * static_cast<float>(Game::currentMap->tiles[coordinateY][coordinateX].flowDirectionY);
+            mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
+            mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
 
             if(mTransform->position.DistanceTo(Game::gPlayer->getTransformComponent()->position) < attackRange)
@@ -156,13 +146,20 @@ void AIComponent::FindTarget()
 }
 
 void AIComponent::setTargetAndCalculateFlowField(int targetNewX, int targetNewY) {
+    if(tiles.empty())
+    {
+        std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
+        return;
+    }
+
+    // Get Map size
+    int sizeX = tiles[0].size();
+    int sizeY = tiles.size();
+
     if(targetX != targetNewX || targetY != targetNewY)
     {
         targetX = targetNewX;
         targetY = targetNewY;
-        // Get Map size
-        int sizeX = Game::currentMap->getSizeX();
-        int sizeY = Game::currentMap->getSizeY();
 
         //Ensure the target is in bounds.
         if ((targetX >=0) && (targetX < sizeX) &&
@@ -187,9 +184,16 @@ void AIComponent::setTargetAndCalculateFlowField(int targetNewX, int targetNewY)
 }
 
 void AIComponent::calculateDistances(int targetX, int targetY) {
-    // Get map size
-    int sizeX = Game::currentMap->getSizeX();
-    int sizeY = Game::currentMap->getSizeY();
+
+    if(tiles.empty())
+    {
+        std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
+        return;
+    }
+
+    // Get Map size
+    int sizeX = tiles[0].size();
+    int sizeY = tiles.size();
 
     //Create a queue that will contain the indices to be checked.
     std::queue<Tile> listTilesToCheck;
@@ -228,9 +232,15 @@ void AIComponent::calculateDistances(int targetX, int targetY) {
 }
 
 void AIComponent::calculateFlowDirections() {
-    // Get map size
-    int sizeX = Game::currentMap->getSizeX();
-    int sizeY = Game::currentMap->getSizeY();
+    if(tiles.empty())
+    {
+        std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
+        return;
+    }
+
+    // Get Map size
+    int sizeX = tiles[0].size();
+    int sizeY = tiles.size();
 
     //The offset of the neighboring tiles to be checked.
     int moveX[4] = {0,0,-1,1};

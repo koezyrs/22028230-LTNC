@@ -27,9 +27,11 @@ public:
     void Update();
     void Render();
 private:
+    SDL_Color Black = {0,0,0};
     void LoginButon();
     void ExitButton();
     void RegistButton();
+    void setMessage(std::string text);
     void LoadGameDatabase(std::string _account_id);
     SDL_Texture* loginPanelTexture;
     InputBox* username_input;
@@ -37,6 +39,7 @@ private:
     Button* button_login;
     Button* button_exit;
     Button* button_register;
+    Label* systemMessageText;
 };
 
 #endif // Login_h

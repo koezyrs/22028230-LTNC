@@ -23,7 +23,7 @@
 class Actor : public Entity
 {
 public:
-    Actor(std::string characterName, int level, int exp, int next_level_exp,
+    Actor(int _actor_id, std::string characterName, int level, int exp, int next_level_exp,
           int strength, int dexterity, int intelligence, int vitality, int agility,
           int stats_used, int stats_available, float x, float y, std::string skin);
     ~Actor();
@@ -40,7 +40,7 @@ public:
     bool isActive() const;
     void destroy();
     void setPosition(float x, float y);
-
+    int actor_id;
 private:
     bool active = true;
     TransformComponent* mTransform;

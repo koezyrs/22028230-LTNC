@@ -35,13 +35,9 @@ public:
     Map(int _id);
     ~Map();
     int id;
-    Tile** tiles;
-    void setTargetAndCalculateFlowField(int targetXNew, int targetYNew);
-    void calculateDistances();
-    void calculateFlowDirections();
-    void LoadMap(std::string maptex, const char* mapfile, int sizeX, int sizeY);
-    void AddWall(int x, int y);
-    void AddMonster(float x, float y, int monster_id);
+    void LoadMap(std::string maptex, std::vector<std::vector<Tile>> mapBase);
+    void AddWall(float x, float y);
+    void AddMonster(float x, float y, int monster_id, std::vector<std::vector<Tile>> mapBase);
     void AddEvent(float x, float y, std::function<void()> func = []{});
     void AddNPC(float x, float y, const char* filepath, std::string name);
     void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);

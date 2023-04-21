@@ -98,17 +98,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
     SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
     srand(time(0));
 
-    conn = mysql_init(0);
-    conn = mysql_real_connect(conn, "192.168.6.102", "admin", "admin", "test", 3306, NULL, 0);
-    if(!conn)
-    {
-        std::cerr << "Can not connect to database! " << std::endl;
-        session = CLEAR;
-        return;
-    }else{
-        std::cerr << "Connect to database successfully! " << std::endl;
-    }
-
     session = LOAD_RESOURCES;
     return;
 }
@@ -144,6 +133,7 @@ void Game::loadResources()
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
     TextureManager::LoadTexture("data files/maps/map02.png", "Map02");
+    TextureManager::LoadTexture("data files/maps/map03.png", "Map03");
 
     // Sprite
     TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
@@ -168,6 +158,9 @@ void Game::loadResources()
 
 void Game::loadData()
 {
+    // Load all map
+    MapManager::LoadMapDatabase();
+
     // Load all game dialogue
     DialogueManager::LoadDialogue();
 
@@ -261,6 +254,7 @@ void Game::update()
         if(Collision::AABB(*gPlayer->getColliderComponent(), *wall->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
+            break;
         }
     }
 
@@ -270,6 +264,7 @@ void Game::update()
         if(Collision::AABB(*gPlayer->getColliderComponent(), *monster->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
+            break;
         }
     }
 
@@ -280,6 +275,7 @@ void Game::update()
         if(Collision::AABB(*gPlayer->getColliderComponent(), *npc->getColliderComponent()))
         {
             gPlayer->getTransformComponent()->position = playerPos;
+            break;
         }
 
         // Interact with NPC
@@ -319,6 +315,7 @@ void Game::update()
         {
             gPlayer->getTransformComponent()->position = playerPos;
             eventa->Perform();
+            break;
         }
     }
 
@@ -382,6 +379,73 @@ void Game::render()
 
 void Game::saveData()
 {
+    int l_actor_id = gPlayer->actor_id;
+    std::string actor_id = std::to_string(l_actor_id);
+    std::string qstr;
+    int qstate;
+
+    std::string level = to_string(gPlayer->mStats->Level);
+    std::string experience = to_string(gPlayer->mStats->Experience);
+    std::string experience_to_next_level = to_string(gPlayer->mStats->ExperienceToNextLevel);
+    std::string strength = to_string(gPlayer->mStats->Strength);
+    std::string dexterity = to_string(gPlayer->mStats->Dexterity);
+    std::string intelligence = to_string(gPlayer->mStats->Intelligence);
+    std::string vitality = to_string(gPlayer->mStats->Vitality);
+    std::string agility = to_string(gPlayer->mStats->Agility);
+    std::string stats_used = to_string(gPlayer->mStats->StatsUsed);
+    std::string stats_available = to_string(gPlayer->mStats->StatsAvailable);
+    std::string map_id = to_string(currentMap->id);
+    std::string x = to_string(static_cast<int>(gPlayer->getTransformComponent()->position.x));
+    std::string y = to_string(static_cast<int>(gPlayer->getTransformComponent()->position.y));
+    std::string gold = "10";
+    std::string skin = "Player";
+
+    // Update actor
+    qstr = "";
+    qstr += "UPDATE `actors` SET `level`='" + level;
+    qstr += "',`experience`='" + experience;
+    qstr += "',`experience_to_next_level`='" + experience_to_next_level;
+    qstr += "',`strength`='" + strength;
+    qstr += "',`dexterity`='" + dexterity;
+    qstr += "',`intelligence`='" + intelligence;
+    qstr += "',`vitality`='" + vitality;
+    qstr += "',`agility`='" + agility;
+    qstr += "',`stats_used`='" + stats_used;
+    qstr += "',`stats_available`='" + stats_available;
+    qstr += "',`map_id`='" + map_id;
+    qstr += "',`x`='" + x;
+    qstr += "',`y`='" + y;
+    qstr += "',`gold`='" + gold;
+    qstr += "',`skin`='" + skin;
+    qstr += "' WHERE `id` = '" + actor_id + "'";
+
+    qstate = mysql_query(conn, qstr.c_str());
+    if(qstate)
+    {
+        std::cout << "Can not make query! (Can not save actor!)" << std::endl;
+    }
+
+    // Update inventory
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        std::string slot_id = to_string(i);
+        int equipment_id, item_id, item_amount;
+        gInventory->FindEquipmentAtSlot(i, &equipment_id);
+        gInventory->FindItemAtSlot(i, &item_id, &item_amount);
+        qstr = "";
+        qstr += "UPDATE `actor_inventory` SET `equipment_id`='" + std::to_string(equipment_id);
+        qstr += "',`item_id`='" + std::to_string(item_id);
+        qstr += "',`item_amount`='" + std::to_string(item_amount);
+        qstr += "' WHERE `slot_id` ='" + slot_id;
+        qstr += "' AND `actor_id` ='" + actor_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(qstate)
+        {
+            std::cout << "Can not make query! (Can not save actor!)" << std::endl;
+        }
+    }
+
+
     std::cout << "Player data was saved!" << std::endl;
     session = CLEAR;
 }

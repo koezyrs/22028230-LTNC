@@ -9,6 +9,7 @@ Login::Login()
     button_login = new Button("LoginButtonOut","LoginButtonOver",446,319,56,21, [this]{LoginButon();});
     button_exit = new Button("ExitButtonOut","ExitButtonOver",523,319,56,21,[this]{ExitButton();});
     button_register = new Button("RegistButtonOut","RegistButtonOver",558,345,56,21,[this]{RegistButton();});
+    systemMessageText = new Label(GAME_FONT, " ", 12, 420, 150, Black, 500, false, []{});
     username_input->setActive();
 }
 
@@ -19,6 +20,7 @@ Login::~Login()
     delete button_login;
     delete button_exit;
     delete button_register;
+    delete systemMessageText;
 }
 
 void Login::HandleEvent()
@@ -61,6 +63,7 @@ void Login::Render()
     button_login->Render();
     button_exit->Render();
     button_register->Render();
+    systemMessageText->Render();
 
      // Update screen
     SDL_RenderPresent(Game::gRenderer);
@@ -68,6 +71,15 @@ void Login::Render()
 
 void Login::LoginButon()
 {
+    Game::conn = mysql_init(0);
+    Game::conn = mysql_real_connect(Game::conn, HOST, DBUSERNAME, DBPASSWORD, DATABASE, HOSTPORT, NULL, 0);
+    if(!Game::conn)
+    {
+        setMessage("Can't connect to database!");
+        std::cerr << "Can not connect to database! " << std::endl;
+        return;
+    }
+
     MYSQL_ROW row;
     MYSQL_RES* res;
     std::string qstr = "SELECT id FROM accounts WHERE username = '" + username_input->inputValue + "' AND password = '" + password_input->inputValue + "'";
@@ -127,6 +139,7 @@ void Login::LoadGameDatabase(std::string _account_id)
         }
         std::string _actor_id(row[0]); actor_id = _actor_id;
         std::string playerName(row[2]);
+        int l_actor_id = std::stoi(row[0]);
         int level = std::stoi(row[3]);
         int exp = std::stoi(row[4]);
         int next_exp = std::stoi(row[5]);
@@ -143,9 +156,10 @@ void Login::LoadGameDatabase(std::string _account_id)
         int gold = std::stoi(row[16]);
         std::string playerSkin(row[17]);
         Game::currentMap = std::make_unique<Map>(map_id);
-        Game::gPlayer = std::make_unique<Actor>(playerName, level, exp, next_exp, strength, dexterity, intelligence, vitality, agility,
+        Game::gPlayer = std::make_unique<Actor>(l_actor_id,playerName, level, exp, next_exp, strength, dexterity, intelligence, vitality, agility,
                                   stats_use, stats_avail, x, y, playerSkin);
         MapManager::LoadMap(map_id);
+        Game::gPlayer->setPosition(x,y);
         mysql_free_result(res);
     }else
     {
@@ -205,4 +219,10 @@ void Login::LoadGameDatabase(std::string _account_id)
         Game::gQuestLog = std::make_unique<QuestLog>();
 
         Game::session = RUNNING;
+}
+
+void Login::setMessage(std::string text)
+{
+    systemMessageText->Reset();
+    systemMessageText = new Label(GAME_FONT, text.c_str(), 12, 420, 150, Black, 204);
 }
