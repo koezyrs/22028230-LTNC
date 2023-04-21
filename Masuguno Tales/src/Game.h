@@ -57,7 +57,7 @@ public:
     static SDL_Event event;
     static SDL_Renderer* gRenderer;
     static MYSQL* conn;
-    static std::unique_ptr<Map> currentMap;
+    static std::shared_ptr<Map> currentMap;
     static std::unique_ptr<Actor> gPlayer;
     static std::unique_ptr<Dialogue> gDialogue;
     static std::unique_ptr<Inventory> gInventory;

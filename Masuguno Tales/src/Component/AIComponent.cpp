@@ -19,10 +19,22 @@ AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _da
 
 AIComponent::~AIComponent(){}
 
-int AIComponent::getRandomRange(int n)
+void AIComponent::getRandomRange(int n, int *nextMoveX, int *nextMoveY)
 {
-    int res = static_cast<float> (rand()%n);
-    return res;
+    int sizeX = tiles[0].size();
+    int sizeY = tiles.size();
+    tryAgain:
+    int rangeX = static_cast<float> (rand()%n);
+    int rangeY = static_cast<float> (rand()%n);
+    int startCoordX = static_cast<int>(startPostion.x) / GAME_PIXELS;
+    int startCoordY = static_cast<int>(startPostion.y) / GAME_PIXELS;
+    int tmpNextMoveX = startCoordX + rangeX;
+    int tmpNextMoveY = startCoordY + rangeY;
+    if(tmpNextMoveX < 0 || tmpNextMoveX >= sizeX) goto tryAgain;
+    if(tmpNextMoveY < 0 || tmpNextMoveY >= sizeY) goto tryAgain;
+    if(tiles[tmpNextMoveY][tmpNextMoveX].isWall) goto tryAgain;
+    *nextMoveX = tmpNextMoveX;
+    *nextMoveY = tmpNextMoveY;
 }
 
 void AIComponent::Update()
@@ -47,21 +59,8 @@ void AIComponent::Update()
             float reachedPositionDistance = 33.0f;
             if(mTransform->position.DistanceTo(roamPosition) < reachedPositionDistance)
             {
-                int rangeX = getRandomRange(4);
-                int rangeY = getRandomRange(4);
-                int startCoordX = static_cast<int>(startPostion.x) / GAME_PIXELS;
-                int startCoordY = static_cast<int>(startPostion.y) / GAME_PIXELS;
-                int nextMoveX = startCoordX + rangeX;
-                int nextMoveY = startCoordY + rangeY;
-                while(tiles[nextMoveY][nextMoveX].isWall)
-                {
-                    rangeX = getRandomRange(4);
-                    rangeY = getRandomRange(4);
-                    startCoordX = static_cast<int>(startPostion.x) / GAME_PIXELS;
-                    startCoordY = static_cast<int>(startPostion.y) / GAME_PIXELS;
-                    nextMoveX = startCoordX + rangeX;
-                    nextMoveY = startCoordY + rangeY;
-                }
+                int nextMoveX, nextMoveY;
+                getRandomRange(4,&nextMoveX, &nextMoveY);
                 roamPosition.x = nextMoveX * GAME_PIXELS;
                 roamPosition.y = nextMoveY * GAME_PIXELS;
                 setTargetAndCalculateFlowField(nextMoveX, nextMoveY);

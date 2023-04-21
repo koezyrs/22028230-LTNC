@@ -1,21 +1,9 @@
 #include "Map.h"
-
-Map::Map(int _id)
-: id(_id), width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL) {}
-
-Map::~Map()
+#include "MapManager.h"
+Map::Map(int _id, std::string maptex)
+: id(_id), width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL)
 {
-    walls.clear();
-    monsters.clear();
-    events.clear();
-    npcs.clear();
-    projectiles.clear();
-    Game::gPlayer->getKeyboardController()->unsetTarget();
-    mTexture = NULL;
-}
-
-void Map::LoadMap(std::string maptex, std::vector<std::vector<Tile>> mapBase)
-{
+    std::vector<std::vector<Tile>> mapBase = MapManager::mapBase[id];
     mTexture = TextureManager::GetTexture(maptex);
     SDL_QueryTexture(mTexture, NULL, NULL, &width, &height);
     srcRect.x = srcRect.y = destRect.x = destRect.y = 0;
@@ -40,21 +28,24 @@ void Map::LoadMap(std::string maptex, std::vector<std::vector<Tile>> mapBase)
     }
 }
 
+Map::~Map() {}
+
 void Map::Refresh()
 {
+    /*
     walls.erase(std::remove_if(walls.begin(), walls.end(),
         [](auto& theWall){return !theWall->isActive();}), walls.end());
 
-    /*
+
     monsters.erase(std::remove_if(monsters.begin(), monsters.end(),
         [](auto& theMonster){return !theMonster->isActive();}), monsters.end());
-    */
+
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(),
         [](auto& theNPC) {return !theNPC->isActive();}), npcs.end());
 
     events.erase(std::remove_if(events.begin(), events.end(),
         [](auto& theEvent){return !theEvent->isActive();}), events.end());
-
+    */
     projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(),
         [](auto& theProjectile){return !theProjectile->isActive();}), projectiles.end());
 
@@ -62,8 +53,15 @@ void Map::Refresh()
 
 void Map::Update()
 {
+
+    Refresh();
+    // Saved the last position after taking the next move
+    Vector2D playerPos = Game::gPlayer->getTransformComponent()->position;
+
     destRect.x = position.x - Game::gCamera.x;
     destRect.y = position.y - Game::gCamera.y;
+
+    Game::gPlayer->Update();
 
     for(auto& w : walls)
     {
@@ -88,6 +86,97 @@ void Map::Update()
     for(auto& p : projectiles)
     {
         p->Update();
+    }
+
+    // Collision check
+    for(auto& wall : walls)
+    {
+        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *wall->getColliderComponent()))
+        {
+            Game::gPlayer->getTransformComponent()->position = playerPos;
+        }
+    }
+
+    // Hit Monster check
+    for(auto& monster : monsters)
+    {
+        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *monster->getColliderComponent()))
+        {
+            Game::gPlayer->getTransformComponent()->position = playerPos;
+        }
+    }
+
+    // Collide with NPC
+    for(auto& npc : npcs)
+    {
+        // Check Collision
+        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *npc->getColliderComponent()))
+        {
+            Game::gPlayer->getTransformComponent()->position = playerPos;
+        }
+        // Interact with NPC
+        Vector2D npcPos = npc->getTransformComponent()->position;
+        Vector2D currentplayerPos = Game::gPlayer->getTransformComponent()->position;
+        float distance = sqrt((npcPos.x - currentplayerPos.x)*(npcPos.x - currentplayerPos.x) + (npcPos.y - currentplayerPos.y)*(npcPos.y - currentplayerPos.y));
+
+        float exitDistance = 1.0f;
+        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
+        {
+            // Check if NPC and Player are facing to each other
+            int playerAnimIndex = Game::gPlayer->getSpriteComponent()->animIndex;
+            int npcAnimIndex = npc->getSpriteComponent()->animIndex;
+            bool success = false;
+            if(playerAnimIndex == 0 && npcAnimIndex == 3) success = true;
+            else if(playerAnimIndex == 1 && npcAnimIndex == 2) success = true;
+            else if(playerAnimIndex == 2 && npcAnimIndex == 1) success = true;
+            else if(playerAnimIndex == 3 && npcAnimIndex == 0) success = true;
+
+            // If is facing
+            if(success){
+                switch(Game::event.key.keysym.sym )
+                {
+                    case SDLK_LCTRL: npc->PlayDialogue();
+                }
+            }
+        }
+
+        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) npc->HideDialogue();
+
+    }
+
+    // Apply damage from projectile
+    for(auto& prjtile : projectiles)
+    {
+        if(prjtile->isUsed()) continue;
+        for(auto& mon : monsters)
+        {
+            if(prjtile->getTag() == "Monster") continue;
+            if(Collision::AABB(*prjtile->getColliderComponent(), *mon->getColliderComponent()))
+            {
+                mon->ApplyDamage(prjtile->getDamage());
+                prjtile->Used();
+            }
+        }
+
+        if(prjtile->getTag() == "Player") continue;
+        if(Collision::AABB(*prjtile->getColliderComponent(), *Game::gPlayer->getColliderComponent()))
+        {
+            Game::gPlayer->mStats->ApplyDamage(prjtile->getDamage());
+            prjtile->Used();
+        }
+    }
+
+
+
+    // Interact with event
+    for(auto& eventa : events)
+    {
+        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *eventa->getColliderComponent()))
+        {
+            Game::gPlayer->getTransformComponent()->position = playerPos;
+            eventa->Perform();
+            break;
+        }
     }
 }
 

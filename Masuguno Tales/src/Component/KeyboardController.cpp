@@ -5,8 +5,8 @@
 #include "../HUD.h"
 
 KeyboardController::KeyboardController() {}
-KeyboardController::KeyboardController(TransformComponent* trans, SpriteComponent* sprite)
-: cooldownBasicAttack(0), state(NONE)
+KeyboardController::KeyboardController(TransformComponent* trans, SpriteComponent* sprite, bool *movement)
+: cooldownBasicAttack(0), state(NONE), movementAvailable(movement)
 {
     mSprite = sprite;
     mTransform = trans;
@@ -92,41 +92,48 @@ void KeyboardController::Update()
 {
     if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
     {
-        switch(Game::event.key.keysym.sym)
+        if(*movementAvailable)
         {
-        case SDLK_UP:
-            mTransform->velocity.y -= mTransform->speed;
-            break;
-        case SDLK_DOWN:
-            mTransform->velocity.y += mTransform->speed;
-            break;
-        case SDLK_LEFT:
-            mTransform->velocity.x -= mTransform->speed;
-            break;
-        case SDLK_RIGHT:
-            mTransform->velocity.x += mTransform->speed;
-            break;
-        default:
-            break;
+
+            switch(Game::event.key.keysym.sym)
+            {
+            case SDLK_UP:
+                mTransform->velocity.y -= mTransform->speed;
+                break;
+            case SDLK_DOWN:
+                mTransform->velocity.y += mTransform->speed;
+                break;
+            case SDLK_LEFT:
+                mTransform->velocity.x -= mTransform->speed;
+                break;
+            case SDLK_RIGHT:
+                mTransform->velocity.x += mTransform->speed;
+                break;
+            default:
+                break;
+            }
         }
     }
 
     if(Game::event.type == SDL_KEYUP && Game::event.key.repeat == 0)
     {
-        switch(Game::event.key.keysym.sym)
+        if(*movementAvailable)
         {
-        case SDLK_UP:
-            mTransform->velocity.y += mTransform->speed;
-            break;
-        case SDLK_DOWN:
-            mTransform->velocity.y -= mTransform->speed;
-            break;
-        case SDLK_LEFT:
-            mTransform->velocity.x += mTransform->speed;
-            break;
-        case SDLK_RIGHT:
-            mTransform->velocity.x -= mTransform->speed;
-            break;
+            switch(Game::event.key.keysym.sym)
+            {
+            case SDLK_UP:
+                mTransform->velocity.y += mTransform->speed;
+                break;
+            case SDLK_DOWN:
+                mTransform->velocity.y -= mTransform->speed;
+                break;
+            case SDLK_LEFT:
+                mTransform->velocity.x += mTransform->speed;
+                break;
+            case SDLK_RIGHT:
+                mTransform->velocity.x -= mTransform->speed;
+                break;
+            }
         }
     }
 

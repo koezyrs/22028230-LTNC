@@ -1,7 +1,7 @@
 #include "Event.h"
 
 Event::Event(float x, float y, std::function<void()> func)
-:position(x,y) , EventFunction([this,func] {func();})
+:position(x,y), EventFunction([this, func]{func();})
 {
     mTransform = new TransformComponent(x, y, GAME_PIXELS, GAME_PIXELS, 1);
     mCollider = new ColliderComponent(mTransform, "Event");
@@ -35,7 +35,6 @@ void Event::destroy()
 {
     active = false;
 }
-
 void Event::Perform()
 {
     EventFunction();

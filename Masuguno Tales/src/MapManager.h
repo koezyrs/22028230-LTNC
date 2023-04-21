@@ -17,6 +17,7 @@ class MapManager
 public:
     static void LoadMap(int map_id);
     static std::map<int, std::vector<std::vector<Tile>>> mapBase;
+    static std::map<int, std::shared_ptr<Map>> mapDatabase;
     static void LoadMapDatabase();
 private:
     static std::vector<std::vector<Tile>> setupMap(const char* msgnFile, int sizeX, int sizeY);

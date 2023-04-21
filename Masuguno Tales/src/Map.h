@@ -32,10 +32,9 @@
 class Map
 {
 public:
-    Map(int _id);
+    Map(int _id, std::string maptex);
     ~Map();
     int id;
-    void LoadMap(std::string maptex, std::vector<std::vector<Tile>> mapBase);
     void AddWall(float x, float y);
     void AddMonster(float x, float y, int monster_id, std::vector<std::vector<Tile>> mapBase);
     void AddEvent(float x, float y, std::function<void()> func = []{});

@@ -29,9 +29,10 @@ private:
     std::shared_ptr<Monster> target;
     Uint64 cooldownBasicAttack;
     DIRECTION state;
+    bool *movementAvailable;
 public:
     KeyboardController();
-    KeyboardController(TransformComponent* trans, SpriteComponent* sprite);
+    KeyboardController(TransformComponent* trans, SpriteComponent* sprite, bool *momvement);
     std::shared_ptr<Monster> const& getTarget() const;
     void setTarget(std::shared_ptr<Monster>& _tar);
     void unsetTarget();

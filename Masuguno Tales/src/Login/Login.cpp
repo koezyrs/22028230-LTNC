@@ -155,7 +155,7 @@ void Login::LoadGameDatabase(std::string _account_id)
         float y = std::stoi(row[15]);
         int gold = std::stoi(row[16]);
         std::string playerSkin(row[17]);
-        Game::currentMap = std::make_unique<Map>(map_id);
+        Game::currentMap = MapManager::mapDatabase[1];
         Game::gPlayer = std::make_unique<Actor>(l_actor_id,playerName, level, exp, next_exp, strength, dexterity, intelligence, vitality, agility,
                                   stats_use, stats_avail, x, y, playerSkin);
         MapManager::LoadMap(map_id);

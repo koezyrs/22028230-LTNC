@@ -13,12 +13,13 @@ class Event
 public:
     Event(float x, float y, std::function<void()> func = []{});
     virtual ~Event();
-    void Perform();
     void Update();
+    void Perform();
     TransformComponent* getTransformComponent();
     ColliderComponent* getColliderComponent();
     bool isActive();
     void destroy();
+    int map_id;
 private:
     bool active = true;
     Vector2D position;

@@ -44,7 +44,7 @@ private:
     int targetX, targetY;
     Uint64 timeout;
     std::vector<std::vector<Tile>> tiles;
-    int getRandomRange(int n);
+    void getRandomRange(int n, int *nextMoveX, int *nextMoveY);
 public:
     AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase);

@@ -41,8 +41,11 @@ public:
     void destroy();
     void setPosition(float x, float y);
     int actor_id;
+    void enableMovement();
+    void disableMovement();
 private:
     bool active = true;
+    bool movement;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     ColliderComponent* mCollider;

@@ -39,8 +39,8 @@ SDL_Event Game::event;
 SDL_Renderer* Game::gRenderer;
 SDL_Rect Game::gCamera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
+std::shared_ptr<Map> Game::currentMap;
 std::unique_ptr<Actor> Game::gPlayer;
-std::unique_ptr<Map> Game::currentMap;
 std::unique_ptr<Dialogue> Game::gDialogue;
 std::unique_ptr<Inventory> Game::gInventory;
 std::unique_ptr<HUD> Game::gHUD;
@@ -158,9 +158,6 @@ void Game::loadResources()
 
 void Game::loadData()
 {
-    // Load all map
-    MapManager::LoadMapDatabase();
-
     // Load all game dialogue
     DialogueManager::LoadDialogue();
 
@@ -178,6 +175,9 @@ void Game::loadData()
 
     // Load all quest
     QuestDB::LoadQuestDatabase();
+
+    // Load all map
+    MapManager::LoadMapDatabase();
 
     loginPanel = new Login();
     registerPanel = new Register();
@@ -235,111 +235,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    currentMap->Refresh();
-    // Saved the last position after taking the next move
-    Vector2D playerPos = gPlayer->getTransformComponent()->position;
-
     // Update Game Object
     currentMap->Update();
-    gPlayer->Update();
     gHUD->Update();
     gHotbar->Update();
     if(!gDialogue->isHide()) gDialogue->Update();
     if(!gInventory->isHide()) gInventory->Update();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Update();
-
-    // Collision check
-    for(auto& wall : currentMap->walls)
-    {
-        if(Collision::AABB(*gPlayer->getColliderComponent(), *wall->getColliderComponent()))
-        {
-            gPlayer->getTransformComponent()->position = playerPos;
-            break;
-        }
-    }
-
-    // Hit Monster check
-    for(auto& monster : currentMap->monsters)
-    {
-        if(Collision::AABB(*gPlayer->getColliderComponent(), *monster->getColliderComponent()))
-        {
-            gPlayer->getTransformComponent()->position = playerPos;
-            break;
-        }
-    }
-
-    // Collide with NPC
-    for(auto& npc : currentMap->npcs)
-    {
-        // Check Collision
-        if(Collision::AABB(*gPlayer->getColliderComponent(), *npc->getColliderComponent()))
-        {
-            gPlayer->getTransformComponent()->position = playerPos;
-            break;
-        }
-
-        // Interact with NPC
-        Vector2D npcPos = npc->getTransformComponent()->position;
-        Vector2D currentplayerPos = gPlayer->getTransformComponent()->position;
-        float distance = sqrt((npcPos.x - currentplayerPos.x)*(npcPos.x - currentplayerPos.x) + (npcPos.y - currentplayerPos.y)*(npcPos.y - currentplayerPos.y));
-
-        float exitDistance = 1.0f;
-        if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
-        {
-            // Check if NPC and Player are facing to each other
-            int playerAnimIndex = gPlayer->getSpriteComponent()->animIndex;
-            int npcAnimIndex = npc->getSpriteComponent()->animIndex;
-            bool success = false;
-            if(playerAnimIndex == 0 && npcAnimIndex == 3) success = true;
-            else if(playerAnimIndex == 1 && npcAnimIndex == 2) success = true;
-            else if(playerAnimIndex == 2 && npcAnimIndex == 1) success = true;
-            else if(playerAnimIndex == 3 && npcAnimIndex == 0) success = true;
-
-            // If is facing
-            if(success){
-                switch(Game::event.key.keysym.sym )
-                {
-                    case SDLK_LCTRL: npc->PlayDialogue();
-                }
-            }
-        }
-
-        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) npc->HideDialogue();
-
-    }
-
-    // Interact with event
-    for(auto& eventa : currentMap->events)
-    {
-        if(Collision::AABB(*gPlayer->getColliderComponent(), *eventa->getColliderComponent()))
-        {
-            gPlayer->getTransformComponent()->position = playerPos;
-            eventa->Perform();
-            break;
-        }
-    }
-
-    // Apply damage from projectile
-    for(auto& prjtile : currentMap->projectiles)
-    {
-        if(prjtile->isUsed()) continue;
-        for(auto& mon : currentMap->monsters)
-        {
-            if(prjtile->getTag() == "Monster") continue;
-            if(Collision::AABB(*prjtile->getColliderComponent(), *mon->getColliderComponent()))
-            {
-                mon->ApplyDamage(prjtile->getDamage());
-                prjtile->Used();
-            }
-        }
-
-        if(prjtile->getTag() == "Player") continue;
-        if(Collision::AABB(*prjtile->getColliderComponent(), *Game::gPlayer->getColliderComponent()))
-        {
-            Game::gPlayer->mStats->ApplyDamage(prjtile->getDamage());
-            prjtile->Used();
-        }
-    }
 
     // Camera Update
     gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
@@ -350,7 +252,6 @@ void Game::update()
     if(gCamera.y >= gCamera.h) gCamera.y = gCamera.h;
     if(gCamera.x + gCamera.w >= currentMap->getWidth()) gCamera.x = currentMap->getWidth() - gCamera.w;
     if(gCamera.y + gCamera.h >= currentMap->getHeight()) gCamera.y = currentMap->getHeight() - gCamera.h;
-
     return;
 }
 
