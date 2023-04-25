@@ -459,3 +459,10 @@ bool CharacterInformation::AddEquipment(int equipment_id)
     return false;
 }
 
+void CharacterInformation::FindEquipmentAtSlot(int slot_id, int *equipment_id)
+{
+    if(equipSlot[slot_id].equipment)
+    {
+        *equipment_id = equipSlot[slot_id].equipment->equipment_id;
+    }else *equipment_id = 0;
+}

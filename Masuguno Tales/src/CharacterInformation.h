@@ -29,6 +29,10 @@ public:
     void Update() override;
     void Render() override;
     bool AddEquipment(int equipment_id);
+
+    // For save data only
+    void FindEquipmentAtSlot(int slot_id, int *equipment_id);
+    // </>
 private:
     SDL_Color White = {255,255,255};
     SDL_Color Black = {0,0,0};

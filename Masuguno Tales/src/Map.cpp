@@ -1,10 +1,11 @@
 #include "Map.h"
 #include "MapManager.h"
-Map::Map(int _id, std::string maptex)
-: id(_id), width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL)
+Map::Map(int _id, std::string maptex, std::string overlay)
+: id(_id), width(0), height(0), sizeX(0), sizeY(0), targetX(0), targetY(0), position(), mTexture(NULL), mTexture_Overlay(NULL)
 {
     std::vector<std::vector<Tile>> mapBase = MapManager::mapBase[id];
     mTexture = TextureManager::GetTexture(maptex);
+    mTexture_Overlay = TextureManager::GetTexture(overlay);
     SDL_QueryTexture(mTexture, NULL, NULL, &width, &height);
     srcRect.x = srcRect.y = destRect.x = destRect.y = 0;
     srcRect.w = destRect.w = width;
@@ -201,6 +202,7 @@ void Map::RenderUpperLayer()
     {
         p->Render();
     }
+    TextureManager::Draw(mTexture_Overlay, srcRect, destRect);
 }
 void Map::AddWall(float x, float y)
 {

@@ -32,7 +32,7 @@
 class Map
 {
 public:
-    Map(int _id, std::string maptex);
+    Map(int _id, std::string maptex, std::string overlay);
     ~Map();
     int id;
     void AddWall(float x, float y);
@@ -63,6 +63,7 @@ private:
     int targetY;
     Vector2D position;
     SDL_Texture* mTexture;
+    SDL_Texture* mTexture_Overlay;
     SDL_Rect srcRect, destRect;
 };
 

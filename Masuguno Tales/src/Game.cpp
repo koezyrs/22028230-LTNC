@@ -132,7 +132,9 @@ void Game::loadResources()
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
+    TextureManager::LoadTexture("data files/maps/map01_above_player.png", "Map01_Overlay");
     TextureManager::LoadTexture("data files/maps/map02.png", "Map02");
+    TextureManager::LoadTexture("data files/maps/map02_above_player.png", "Map02_Overlay");
     TextureManager::LoadTexture("data files/maps/map03.png", "Map03");
 
     // Sprite
@@ -346,6 +348,22 @@ void Game::saveData()
         }
     }
 
+    // Update player CC's
+    for(int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
+    {
+        std::string slot_id = to_string(i);
+        int equipment_id;
+        gCharacterInformation->FindEquipmentAtSlot(i, &equipment_id);
+        qstr = "";
+        qstr += "UPDATE `actor_character_information` SET `equipment_id`='" + std::to_string(equipment_id);
+        qstr += "' WHERE `slot_id` ='" + slot_id;
+        qstr += "' AND `actor_id` ='" + actor_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(qstate)
+        {
+            std::cout << "Can not make query! (Can not save actor!)" << std::endl;
+        }
+    }
 
     std::cout << "Player data was saved!" << std::endl;
     session = CLEAR;

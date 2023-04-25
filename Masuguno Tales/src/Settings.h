@@ -4,10 +4,10 @@
 #define Settings_h
 const char GAME_TITLE[] = "Masuguno Tales";
 const char GAME_FONT[] = "data files/font/game.ttf";
-const char HOST[] = "192.168.6.102";
-const char DBUSERNAME[] = "admin";
-const char DBPASSWORD[] = "admin";
-const char DATABASE[] = "test";
+const char HOST[] = "127.0.0.1"; // sql12.freemysqlhosting.net
+const char DBUSERNAME[] = "admin"; // sql12613641
+const char DBPASSWORD[] = "admin"; // CQiXxpa5uh
+const char DATABASE[] = "test"; // sql12613641
 const int HOSTPORT = 3306;
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;

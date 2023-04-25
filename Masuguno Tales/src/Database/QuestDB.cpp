@@ -15,15 +15,15 @@ void QuestDB::LoadQuestDatabase()
         0,                                  // Item amount
         0,                                  // Equip id
         0,                                  // Equip amount
-        1,                                  // Enemy id
-        1,                                  // Enemy amount
+        0,                                  // Enemy id
+        0,                                  // Enemy amount
         // Reward
         10,                                 // Exp
         1,                                  // Gold
         1,                                  // Reward item id
         5,                                  // Reward item amount
         1,                                  // Reward equip id
-        0,                                  // Reward equip amount
+        1,                                  // Reward equip amount
         true                               // Repeat
     );
 
