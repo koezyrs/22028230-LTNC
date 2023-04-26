@@ -203,6 +203,7 @@ void Map::RenderUpperLayer()
         p->Render();
     }
     TextureManager::Draw(mTexture_Overlay, srcRect, destRect);
+    Game::gPlayer->getNameComponent()->Render();
 }
 void Map::AddWall(float x, float y)
 {

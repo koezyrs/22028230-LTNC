@@ -45,12 +45,12 @@ void MapManager::LoadMapDatabase()
     // Map Base
     mapBase[1] = setupMap("data files/maps/map01.msgn", 50, 30);
     mapBase[2] = setupMap("data files/maps/map02.msgn", 33, 21);
-    mapBase[3] = setupMap("data files/maps/map03.msgn", 32, 18);
+    mapBase[3] = setupMap("data files/maps/map03.msgn", 61, 32);
 
     // Map database
     mapDatabase[1] = std::make_shared<Map>(1, "Map01", "Map01_Overlay");
     mapDatabase[2] = std::make_shared<Map>(2, "Map02", "Map02_Overlay");
-    mapDatabase[3] = std::make_shared<Map>(3, "Map03", "");
+    mapDatabase[3] = std::make_shared<Map>(3, "Map03", "Map03_Overlay");
 
     // Load data
     LoadMap1();
@@ -66,6 +66,16 @@ void MapManager::LoadMap1()
                                     LoadMap(2);
                                     Game::gPlayer->setPosition(16 * 32, 19 * 32);
                                 });
+    mapDatabase[1]->AddEvent(-1 * 32, 23 * 32, []
+                                {
+                                    LoadMap(3);
+                                    Game::gPlayer->setPosition(60 * 32, 17 * 32);
+                                });
+    mapDatabase[1]->AddEvent(-1 * 32, 24 * 32, []
+                                {
+                                    LoadMap(3);
+                                    Game::gPlayer->setPosition(60 * 32, 18 * 32);
+                                });
 
 }
 
@@ -80,20 +90,14 @@ void MapManager::LoadMap2()
 
 void MapManager::LoadMap3()
 {
-    mapDatabase[3]->AddNPC(10 * GAME_PIXELS, 10 * GAME_PIXELS, "Sprite-Guard1", "The Guard");
-    mapDatabase[3]->AddNPC(15 * GAME_PIXELS, 20 * GAME_PIXELS, "Sprite-Guard2", "KienHDVN");
-    mapDatabase[3]->AddNPC(7 * GAME_PIXELS, 10 * GAME_PIXELS, "Sprite-Guard1", "The Guard");
-    mapDatabase[3]->AddNPC(5 * GAME_PIXELS, 20 * GAME_PIXELS, "Sprite-Guard2", "KienHDVN");
-    mapDatabase[3]->AddNPC(4 * GAME_PIXELS, 10 * GAME_PIXELS, "Sprite-Guard1", "The Guard");
-    mapDatabase[3]->AddNPC(13 * GAME_PIXELS, 20 * GAME_PIXELS, "Sprite-Guard2", "KienHDVN");
-
-    mapDatabase[3]->AddEvent(11 * 32, 17*32, []{LoadMap(1);});
-    mapDatabase[3]->AddEvent(12 * 32, 17*32, []{LoadMap(1);});
-    mapDatabase[3]->AddEvent(13 * 32, 17*32, []{LoadMap(1);});
-    mapDatabase[3]->AddEvent(14 * 32, 17*32, []{LoadMap(1);});
-
-    mapDatabase[3]->AddMonster(10 * GAME_PIXELS, 10 * GAME_PIXELS, 1, mapBase[3]);
-    mapDatabase[3]->AddMonster(15 * GAME_PIXELS, 15 * GAME_PIXELS, 1, mapBase[3]);
-    mapDatabase[3]->AddMonster(8 * GAME_PIXELS, 9 * GAME_PIXELS, 1, mapBase[3]);
-    mapDatabase[3]->AddMonster(7 * GAME_PIXELS, 15 * GAME_PIXELS, 1, mapBase[3]);
+    mapDatabase[3]->AddEvent(61 * 32, 17 * 32, []
+                                {
+                                    LoadMap(1);
+                                    Game::gPlayer->setPosition(0 * 32, 23 * 32);
+                                });
+    mapDatabase[3]->AddEvent(61 * 32, 18 * 32, []
+                                {
+                                    LoadMap(1);
+                                    Game::gPlayer->setPosition(0 * 32, 24 * 32);
+                                });
 }
