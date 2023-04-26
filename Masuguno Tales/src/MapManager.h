@@ -24,6 +24,7 @@ private:
     static void LoadMap1();
     static void LoadMap2();
     static void LoadMap3();
+    static void LoadMap4();
 };
 
 #endif // MapManager_h

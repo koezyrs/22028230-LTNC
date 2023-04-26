@@ -137,7 +137,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/maps/map02_above_player.png", "Map02_Overlay");
     TextureManager::LoadTexture("data files/maps/map03.png", "Map03");
     TextureManager::LoadTexture("data files/maps/map03_above_player.png", "Map03_Overlay");
-
+    TextureManager::LoadTexture("data files/maps/map04.png", "Map04");
+    TextureManager::LoadTexture("data files/maps/map04_above_player.png", "Map04_Overlay");
     // Sprite
     TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
     TextureManager::LoadTexture("data files/graphics/characters/158.png", "Sprite-Guard1");

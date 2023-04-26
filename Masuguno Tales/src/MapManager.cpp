@@ -46,16 +46,19 @@ void MapManager::LoadMapDatabase()
     mapBase[1] = setupMap("data files/maps/map01.msgn", 50, 30);
     mapBase[2] = setupMap("data files/maps/map02.msgn", 33, 21);
     mapBase[3] = setupMap("data files/maps/map03.msgn", 61, 32);
+    mapBase[4] = setupMap("data files/maps/map04.msgn", 60, 33);
 
     // Map database
     mapDatabase[1] = std::make_shared<Map>(1, "Map01", "Map01_Overlay");
     mapDatabase[2] = std::make_shared<Map>(2, "Map02", "Map02_Overlay");
     mapDatabase[3] = std::make_shared<Map>(3, "Map03", "Map03_Overlay");
+    mapDatabase[4] = std::make_shared<Map>(4, "Map04", "Map04_Overlay");
 
     // Load data
     LoadMap1();
     LoadMap2();
     LoadMap3();
+    LoadMap4();
 }
 
 void MapManager::LoadMap1()
@@ -75,6 +78,11 @@ void MapManager::LoadMap1()
                                 {
                                     LoadMap(3);
                                     Game::gPlayer->setPosition(60 * 32, 18 * 32);
+                                });
+    mapDatabase[1]->AddEvent(35 * 32, 30 * 32, []
+                                {
+                                    LoadMap(4);
+                                    Game::gPlayer->setPosition(27 * 32, 0 * 32);
                                 });
 
 }
@@ -99,5 +107,14 @@ void MapManager::LoadMap3()
                                 {
                                     LoadMap(1);
                                     Game::gPlayer->setPosition(0 * 32, 24 * 32);
+                                });
+}
+
+void MapManager::LoadMap4()
+{
+    mapDatabase[4]->AddEvent(27 * 32, -1 * 32, []
+                                {
+                                    LoadMap(1);
+                                    Game::gPlayer->setPosition(35 * 32, 29 * 32);
                                 });
 }
