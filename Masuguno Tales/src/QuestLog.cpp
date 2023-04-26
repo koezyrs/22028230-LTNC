@@ -91,12 +91,12 @@ bool QuestLog::checkQuest(int quest_id)
     if(success)
     {
         Game::gPlayer->mStats->Experience += quest.reward_exp;
-        //Game::gInventory->AddGold(quest.reward_gold);
+        Game::gInventory->AddGold(quest.reward_gold);
         for(int i = 1; i <= quest.reward_item_amount; i++) Game::gInventory->AddItem(quest.reward_item_id);
         for(int i = 1; i <= quest.reward_equip_amount; i++) Game::gInventory->AddEquipment(quest.reward_equip_id);
-        onGoingQuest.erase(quest_id);
-        totalMonsterKilled.erase(quest.enemy_id);
-        finishedQuest[quest_id] = true;
+        totalMonsterKilled[quest.enemy_id] = 0;
+        onGoingQuest[quest_id] = false;
+        if(!quest.repeat) finishedQuest[quest_id] = true;
         std::cerr << "Finished quest and received reward!" << std::endl;
     }
     return success;

@@ -83,7 +83,7 @@ CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _heig
     CharacterInformationBox = TextureManager::GetTexture("CharacterInformation");
     equipSlot = new EquipmentSlot[MAX_EQUIPMENT_SLOTS];
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 190, _y + 4, 13, 13, [this]{Window::hideWindow(); });
-    characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, White, false, []{});
+    characterInformationTitle = new Label("data files/font/game.ttf", "Character Information", 10, _x + 5, _y + 5, White, 320);
     addStrength = new Button("AddButtonOut", "AddButtonOver", _x + 20, _y + 259, 16, 16,
                              []{ if(Game::gPlayer->mStats->StatsAvailable <= 0) return;
                                  Game::gPlayer->mStats->Strength += 1;

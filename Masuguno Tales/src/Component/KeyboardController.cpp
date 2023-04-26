@@ -69,7 +69,8 @@ void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown)
 
     // Attack Monster
     bool success = false;
-    Vector2D monsterPos = target->getTransformComponent()->position;
+    SDL_Rect monsterRect = target->getColliderComponent()->mCollider;
+    Vector2D monsterPos = Vector2D(monsterRect.x + Game::gCamera.x, monsterRect.y + Game::gCamera.y);
     Vector2D currentplayerPos = mTransform->position;
     float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
     float skillRange = sk.skillRange;

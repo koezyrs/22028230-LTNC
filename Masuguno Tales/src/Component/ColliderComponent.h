@@ -15,8 +15,9 @@ public:
     TransformComponent* mTransform;
     SDL_Rect mCollider;
     std::string tag;
+    bool centered;
     ColliderComponent(TransformComponent* trans);
-    ColliderComponent(TransformComponent* trans, std::string _tag);
+    ColliderComponent(TransformComponent* trans, std::string _tag, bool isCentered = false);
     void Update();
 };
 

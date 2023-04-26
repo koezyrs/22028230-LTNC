@@ -68,36 +68,36 @@ void Dialogue::setFace(std::string faceImg)
 void Dialogue::setTitleLabel(const char* title)
 {
     dialogueTitle->Reset();
-    dialogueTitle = new Label("data files/font/game.ttf", title, 10, position.x + 5, position.y + 5, SDL_Color{255,255,255}, false, []{});
+    dialogueTitle = new Label(GAME_FONT, title, 10, position.x + 5, position.y + 5, White, 320);
 }
 
 void Dialogue::setContentLabel(const char* content)
 {
     dialogueContent->Reset();
-    dialogueContent = new Label("data files/font/game.ttf", content, 10, position.x + 134, position.y + 45, SDL_Color{255,255,255}, 320, false, []{});
+    dialogueContent = new Label(GAME_FONT, content, 10, position.x + 134, position.y + 45, White, 320);
 
 }
 
 void Dialogue::setOption1(const char* text, std::function<void()> func)
 {
     dialogueOption1->Reset();
-    if(text != NULL) dialogueOption1 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430, true, func);
+    if(text != NULL) dialogueOption1 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430, true, func);
 }
 
 void Dialogue::setOption2(const char* text, std::function<void()> func)
 {
     dialogueOption2->Reset();
-    if(text != NULL) dialogueOption2 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430, true, func);
+    if(text != NULL) dialogueOption2 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430, true, func);
 }
 
 void Dialogue::setOption3(const char* text, std::function<void()> func)
 {
     dialogueOption3->Reset();
-    if(text != NULL) dialogueOption3 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430, true, func);
+    if(text != NULL) dialogueOption3 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430, true, func);
 }
 
 void Dialogue::setOption4(const char* text, std::function<void()> func)
 {
     dialogueOption4->Reset();
-    if(text != NULL) dialogueOption4 = new Label("data files/font/game.ttf", text, 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430, true, func);
+    if(text != NULL) dialogueOption4 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430, true, func);
 }

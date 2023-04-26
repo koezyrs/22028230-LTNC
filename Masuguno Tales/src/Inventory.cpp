@@ -131,11 +131,12 @@ struct InventorySlot
 };
 
 Inventory::Inventory(int _x, int _y, int _width, int _height)
-: Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height)
+: Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height), gold(0)
 {
     InventoryBox = TextureManager::GetTexture("Inventory");
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 181, _y + 3, 13, 13, [this]{Window::hideWindow(); });
-    inventoryTitle = new Label(GAME_FONT, "Inventory", 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
+    inventoryTitle = new Label(GAME_FONT, "Inventory", 10, _x + 5, _y + 5, White, 250);
+    goldLabel = new Label(GAME_FONT, " ", 10, _x + 30, _y + 296, White, 250);
     invSlot = new InventorySlot[MAX_INVENTORY_SLOTS];
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
@@ -168,6 +169,13 @@ void Inventory::Update()
         invSlot[i].handleEvent(&Game::event);
     }
 
+    std::string newGold = std::to_string(gold);
+    if(goldStr != newGold)
+    {
+        goldStr = newGold;
+        goldLabel->Reset();
+        goldLabel = new Label(GAME_FONT, goldStr.c_str(), 10, position.x + 30, position.y + 296, White, 250);
+    }
 
 }
 
@@ -177,6 +185,7 @@ void Inventory::Render()
 
     TextureManager::Draw(InventoryBox, srcRect, destRect);
     inventoryTitle->Render();
+    goldLabel->Render();
     closeButton->Render();
 
     for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
@@ -247,6 +256,7 @@ Inventory::~Inventory()
     delete closeButton;
     delete inventoryTitle;
     delete invSlot;
+    delete goldLabel;
 
     InventoryBox = NULL;
 }
@@ -342,4 +352,14 @@ void Inventory::FindEquipmentAtSlot(int slot_id, int* equipment_id)
     {
         *equipment_id = invSlot[slot_id].equipment->equipment_id;
     }
+}
+
+void Inventory::AddGold(int gold)
+{
+    this->gold += gold;
+}
+
+int Inventory::GetGold()
+{
+    return gold;
 }

@@ -36,6 +36,9 @@ public:
     bool AddEquipment(int equipment_id);
     bool FindItem(int item_id, int item_amount);
     bool FindEquip(int equip_id, int equip_amount);
+    void AddGold(int gold);
+    int GetGold();
+
     // Use for register only
     void AddEquipmentToSlot(int slot_id, int equipment_id);
     void AddItemToSlot(int slot_id, int item_id, int item_amount);
@@ -46,6 +49,7 @@ public:
     void FindEquipmentAtSlot(int slot_id, int* equipment_id);
     // </>
 private:
+    SDL_Color White = {255,255,255};
     Vector2D position;
     int mWidth, mHeight;
     SDL_Texture* InventoryBox;
@@ -53,10 +57,14 @@ private:
 
     std::vector<Item*> itemList;
     std::vector<Equipment*> equipmentList;
+    int gold;
 
     InventorySlot* invSlot;
     Label* inventoryTitle;
     Button* closeButton;
+
+    Label* goldLabel;
+    std::string goldStr;
 };
 
 #endif // Inventory_h

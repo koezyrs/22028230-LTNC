@@ -31,6 +31,7 @@ private:
     void calculateFlowDirections();
 
     TransformComponent* mTransform;
+    ColliderComponent* mCollider;
     Vector2D startPostion;
     bool* trigger;
     Uint64 nextAttackTime;
@@ -46,7 +47,7 @@ private:
     std::vector<std::vector<Tile>> tiles;
     void getRandomRange(int n, int *nextMoveX, int *nextMoveY);
 public:
-    AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
+    AIComponent(TransformComponent* trans, ColliderComponent* collider ,Vector2D startPos, float _damage, float _attackSpeed,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase);
     ~AIComponent();
     void Update();

@@ -1,5 +1,5 @@
 #include "AIComponent.h"
-AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _damage, float _attackSpeed,
+AIComponent::AIComponent(TransformComponent* trans, ColliderComponent* collider, Vector2D startPos, float _damage, float _attackSpeed,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
     roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
@@ -7,6 +7,7 @@ AIComponent::AIComponent(TransformComponent* trans, Vector2D startPos, float _da
 {
     trigger = _trigger;
     mTransform = trans;
+    mCollider = collider;
     mTransform->speed = roamSpeed;
     roamPosition = startPostion;
 
@@ -51,8 +52,8 @@ void AIComponent::Update()
             // Move to destination
             mTransform->speed = roamSpeed;
 
-            int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
-            int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
+            int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
+            int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
@@ -78,9 +79,8 @@ void AIComponent::Update()
             setTargetAndCalculateFlowField(playerPosX, playerPosY);
 
             mTransform->speed = chaseSpeed;
-
-            int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
-            int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
+            int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
+            int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
@@ -115,8 +115,8 @@ void AIComponent::Update()
             setTargetAndCalculateFlowField(startX, startY);
 
             // Move to destination
-            int coordinateX = (static_cast<int>(mTransform->position.x + GAME_PIXELS/2)) / GAME_PIXELS;
-            int coordinateY = (static_cast<int>(mTransform->position.y + GAME_PIXELS/2)) / GAME_PIXELS;
+            int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
+            int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 

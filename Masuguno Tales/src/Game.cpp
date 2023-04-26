@@ -139,11 +139,14 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/maps/map03_above_player.png", "Map03_Overlay");
     TextureManager::LoadTexture("data files/maps/map04.png", "Map04");
     TextureManager::LoadTexture("data files/maps/map04_above_player.png", "Map04_Overlay");
+    TextureManager::LoadTexture("data files/maps/map05.png", "Map05");
+
     // Sprite
     TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
     TextureManager::LoadTexture("data files/graphics/characters/158.png", "Sprite-Guard1");
     TextureManager::LoadTexture("data files/graphics/characters/159.png", "Sprite-Guard2");
     TextureManager::LoadTexture("data files/graphics/characters/17.png", "Sprite-MonsterCow");
+    TextureManager::LoadTexture("data files/graphics/characters/BossDragon.png", "Sprite-BossDragon");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
@@ -284,6 +287,8 @@ void Game::render()
 
 void Game::saveData()
 {
+    MYSQL_ROW row;
+    MYSQL_RES* res;
     int l_actor_id = gPlayer->actor_id;
     std::string actor_id = std::to_string(l_actor_id);
     std::string qstr;
@@ -302,7 +307,7 @@ void Game::saveData()
     std::string map_id = to_string(currentMap->id);
     std::string x = to_string(static_cast<int>(gPlayer->getTransformComponent()->position.x));
     std::string y = to_string(static_cast<int>(gPlayer->getTransformComponent()->position.y));
-    std::string gold = "10";
+    std::string gold = to_string(gInventory->GetGold());
     std::string skin = "Player";
 
     // Update actor
@@ -346,7 +351,7 @@ void Game::saveData()
         qstate = mysql_query(conn, qstr.c_str());
         if(qstate)
         {
-            std::cout << "Can not make query! (Can not save actor!)" << std::endl;
+            std::cout << "Can not make query! (Can not save actor inventory!)" << std::endl;
         }
     }
 
@@ -363,7 +368,132 @@ void Game::saveData()
         qstate = mysql_query(conn, qstr.c_str());
         if(qstate)
         {
-            std::cout << "Can not make query! (Can not save actor!)" << std::endl;
+            std::cout << "Can not make query! (Can not save actor CC's!)" << std::endl;
+        }
+    }
+
+    // Update player variable
+    for(auto& v : gQuestLog->mVariable)
+    {
+        std::string variable_id = std::to_string(v.first);
+        std::string variable_value = std::to_string(v.second);
+        qstr = "SELECT * FROM `actor_variable` WHERE `actor_id` = '" + actor_id + "' AND `variable_id` = '" + variable_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(!qstate)
+        {
+            // Exist variable
+            res = mysql_store_result(Game::conn);
+            row = mysql_fetch_row(res);
+            if(row)
+            {
+                qstr = "UPDATE `actor_variable` SET `variable_value` = '" + variable_value;
+                qstr += "' WHERE `actor_id` = '" + actor_id + "' AND `variable_id` = '" + variable_id + "'";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor variable #1!)" << std::endl;
+            }else
+            {
+                qstr = "INSERT INTO actor_variable(actor_id, variable_id, variable_value) ";
+                qstr += "VALUES('" + actor_id + "','" + variable_id + "','" + variable_value + "')";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor variable #2!)" << std::endl;
+            }
+            mysql_free_result(res);
+        }else
+        {
+            std::cerr << "Can not make query! (Can not save actor variable #3!)" << std::endl;
+        }
+    }
+
+    // Update player monster kills
+    for(auto& k : gQuestLog->totalMonsterKilled)
+    {
+        std::string monster_id = std::to_string(k.first);
+        std::string amount = std::to_string(k.second);
+        qstr = "SELECT * FROM `actor_monster_kills` WHERE `actor_id` = '" + actor_id + "' AND `monster_id` = '" + monster_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            row = mysql_fetch_row(res);
+            if(row)
+            {
+                qstr = "UPDATE `actor_monster_kills` SET `amount` = '" + amount;
+                qstr += "' WHERE `actor_id` = '" + actor_id + "' AND `monster_id` = '" + monster_id + "'";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor monster_kills #1!)" << std::endl;
+            }else
+            {
+                qstr = "INSERT INTO actor_monster_kills(actor_id, monster_id, amount) ";
+                qstr += "VALUES('" + actor_id + "','" + monster_id + "','" + amount + "')";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor monster_kills #2!)" << std::endl;
+            }
+            mysql_free_result(res);
+        }else
+        {
+            std::cerr << "Can not make query! (Can not save actor monster_kills #3!)" << std::endl;
+        }
+    }
+
+    // Update player quests
+    for(auto& q : gQuestLog->onGoingQuest)
+    {
+        std::string quest_id = std::to_string(q.first);
+        qstr = "SELECT * FROM `actor_quest` WHERE `actor_id` = '" + actor_id + "' AND `quest_id` = '" + quest_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(!qstate)
+        {
+            // Exist variable
+            res = mysql_store_result(Game::conn);
+            row = mysql_fetch_row(res);
+            if(row)
+            {
+                if(q.second) qstr = "UPDATE `actor_quest` SET `progress` = '1'";
+                else qstr = "UPDATE `actor_quest` SET `progress` = '0'";
+                qstr += " WHERE `actor_id` = '" + actor_id + "' AND `quest_id` = '" + quest_id + "'";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor on going quest #1!)" << std::endl;
+            }else
+            {
+                qstr = "INSERT INTO actor_quest(actor_id, quest_id, progress) ";
+                if(q.second) qstr += "VALUES('" + actor_id + "','" + quest_id + "','1')";
+                else qstr += "VALUES('" + actor_id + "','" + quest_id + "','0')";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor on going quest #2!)" << std::endl;
+            }
+            mysql_free_result(res);
+        }else
+        {
+            std::cerr << "Can not make query! (Can not save actor on going quest #3!)" << std::endl;
+        }
+    }
+
+    for(auto& q : gQuestLog->finishedQuest)
+    {
+        std::string quest_id = std::to_string(q.first);
+        qstr = "SELECT * FROM `actor_quest` WHERE `actor_id` = '" + actor_id + "' AND `quest_id` = '" + quest_id + "'";
+        qstate = mysql_query(conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            row = mysql_fetch_row(res);
+            if(row)
+            {
+                qstr = "UPDATE `actor_quest` SET `progress` = '2'";
+                qstr += " WHERE `actor_id` = '" + actor_id + "' AND `quest_id` = '" + quest_id + "'";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor finished quest #1!)" << std::endl;
+            }else
+            {
+                qstr = "INSERT INTO actor_variable(actor_id, quest_id, progress) ";
+                qstr += "VALUES('" + actor_id + "','" + quest_id + "','2')";
+                qstate = mysql_query(conn, qstr.c_str());
+                if(qstate) std::cerr << "Can not make query! (Can not save actor finished quest #2!)" << std::endl;
+            }
+            mysql_free_result(res);
+        }else
+        {
+            std::cerr << "Can not make query! (Can not save actor finished quest #3!)" << std::endl;
         }
     }
 

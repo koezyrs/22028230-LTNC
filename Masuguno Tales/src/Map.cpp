@@ -98,6 +98,7 @@ void Map::Update()
         }
     }
 
+    /*
     // Hit Monster check
     for(auto& monster : monsters)
     {
@@ -106,6 +107,7 @@ void Map::Update()
             Game::gPlayer->getTransformComponent()->position = playerPos;
         }
     }
+    */
 
     // Collide with NPC
     for(auto& npc : npcs)
@@ -215,7 +217,7 @@ void Map::AddMonster(float x, float y, int monster_id, std::vector<std::vector<T
     MonsterType monster = MonsterDB::monsterDatabase[monster_id];
     if(!monster.monsterSprite.empty())
     {
-        monsters.emplace_back(std::make_shared<Monster>(monster.monster_id, x, y, GAME_PIXELS, GAME_PIXELS, GAME_SCALE, monster.monsterName
+        monsters.emplace_back(std::make_shared<Monster>(monster.monster_id, x, y, monster.width, monster.height, GAME_SCALE, monster.monsterName
                                           , monster.monsterSprite, monster.damage, monster.health, monster.attackSpeed,
                                           monster.attackRange, monster.stopChaseRange, monster.chaseSpeed, monster.roamSpeed,mapBase));
     }

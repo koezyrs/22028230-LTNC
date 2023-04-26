@@ -28,6 +28,7 @@ public:
     void setOption3(const char* text, std::function<void()> func = []{});
     void setOption4(const char* text, std::function<void()> func = []{});
 private:
+    SDL_Color White = {255,255,255};
     Vector2D position;
     int mWidth, mHeight;
     SDL_Texture* DialogueBox;

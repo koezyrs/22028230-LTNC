@@ -15,8 +15,8 @@ void QuestDB::LoadQuestDatabase()
         0,                                  // Item amount
         0,                                  // Equip id
         0,                                  // Equip amount
-        0,                                  // Enemy id
-        0,                                  // Enemy amount
+        1,                                  // Enemy id
+        10,                                  // Enemy amount
         // Reward
         10,                                 // Exp
         1,                                  // Gold

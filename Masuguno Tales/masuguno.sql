@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 18, 2023 lúc 02:03 PM
+-- Thời gian đã tạo: Th4 26, 2023 lúc 04:49 PM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
 
@@ -34,15 +34,6 @@ CREATE TABLE `accounts` (
   `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Đang đổ dữ liệu cho bảng `accounts`
---
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`) VALUES
-(1, 'Hecklol', '675844', 'duong1@gmail.com'),
-(2, 'duongprovip', '675844', 'duong1@gmail.com'),
-(3, 'koezyrs', 'X+mdP?10Za', 'safsdjh@gmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -70,13 +61,6 @@ CREATE TABLE `actors` (
   `skin` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Đang đổ dữ liệu cho bảng `actors`
---
-
-INSERT INTO `actors` (`id`, `account_id`, `character_name`, `level`, `experience`, `experience_to_next_level`, `strength`, `dexterity`, `intelligence`, `vitality`, `agility`, `stats_used`, `stats_available`, `map_id`, `x`, `y`, `gold`, `skin`) VALUES
-(1, 3, 'abc', 1, 0, 100, 5, 4, 10, 20, 0, 0, 0, 1, 14, 14, 0, 'Sprite-Player');
-
 -- --------------------------------------------------------
 
 --
@@ -89,13 +73,6 @@ CREATE TABLE `actor_character_information` (
   `slot_id` int(11) NOT NULL,
   `equipment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Đang đổ dữ liệu cho bảng `actor_character_information`
---
-
-INSERT INTO `actor_character_information` (`id`, `actor_id`, `slot_id`, `equipment_id`) VALUES
-(1, 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -112,13 +89,44 @@ CREATE TABLE `actor_inventory` (
   `item_amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Đang đổ dữ liệu cho bảng `actor_inventory`
+-- Cấu trúc bảng cho bảng `actor_monster_kills`
 --
 
-INSERT INTO `actor_inventory` (`id`, `actor_id`, `slot_id`, `equipment_id`, `item_id`, `item_amount`) VALUES
-(1, 3, 0, 1, 0, 0),
-(2, 3, 1, 0, 1, 20);
+CREATE TABLE `actor_monster_kills` (
+  `id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `monster_id` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `actor_quest`
+--
+
+CREATE TABLE `actor_quest` (
+  `id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `quest_id` int(11) NOT NULL,
+  `progress` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `actor_variable`
+--
+
+CREATE TABLE `actor_variable` (
+  `id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `variable_id` int(11) NOT NULL,
+  `variable_value` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -149,6 +157,24 @@ ALTER TABLE `actor_inventory`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `actor_monster_kills`
+--
+ALTER TABLE `actor_monster_kills`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `actor_quest`
+--
+ALTER TABLE `actor_quest`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `actor_variable`
+--
+ALTER TABLE `actor_variable`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -156,25 +182,43 @@ ALTER TABLE `actor_inventory`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `actors`
 --
 ALTER TABLE `actors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `actor_character_information`
 --
 ALTER TABLE `actor_character_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `actor_inventory`
 --
 ALTER TABLE `actor_inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `actor_monster_kills`
+--
+ALTER TABLE `actor_monster_kills`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `actor_quest`
+--
+ALTER TABLE `actor_quest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `actor_variable`
+--
+ALTER TABLE `actor_variable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

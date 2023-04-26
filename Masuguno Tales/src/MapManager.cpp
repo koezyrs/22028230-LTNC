@@ -47,18 +47,21 @@ void MapManager::LoadMapDatabase()
     mapBase[2] = setupMap("data files/maps/map02.msgn", 33, 21);
     mapBase[3] = setupMap("data files/maps/map03.msgn", 61, 32);
     mapBase[4] = setupMap("data files/maps/map04.msgn", 60, 33);
+    mapBase[5] = setupMap("data files/maps/map05.msgn", 32, 19);
 
     // Map database
     mapDatabase[1] = std::make_shared<Map>(1, "Map01", "Map01_Overlay");
     mapDatabase[2] = std::make_shared<Map>(2, "Map02", "Map02_Overlay");
     mapDatabase[3] = std::make_shared<Map>(3, "Map03", "Map03_Overlay");
     mapDatabase[4] = std::make_shared<Map>(4, "Map04", "Map04_Overlay");
+    mapDatabase[5] = std::make_shared<Map>(5, "Map05", "");
 
     // Load data
     LoadMap1();
     LoadMap2();
     LoadMap3();
     LoadMap4();
+    LoadMap5();
 }
 
 void MapManager::LoadMap1()
@@ -72,19 +75,19 @@ void MapManager::LoadMap1()
     mapDatabase[1]->AddEvent(-1 * 32, 23 * 32, []
                                 {
                                     LoadMap(3);
-                                    Game::gPlayer->setPosition(60 * 32, 17 * 32);
+                                    Game::gPlayer->setPosition(59 * 32, 17 * 32);
                                 });
     mapDatabase[1]->AddEvent(-1 * 32, 24 * 32, []
                                 {
                                     LoadMap(3);
-                                    Game::gPlayer->setPosition(60 * 32, 18 * 32);
+                                    Game::gPlayer->setPosition(59 * 32, 18 * 32);
                                 });
     mapDatabase[1]->AddEvent(35 * 32, 30 * 32, []
                                 {
                                     LoadMap(4);
                                     Game::gPlayer->setPosition(27 * 32, 0 * 32);
                                 });
-
+    mapDatabase[1]->AddMonster(17*32,16*32,1,mapBase[1]);
 }
 
 void MapManager::LoadMap2()
@@ -98,12 +101,12 @@ void MapManager::LoadMap2()
 
 void MapManager::LoadMap3()
 {
-    mapDatabase[3]->AddEvent(61 * 32, 17 * 32, []
+    mapDatabase[3]->AddEvent(60 * 32, 17 * 32, []
                                 {
                                     LoadMap(1);
                                     Game::gPlayer->setPosition(0 * 32, 23 * 32);
                                 });
-    mapDatabase[3]->AddEvent(61 * 32, 18 * 32, []
+    mapDatabase[3]->AddEvent(60 * 32, 18 * 32, []
                                 {
                                     LoadMap(1);
                                     Game::gPlayer->setPosition(0 * 32, 24 * 32);
@@ -117,4 +120,19 @@ void MapManager::LoadMap4()
                                     LoadMap(1);
                                     Game::gPlayer->setPosition(35 * 32, 29 * 32);
                                 });
+    mapDatabase[4]->AddEvent(47 * 32, 20 * 32, []
+                                {
+                                    LoadMap(5);
+                                    Game::gPlayer->setPosition(16 * 32, 17 * 32);
+                                });
+}
+
+void MapManager::LoadMap5()
+{
+    mapDatabase[5]->AddEvent(16 * 32, 18 * 32, []
+                                {
+                                    LoadMap(4);
+                                    Game::gPlayer->setPosition(47 * 32, 21 * 32);
+                                });
+     mapDatabase[5]->AddMonster(15 * 32, 6 * 32, 2, mapBase[5]);
 }

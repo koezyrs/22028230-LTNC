@@ -122,6 +122,7 @@ void Login::LoadGameDatabase(std::string _account_id)
 
     std::string account_id = _account_id;
     std::string actor_id;
+    int goldAmount;
     std::string qstr;
     int qstate;
 
@@ -153,7 +154,7 @@ void Login::LoadGameDatabase(std::string _account_id)
         int map_id = std::stoi(row[13]);
         float x = std::stoi(row[14]);
         float y = std::stoi(row[15]);
-        int gold = std::stoi(row[16]);
+        goldAmount = std::stoi(row[16]);
         std::string playerSkin(row[17]);
         Game::currentMap = MapManager::mapDatabase[1];
         Game::gPlayer = std::make_unique<Actor>(l_actor_id,playerName, level, exp, next_exp, strength, dexterity, intelligence, vitality, agility,
@@ -186,6 +187,7 @@ void Login::LoadGameDatabase(std::string _account_id)
                 Game::gInventory->AddItemToSlot(slot_id,item_id,item_amount);
             }
         }
+        Game::gInventory->AddGold(goldAmount);
         std::cout << "Success add item/equip to inventory!" << std::endl;
         mysql_free_result(res);
     }else{
@@ -216,7 +218,71 @@ void Login::LoadGameDatabase(std::string _account_id)
         Game::gDialogue = std::make_unique<Dialogue>((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "EmptyFace", " ");
         Game::gHUD = std::make_unique<HUD>();
         Game::gHotbar = std::make_unique<Hotbar>();
+
+    // Quest
         Game::gQuestLog = std::make_unique<QuestLog>();
+        qstr = "SELECT * FROM `actor_quest` WHERE actor_id = '" + actor_id + "'";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                int quest_id = std::stoi(row[2]);
+                int progress = std::stoi(row[3]);
+                switch(progress){
+                case 1:
+                    Game::gQuestLog->onGoingQuest[quest_id] = true;
+                    break;
+                case 2:
+                    Game::gQuestLog->finishedQuest[quest_id] = true;
+                    break;
+                }
+            }
+            std::cout << "Success load player quest data from server!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
+
+    // Player variables
+        qstr = "SELECT * FROM `actor_variable` WHERE actor_id = '" + actor_id + "'";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                int variable_id = std::stoi(row[2]);
+                int variable_value = std::stoi(row[3]);
+                Game::gQuestLog->mVariable[variable_id] = variable_value;
+            }
+            std::cout << "Success load player variable data from server!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
+
+    // Player monster kills
+        qstr = "SELECT * FROM `actor_monster_kills` WHERE actor_id = '" + actor_id + "'";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                int monster_id = std::stoi(row[2]);
+                int amount = std::stoi(row[3]);
+                Game::gQuestLog->totalMonsterKilled[monster_id] = amount;
+            }
+            std::cout << "Success load player monster kills data from server!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
 
         Game::session = RUNNING;
 }
