@@ -3,14 +3,14 @@ AIComponent::AIComponent(TransformComponent* trans, ColliderComponent* collider,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
     roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
-    targetX(0), targetY(0), tiles(mapBase)
+    targetX(0), targetY(0)
 {
     trigger = _trigger;
     mTransform = trans;
     mCollider = collider;
     mTransform->speed = roamSpeed;
     roamPosition = startPostion;
-
+    tiles = mapBase;
     if(tiles.empty())
     {
         std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;

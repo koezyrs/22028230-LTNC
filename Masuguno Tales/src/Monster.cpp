@@ -61,7 +61,7 @@ void Monster::Update()
         trigger = false;
         float spawnWaitTime = 10000;
         timeSpawn = SDL_GetTicks64() + spawnWaitTime;
-        mTransform->position = Vector2D(-100,-100); // The deadzone
+        mTransform->position = Vector2D(0,0); // The deadzone
         mCollider->Update();
         Game::gQuestLog->totalMonsterKilled[monster_id] = Game::gQuestLog->totalMonsterKilled[monster_id] + 1;
         return;

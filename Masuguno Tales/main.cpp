@@ -1,8 +1,11 @@
+#include <iostream>
 #include "src/Game.h"
 
 Game* game = nullptr;
 
 int main(int argc, char* args[]){
+    //if(argc < 2) return 0;
+    //if(strcmp(args[1],"-1sak1")) return 0;
 
     Uint32 frameStart;
     int frameTime;
@@ -44,8 +47,8 @@ int main(int argc, char* args[]){
             break;
         case CLEAR:
             game->clean();
-            return 0;
+            return 1;
         }
     }
-    return 0;
+    return 1;
 }
