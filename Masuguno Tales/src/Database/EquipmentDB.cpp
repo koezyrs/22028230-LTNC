@@ -13,6 +13,8 @@ void EquipmentDB::LoadEquipmentDatabase()
         0,                      // Dex
         5,                      // Int
         5,                      // Vit
-        15                      // Agi
+        15,                      // Agi
+        30,                      // Buy Price
+        5                        // Sell Price
     );
 }

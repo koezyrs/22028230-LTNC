@@ -13,7 +13,7 @@ class Equipment
 {
 public:
     Equipment(int equipment_id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName,
-                     int _strength, int _dexterity, int _intelligence, int _vitality, int _agility);
+                     int _strength, int _dexterity, int _intelligence, int _vitality, int _agility, int _buyPrice, int _sellPrice);
     ~Equipment();
     SDL_Texture* getEquipmentSprite();
     bool isActive();
@@ -27,6 +27,7 @@ public:
     int Intelligence = 0;
     int Vitality = 0;
     int Agility = 0;
+    int buyPrice, sellPrice;
 private:
     bool active = true;
     SDL_Texture* equipmentSprite;

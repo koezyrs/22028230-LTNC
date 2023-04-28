@@ -10,6 +10,7 @@
 #include "Equipment.h"
 #include "Dialogue.h"
 #include "Inventory.h"
+#include "HUD.h"
 #include "Database/ItemDB.h"
 #include "Database/EquipmentDB.h"
 #include "Database/ShopDB.h"
@@ -29,21 +30,40 @@ public:
     bool OpenShop(int shop_id);
     bool AddItem(int item_id);
     bool AddEquipment(int equipment_id);
+    void SetItemTarget(Item* item);
+    void SetEquipmentTarget(Equipment* equip);
+    void SetNameAndPriceLabel(std::string _name, int _price);
+    bool isBuyOrSell();
 private:
     SDL_Color White = {255,255,255};
+    SDL_Color Black = {0,0,0};
     Vector2D position;
     int mWidth, mHeight;
     SDL_Texture* ShopBox;
     SDL_Rect srcRect, destRect;
     std::vector<Item*> itemList;
     std::vector<Equipment*> equipmentList;
-    int gold;
     ShopSlot* shopSlot;
     Label* shopTitle;
     Button* closeButton;
 
     Label* goldLabel;
     std::string goldStr;
+
+    // Target
+    Item* pickedItem;
+    Equipment* pickedEquip;
+    SDL_Rect srcPickedRect, destPickedRect;
+    Label* pickedName;
+    Label* pickedPrice;
+
+    // Buy or Sell
+    // Buy = 0, Sell = 1
+    bool BuyOrSell = 0; // Default buy
+    Button *acceptBtn, *buyingBtn, *sellBtn;
+
+private:
+    void Buy();
 };
 
 #endif // Shop_h

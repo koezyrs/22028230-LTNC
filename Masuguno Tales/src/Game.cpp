@@ -136,6 +136,12 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/48.png", "AddButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/49.png", "AddButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/Shop.png", "Shop");
+    TextureManager::LoadTexture("data files/graphics/gui/AcceptButtonOut.png", "AcceptButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/AcceptButtonOver.png", "AcceptButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/58.png", "BuyButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/56.png", "BuyButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/59.png", "SellButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/57.png", "SellButtonOver");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
@@ -234,6 +240,7 @@ void Game::handleEvents()
                 Game::gDialogue->hideWindow();
                 Game::gInventory->hideWindow();
                 Game::gCharacterInformation->hideWindow();
+                Game::gShop->hideWindow();
                 break;
             case SDLK_i:
                 Game::gInventory->Toggle();

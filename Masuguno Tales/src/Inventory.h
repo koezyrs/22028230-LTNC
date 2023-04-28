@@ -15,6 +15,7 @@
 #include "Item.h"
 #include "Equipment.h"
 #include "CharacterInformation.h"
+#include "Shop.h"
 #include "Database/ItemDB.h"
 #include "Database/EquipmentDB.h"
 

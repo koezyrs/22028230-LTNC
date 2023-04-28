@@ -30,9 +30,17 @@ struct InventorySlot
             {
                 if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    std::cout << "You have use the " << item->itemName << "!" << std::endl;
-                    item->Perform();
-                    item->currentStack = item->currentStack - 1;
+                    if(!(Game::gShop->isHide()) && (Game::gShop->isBuyOrSell()))
+                    {
+                        item->currentStack = item->currentStack - 1;
+                        Game::gInventory->AddGold(item->sellPrice);
+                    }else
+                    {
+                        std::cout << "You have use the " << item->itemName << "!" << std::endl;
+                        item->Perform();
+                        item->currentStack = item->currentStack - 1;
+                    }
+
                     if(item->currentStack <= 0)
                     {
                         item->destroy();
@@ -49,13 +57,21 @@ struct InventorySlot
             {
                 if(SDL_GetTicks64() - 250 <= lastClick)     // Double Click
                 {
-                    if(AddEquipmentToCharacterInformation(equipment->equipment_id))
+                    if(!(Game::gShop->isHide()) && (Game::gShop->isBuyOrSell()))
                     {
-                        std::cerr << "You have equip the " << equipment->equipmentName << "!" << std::endl;
                         equipment->destroy();
+                        Game::gInventory->AddGold(equipment->sellPrice);
                         Reset();
+                    }else
+                    {
+                        if(AddEquipmentToCharacterInformation(equipment->equipment_id))
+                        {
+                            std::cerr << "You have equip the " << equipment->equipmentName << "!" << std::endl;
+                            equipment->destroy();
+                            Reset();
+                        }
                     }
-                }else                                       // Single Click
+                }else  // Single Click
                 {
                     // Show info
                 }
@@ -220,7 +236,7 @@ bool Inventory::AddItem(int item_id)
     {
         if(invSlot[i].isFull == false)
         {
-            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName,itemTemp.ItemFunc));
+            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag, itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
             invSlot[i].AddItemToSlot(itemList.back());
             std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;
             return true;
@@ -239,7 +255,7 @@ bool Inventory::AddEquipment(int equipment_id)
         {
             equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
                                                      equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
-                                                     equipTemp.Vitality, equipTemp.Agility));
+                                                     equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
             invSlot[i].AddEquipmentToSlot(equipmentList.back());
             std::cout << "Added " << equipTemp.equipmentName << " to the Inventory!" << std::endl;
             return true;
@@ -311,7 +327,7 @@ void Inventory::AddEquipmentToSlot(int slot_id, int equipment_id)
     }
     equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
                                             equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
-                                            equipTemp.Vitality, equipTemp.Agility));
+                                            equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
     invSlot[slot_id].AddEquipmentToSlot(equipmentList.back());
     std::cout << "Added " << equipTemp.equipmentName << " to the Inventory!" << std::endl;
 }
@@ -325,7 +341,7 @@ void Inventory::AddItemToSlot(int slot_id, int item_id, int item_amount)
         return;
     }
 
-    itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName,itemTemp.ItemFunc));
+    itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
     itemList.back()->currentStack = itemList.back()->currentStack + item_amount - 1;
     invSlot[slot_id].AddItemToSlot(itemList.back());
     std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;

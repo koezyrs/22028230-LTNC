@@ -10,7 +10,7 @@
 class Item
 {
 public:
-    Item(int _item_id, std::string spriteName, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func = []{});
+    Item(int _item_id, std::string spriteName, int _maxStack, const char* _itemTag, std::string _itemName, int _buyPrice, int _sellPrice ,std::function<void()> func = []{});
     ~Item();
     SDL_Texture* getItemSprite();
     void Perform();
@@ -22,11 +22,12 @@ public:
     const char* itemTag;
     const char* description;
     std::string itemName;
+    int buyPrice, sellPrice;
 private:
     bool active = true;
     std::function<void()> ItemFunction;
 
-    SDL_Texture* itemSprite;;
+    SDL_Texture* itemSprite;
 };
 
 #endif // Item_h

@@ -9,6 +9,8 @@ void ItemDB::LoadItemDatabase()
         5,                                          // Max stack
         "Potion",                                   // Tag
         "Medium Potion",                            // Name
+        10,
+        2,
         []                                          // Use
         {
             Game::gPlayer->mStats->Health += 10;

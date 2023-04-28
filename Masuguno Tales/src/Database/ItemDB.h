@@ -12,10 +12,11 @@ struct ItemType{
     int maxStack;
     const char* itemTag;
     std::string itemName;
+    int buyPrice, sellPrice;
     std::function<void()> ItemFunc;
     ItemType() {}
-    ItemType(int _item_id, std::string _spriteName, int _maxStack, const char* _itemTag, std::string _itemName, std::function<void()> func)
-    : item_id(_item_id), spriteName(_spriteName), maxStack(_maxStack), itemTag(_itemTag), itemName(_itemName),
+    ItemType(int _item_id, std::string _spriteName, int _maxStack, const char* _itemTag, std::string _itemName, int _buyPrice, int _sellPrice, std::function<void()> func)
+    : item_id(_item_id), spriteName(_spriteName), maxStack(_maxStack), itemTag(_itemTag), itemName(_itemName), buyPrice(_buyPrice), sellPrice(_sellPrice),
     ItemFunc([this,func] {func();})
     {}
 };

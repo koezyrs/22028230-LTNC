@@ -26,12 +26,14 @@ struct ShopSlot
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && item != NULL)
             {
-
+                Game::gShop->SetItemTarget(item);
+                Game::gShop->SetNameAndPriceLabel(item->itemName, item->buyPrice);
             }
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
-
+                Game::gShop->SetEquipmentTarget(equipment);
+                Game::gShop->SetNameAndPriceLabel(equipment->equipmentName, equipment->buyPrice);
             }
 
         }
@@ -65,13 +67,18 @@ struct ShopSlot
 };
 
 Shop::Shop(int _x, int _y, int _width, int _height, std::string shop_title)
-: Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height), gold(0)
+: Window::Window(), position(_x, _y), mWidth(_width), mHeight(_height), pickedItem(NULL), pickedEquip(NULL)
 {
     ShopBox = TextureManager::GetTexture("Shop");
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 257, _y + 5, 13, 13, [this]{Window::hideWindow(); });
     shopTitle = new Label(GAME_FONT, shop_title.c_str(), 10, _x + 5, _y + 5, White, 250);
     goldLabel = new Label(GAME_FONT, " ", 10, _x + 35, _y + 270, White, 250);
     shopSlot = new ShopSlot[MAX_SHOP_SLOTS];
+    pickedName = new Label(GAME_FONT, " ", 10, _x + 60, _y + 226, Black, 250);
+    pickedPrice = new Label(GAME_FONT, " ", 10, _x + 60, _y + 244, Black, 250);
+    acceptBtn = new Button("AcceptButtonOut", "AcceptButtonOver", _x + 201, _y + 229, 56, 21, [this]{Buy();});
+    buyingBtn = new Button("BuyButtonOut", "BuyButtonOver", _x + 176, _y + 264, 49, 20, [this]{BuyOrSell = 0;});
+    sellBtn = new Button("SellButtonOut", "SellButtonOver", _x + 225, _y + 264, 49, 20, [this]{BuyOrSell = 1;});
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
 
@@ -85,6 +92,8 @@ Shop::Shop(int _x, int _y, int _width, int _height, std::string shop_title)
         }
     }
 
+    srcPickedRect = {0,0,32,32};
+    destPickedRect = {_x + 19, _y + 223, 32,32};
 }
 
 void Shop::Update()
@@ -96,14 +105,19 @@ void Shop::Update()
     equipmentList.erase(std::remove_if(equipmentList.begin(), equipmentList.end(),
                 [](Equipment* theEquipment){return !theEquipment->isActive();}), equipmentList.end());
 
+
+
     closeButton->handleEvent(&Game::event);
+    buyingBtn->handleEvent(&Game::event);
+    sellBtn->handleEvent(&Game::event);
+    if(!BuyOrSell) acceptBtn->handleEvent(&Game::event);
 
     for(int i = 0; i < MAX_SHOP_SLOTS; i++)
     {
         shopSlot[i].handleEvent(&Game::event);
     }
 
-    std::string newGold = std::to_string(gold);
+    std::string newGold = std::to_string(Game::gInventory->GetGold());
     if(goldStr != newGold)
     {
         goldStr = newGold;
@@ -130,6 +144,32 @@ void Shop::Render()
             if(shopSlot[i].equipment != NULL) TextureManager::Draw(shopSlot[i].equipment->getEquipmentSprite(), shopSlot[i].srcRect, shopSlot[i].destRect);
         }
     }
+
+    if(pickedEquip)
+    {
+        TextureManager::Draw(pickedEquip->getEquipmentSprite(), srcPickedRect, destPickedRect);
+    }
+    else if(pickedItem)
+    {
+        TextureManager::Draw(pickedItem->getItemSprite(), srcPickedRect, destPickedRect);
+    }
+    pickedName->Render();
+    pickedPrice->Render();
+    buyingBtn->Render();
+    sellBtn->Render();
+
+
+    SDL_Rect optionSrc = {0,0,49,20};
+    if(!BuyOrSell)
+    {
+        acceptBtn->Render();
+        SDL_Rect optionDest = {static_cast<int>(position.x) + 176, static_cast<int>(position.y) + 264, 49, 20};
+        TextureManager::Draw(TextureManager::GetTexture("BuyButtonOver"), optionSrc, optionDest);
+    }else
+    {
+        SDL_Rect optionDest = {static_cast<int>(position.x) + 225, static_cast<int>(position.y) + 264, 49, 20};
+        TextureManager::Draw(TextureManager::GetTexture("SellButtonOver"), optionSrc, optionDest);
+    }
 }
 
 bool Shop::AddItem(int item_id)
@@ -145,7 +185,7 @@ bool Shop::AddItem(int item_id)
     {
         if(shopSlot[i].isFull == false)
         {
-            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName,itemTemp.ItemFunc));
+            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice ,itemTemp.ItemFunc));
             shopSlot[i].AddItemToSlot(itemList.back());
             std::cout << "Added " << itemTemp.itemName << " to the Shop!" << std::endl;
             return true;
@@ -164,7 +204,7 @@ bool Shop::AddEquipment(int equipment_id)
         {
             equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
                                                      equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
-                                                     equipTemp.Vitality, equipTemp.Agility));
+                                                     equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
             shopSlot[i].AddEquipmentToSlot(equipmentList.back());
             std::cout << "Added " << equipTemp.equipmentName << " to the Shop!" << std::endl;
             return true;
@@ -184,6 +224,9 @@ void Shop::Reset()
     {
         shopSlot[i].Reset();
     }
+    pickedName->Reset();
+    pickedPrice->Reset();
+    BuyOrSell = 0;
 }
 
 Shop::~Shop()
@@ -192,7 +235,11 @@ Shop::~Shop()
     delete ShopBox;
     delete[] shopSlot;
     delete goldLabel;
-
+    delete pickedName;
+    delete pickedPrice;
+    delete acceptBtn;
+    delete buyingBtn;
+    delete sellBtn;
     ShopBox = NULL;
 }
 
@@ -204,6 +251,8 @@ bool Shop::OpenShop(int shop_id)
         return false;
     }
     Reset();
+    pickedItem = NULL;
+    pickedEquip = NULL;
     ShopType shopTemp = ShopDB::shopDatabase[shop_id];
     int item_amount = shopTemp.itemList.size();
     for(auto& i : shopTemp.itemList) AddItem(i);
@@ -214,4 +263,64 @@ bool Shop::OpenShop(int shop_id)
     showWindow();
     Game::gDialogue->hideWindow();
     return true;
+}
+
+void Shop::SetItemTarget(Item* item)
+{
+    pickedEquip = NULL;
+    pickedItem = item;
+}
+
+void Shop::SetEquipmentTarget(Equipment* equip)
+{
+    pickedItem = NULL;
+    pickedEquip = equip;
+}
+
+void Shop::SetNameAndPriceLabel(std::string _name, int _price)
+{
+    pickedName->Reset();
+    pickedPrice->Reset();
+    std::string price = "Gold: " + std::to_string(_price);
+    pickedName = new Label(GAME_FONT, _name.c_str(), 10, position.x + 60, position.y + 226, Black, 250);
+    pickedPrice = new Label(GAME_FONT, price.c_str(), 10, position.x + 60, position.y + 244, Black, 250);
+}
+
+void Shop::Buy()
+{
+    int currentGold = Game::gInventory->GetGold();
+    if(pickedEquip)
+    {
+        if(currentGold >= pickedEquip->buyPrice)
+        {
+            if(Game::gInventory->AddEquipment(pickedEquip->equipment_id))
+            {
+                Game::gInventory->AddGold(-pickedEquip->buyPrice);
+            }else{
+                Game::gHUD->setSystemMessage("Inventory is full!", 3000);
+            }
+        }
+        else{
+            Game::gHUD->setSystemMessage("You don't have enough currency to buy this equipment!", 3000);
+        }
+    }else if(pickedItem)
+    {
+        if(currentGold >= pickedItem->buyPrice)
+        {
+            if(Game::gInventory->AddItem(pickedItem->item_id))
+            {
+                Game::gInventory->AddGold(-pickedItem->buyPrice);
+            }else{
+                Game::gHUD->setSystemMessage("Inventory is full!", 3000);
+            }
+        }
+        else{
+            Game::gHUD->setSystemMessage("You don't have enough currency to buy this equipment!", 3000);
+        }
+    }
+}
+
+bool Shop::isBuyOrSell()
+{
+    return BuyOrSell;
 }

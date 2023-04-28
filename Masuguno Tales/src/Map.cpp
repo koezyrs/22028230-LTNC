@@ -143,7 +143,11 @@ void Map::Update()
             }
         }
 
-        if((distance > GAME_PIXELS + 1) && (npc->isInteract)) npc->HideDialogue();
+        if((distance > GAME_PIXELS + 1) && (npc->isInteract))
+        {
+            npc->HideDialogue();
+            Game::gShop->hideWindow();
+        }
 
     }
 
