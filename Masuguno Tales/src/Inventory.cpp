@@ -5,12 +5,14 @@ struct InventorySlot
     InventorySlot() {}
     void init(int _x, int _y)
     {
-        SDL_Color White = {255, 255, 255};
-        stackLabel = new Label("data files/font/game.ttf", " ", 10, _x + 26, _y + 24, White, 20, false, []{});
+        stackLabel = new Label(GAME_FONT, " ", 10, _x + 26, _y + 24, White, 20, false, []{});
         srcRect = {0,0,32,32};
         destRect = {_x, _y,32,32};
         lastClick = 0;
         lastUpdateStack = 0;
+        descriptionName = new Label(GAME_FONT, " ", 10, _x - 140 + 15, _y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, " ", 10, _x - 140 + 3, _y - 30 + 15, White, 132);
+        descriptionSellGold = new Label(GAME_FONT, " ", 10, _x - 140 + 10, _y - 30 + 183, White, 132);
     }
 
     void handleEvent(SDL_Event* e)
@@ -46,12 +48,10 @@ struct InventorySlot
                         item->destroy();
                         Reset();
                     }
-                }else                                       // Single Click
-                {
-                    // Show info
                 }
                 lastClick = SDL_GetTicks64();
             }
+
 
             if(inside && e->type == SDL_MOUSEBUTTONDOWN && isFull == true && equipment != NULL)
             {
@@ -71,9 +71,6 @@ struct InventorySlot
                             Reset();
                         }
                     }
-                }else  // Single Click
-                {
-                    // Show info
                 }
                 lastClick = SDL_GetTicks64();
             }
@@ -88,9 +85,30 @@ struct InventorySlot
                 SDL_Color White = {255, 255, 255};
                 lastUpdateStack = item->currentStack;
                 stackLabel->Reset();
-                stackLabel = new Label("data files/font/game.ttf", tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
+                stackLabel = new Label(GAME_FONT, tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
             }
         }
+    }
+
+    void RenderDescription()
+    {
+        //Get mouse position
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+
+            bool inside = false;
+            // check if the mouse is in the button
+            if((x < destRect.x) || (x > destRect.x + 32) || (y < destRect.y) || (y > destRect.y + 32)) inside = false;
+            else inside = true;
+
+            if(inside && isFull && (item || equipment))
+            {
+                SDL_Rect descriptSrc = {0,0,137,198}, descriptDest = {destRect.x - 140, destRect.y - 30, 137, 198};
+                TextureManager::Draw(descriptionBox, descriptSrc, descriptDest);
+                descriptionName->Render();
+                descriptionContent->Render();
+                descriptionSellGold->Render();
+            }
     }
 
     void Reset()
@@ -99,6 +117,9 @@ struct InventorySlot
         equipment = NULL;
         lastUpdateStack = 0;
         stackLabel->Reset();
+        descriptionName->Reset();
+        descriptionContent->Reset();
+        descriptionSellGold->Reset();
         isFull = false;
     }
 
@@ -106,6 +127,10 @@ struct InventorySlot
     {
         Reset();
         item = _item;
+        descriptionName = new Label(GAME_FONT, item->itemName.c_str(), 10, destRect.x - 140 + 15, destRect.y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, item->description.c_str(), 10, destRect.x - 140 + 3, destRect.y - 30 + 15, White, 132);
+        std::string value = "Sell gold: " +  std::to_string(item->sellPrice);
+        descriptionSellGold = new Label(GAME_FONT, value.c_str(), 10, destRect.x - 140 + 10, destRect.y - 30 + 183, White, 132);
         isFull = true;
     }
 
@@ -113,6 +138,10 @@ struct InventorySlot
     {
         Reset();
         equipment = _equipment;
+        descriptionName = new Label(GAME_FONT, equipment->equipmentName.c_str(), 10, destRect.x - 140 + 15, destRect.y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, equipment->description.c_str(), 10, destRect.x - 140 + 3, destRect.y - 30 + 15, White, 132);
+        std::string value = "Sell gold: " + std::to_string(equipment->sellPrice);
+        descriptionSellGold = new Label(GAME_FONT, value.c_str(), 10, destRect.x - 140 + 10, destRect.y - 30 + 183, White, 132);
         isFull = true;
     }
 
@@ -137,6 +166,7 @@ struct InventorySlot
         return false;
     }
 
+    SDL_Color White = {255,255,255};
     bool isFull = false;
     Item* item = NULL;
     Equipment* equipment = NULL;
@@ -144,6 +174,10 @@ struct InventorySlot
     int lastUpdateStack;
     SDL_Rect srcRect, destRect;
     Uint64 lastClick;
+    SDL_Texture* descriptionBox = TextureManager::GetTexture("DescriptionBox");
+    Label* descriptionName;
+    Label* descriptionContent;
+    Label* descriptionSellGold;
 };
 
 Inventory::Inventory(int _x, int _y, int _width, int _height)
@@ -213,6 +247,15 @@ void Inventory::Render()
             if(invSlot[i].stackLabel != NULL) invSlot[i].stackLabel->Render();
         }
     }
+
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        if(invSlot[i].isFull)
+        {
+            invSlot[i].RenderDescription();
+        }
+    }
+
 }
 
 bool Inventory::AddItem(int item_id)
@@ -236,7 +279,7 @@ bool Inventory::AddItem(int item_id)
     {
         if(invSlot[i].isFull == false)
         {
-            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag, itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
+            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag, itemTemp.itemName, itemTemp.itemDescription, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
             invSlot[i].AddItemToSlot(itemList.back());
             std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;
             return true;
@@ -253,7 +296,7 @@ bool Inventory::AddEquipment(int equipment_id)
     {
         if(invSlot[i].isFull == false)
         {
-            equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
+            equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,
                                                      equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
                                                      equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
             invSlot[i].AddEquipmentToSlot(equipmentList.back());
@@ -271,7 +314,7 @@ Inventory::~Inventory()
 {
     delete closeButton;
     delete inventoryTitle;
-    delete invSlot;
+    delete[] invSlot;
     delete goldLabel;
 
     InventoryBox = NULL;
@@ -325,7 +368,7 @@ void Inventory::AddEquipmentToSlot(int slot_id, int equipment_id)
         std::cerr << "Not found equip id: " << equipment_id << std::endl;
         return;
     }
-    equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
+    equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,
                                             equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
                                             equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
     invSlot[slot_id].AddEquipmentToSlot(equipmentList.back());
@@ -341,7 +384,7 @@ void Inventory::AddItemToSlot(int slot_id, int item_id, int item_amount)
         return;
     }
 
-    itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
+    itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.itemDescription, itemTemp.buyPrice, itemTemp.sellPrice, itemTemp.ItemFunc));
     itemList.back()->currentStack = itemList.back()->currentStack + item_amount - 1;
     invSlot[slot_id].AddItemToSlot(itemList.back());
     std::cout << "Added " << itemTemp.itemName << " to the Inventory!" << std::endl;

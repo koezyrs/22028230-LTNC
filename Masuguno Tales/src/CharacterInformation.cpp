@@ -359,7 +359,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip weapon!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[0].Equip(equipmentList.back());
         return true;
         break;
@@ -369,7 +369,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip shield!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[1].Equip(equipmentList.back());
         return true;
         break;
@@ -379,7 +379,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip helmet!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[2].Equip(equipmentList.back());
         return true;
         break;
@@ -389,7 +389,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip armor!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[3].Equip(equipmentList.back());
         return true;
         break;
@@ -399,7 +399,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip glove!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[4].Equip(equipmentList.back());
         return true;
         break;
@@ -409,7 +409,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip shoes!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[5].Equip(equipmentList.back());
         return true;
         break;
@@ -419,7 +419,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip cape!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[6].Equip(equipmentList.back());
         return true;
         break;
@@ -429,7 +429,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip ring!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[7].Equip(equipmentList.back());
         return true;
         break;
@@ -439,7 +439,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip necklace!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[8].Equip(equipmentList.back());
         return true;
         break;
@@ -449,7 +449,7 @@ bool CharacterInformation::AddEquipment(int equipment_id)
             std::cout << "Already equip medal!" << std::endl;
             return false;
         }
-        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
+        equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence, equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
         equipSlot[9].Equip(equipmentList.back());
         return true;
         break;

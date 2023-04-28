@@ -8,6 +8,9 @@ struct ShopSlot
         SDL_Color White = {255, 255, 255};
         srcRect = {0,0,32,32};
         destRect = {_x, _y,32,32};
+        descriptionName = new Label(GAME_FONT, " ", 10, _x - 140 + 15, _y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, " ", 10, _x - 140 + 3, _y - 30 + 15, White, 132);
+        descriptionSellGold = new Label(GAME_FONT, " ", 10, _x - 140 + 10, _y - 30 + 183, White, 132);
     }
 
 
@@ -39,10 +42,34 @@ struct ShopSlot
         }
     }
 
+    void RenderDescription()
+    {
+        //Get mouse position
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+
+            bool inside = false;
+            // check if the mouse is in the button
+            if((x < destRect.x) || (x > destRect.x + 32) || (y < destRect.y) || (y > destRect.y + 32)) inside = false;
+            else inside = true;
+
+            if(inside && isFull && (item || equipment))
+            {
+                SDL_Rect descriptSrc = {0,0,137,198}, descriptDest = {destRect.x - 140, destRect.y - 30, 137, 198};
+                TextureManager::Draw(descriptionBox, descriptSrc, descriptDest);
+                descriptionName->Render();
+                descriptionContent->Render();
+                descriptionSellGold->Render();
+            }
+    }
+
     void Reset()
     {
         item = NULL;
         equipment = NULL;
+        descriptionName->Reset();
+        descriptionContent->Reset();
+        descriptionSellGold->Reset();
         isFull = false;
     }
 
@@ -50,6 +77,10 @@ struct ShopSlot
     {
         Reset();
         item = _item;
+        descriptionName = new Label(GAME_FONT, item->itemName.c_str(), 10, destRect.x - 140 + 15, destRect.y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, item->description.c_str(), 10, destRect.x - 140 + 3, destRect.y - 30 + 15, White, 132);
+        std::string value = "Sell gold: " +  std::to_string(item->sellPrice);
+        descriptionSellGold = new Label(GAME_FONT, value.c_str(), 10, destRect.x - 140 + 10, destRect.y - 30 + 183, White, 132);
         isFull = true;
     }
 
@@ -57,13 +88,22 @@ struct ShopSlot
     {
         Reset();
         equipment = _equipment;
+        descriptionName = new Label(GAME_FONT, equipment->equipmentName.c_str(), 10, destRect.x - 140 + 15, destRect.y - 30 + 5, White, 132);
+        descriptionContent = new Label(GAME_FONT, equipment->description.c_str(), 10, destRect.x - 140 + 3, destRect.y - 30 + 15, White, 132);
+        std::string value = "Sell gold: " + std::to_string(equipment->sellPrice);
+        descriptionSellGold = new Label(GAME_FONT, value.c_str(), 10, destRect.x - 140 + 10, destRect.y - 30 + 183, White, 132);
         isFull = true;
     }
 
+    SDL_Color White = {255,255,255};
     bool isFull = false;
     Item* item = NULL;
     Equipment* equipment = NULL;
     SDL_Rect srcRect, destRect;
+    SDL_Texture* descriptionBox = TextureManager::GetTexture("DescriptionBox");
+    Label* descriptionName;
+    Label* descriptionContent;
+    Label* descriptionSellGold;
 };
 
 Shop::Shop(int _x, int _y, int _width, int _height, std::string shop_title)
@@ -145,6 +185,14 @@ void Shop::Render()
         }
     }
 
+    for(int i = 0; i < MAX_SHOP_SLOTS; i++)
+    {
+        if(shopSlot[i].isFull)
+        {
+            shopSlot[i].RenderDescription();
+        }
+    }
+
     if(pickedEquip)
     {
         TextureManager::Draw(pickedEquip->getEquipmentSprite(), srcPickedRect, destPickedRect);
@@ -185,7 +233,7 @@ bool Shop::AddItem(int item_id)
     {
         if(shopSlot[i].isFull == false)
         {
-            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.buyPrice, itemTemp.sellPrice ,itemTemp.ItemFunc));
+            itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.itemDescription, itemTemp.buyPrice, itemTemp.sellPrice ,itemTemp.ItemFunc));
             shopSlot[i].AddItemToSlot(itemList.back());
             std::cout << "Added " << itemTemp.itemName << " to the Shop!" << std::endl;
             return true;
@@ -202,7 +250,7 @@ bool Shop::AddEquipment(int equipment_id)
     {
         if(shopSlot[i].isFull == false)
         {
-            equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName,
+            equipmentList.emplace_back(new Equipment(equipTemp.equipment_id, equipTemp.spriteName, equipTemp.equipmentTag, equipTemp.equipmentName, equipTemp.equipmentDescription,
                                                      equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
                                                      equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
             shopSlot[i].AddEquipmentToSlot(equipmentList.back());

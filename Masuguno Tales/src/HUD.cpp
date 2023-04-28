@@ -5,8 +5,8 @@ HUD::HUD() : target(nullptr)
     HUDBase = TextureManager::GetTexture("HUDBase");
     HUDBars = TextureManager::GetTexture("HUDBars");
     TargetHP = TextureManager::GetTexture("TargetHPBar");
-    playerName = new Label(GAME_FONT, Game::gPlayer->getNameComponent()->mName.c_str()  ,10,370, 485, White, 120, false, []{});
-    playerLevel = new Label(GAME_FONT, " ",10,550,485, White, 120, false, []{});
+    playerName = new Label(GAME_FONT, Game::gPlayer->getNameComponent()->mName.c_str()  ,10,370, 485, Black, 120, false, []{});
+    playerLevel = new Label(GAME_FONT, " ",10,570,485, Black, 120, false, []{});
     playerHP = new Label(GAME_FONT, " ",10,370,503, White, 120, false, []{});
     playerMP = new Label(GAME_FONT, " ",10,570,503, White, 120, false, []{});
     playerExperience = new Label(GAME_FONT, " ",10,495,495, White, 120, false, []{});
@@ -56,7 +56,7 @@ void HUD::Update()
         std::string EXPStr = to_string(Game::gPlayer->mStats->Experience) + "/" + to_string(Game::gPlayer->mStats->ExperienceToNextLevel);
 
     //Update player status here
-        playerLevel = new Label("data files/font/game.ttf", LevelStr.c_str(),10,550,485, White, 120, false, []{});
+        playerLevel = new Label("data files/font/game.ttf", LevelStr.c_str(),10,570,485, Black, 120, false, []{});
         playerHP = new Label("data files/font/game.ttf", HPStr.c_str(),10,370,503, White, 120, false, []{});
         playerMP = new Label("data files/font/game.ttf", MPStr.c_str(),10,570,503, White, 120, false, []{});
         playerExperience = new Label("data files/font/game.ttf", EXPStr.c_str(),10,495,495, White, 120, false, []{});

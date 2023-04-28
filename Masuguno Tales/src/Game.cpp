@@ -142,6 +142,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/56.png", "BuyButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/59.png", "SellButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/57.png", "SellButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/DescriptionBox.png", "DescriptionBox");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");

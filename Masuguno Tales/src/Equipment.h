@@ -12,7 +12,7 @@
 class Equipment
 {
 public:
-    Equipment(int equipment_id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName,
+    Equipment(int equipment_id, std::string spriteName, EQUIPMENT_TAG _equipmentTag, std::string _equipmentName, std::string _description,
                      int _strength, int _dexterity, int _intelligence, int _vitality, int _agility, int _buyPrice, int _sellPrice);
     ~Equipment();
     SDL_Texture* getEquipmentSprite();
@@ -20,8 +20,8 @@ public:
     void destroy();
     int equipment_id;
     EQUIPMENT_TAG equipmentTag;
-    const char* description;
     std::string equipmentName;
+    std::string description;
     int Strength = 0;
     int Dexterity = 0;
     int Intelligence = 0;
