@@ -11,6 +11,7 @@
 #include "Actor.h"
 #include "Dialogue.h"
 #include "Inventory.h"
+#include "Shop.h"
 #include "Database/QuestDB.h"
 
 struct DialogueType;

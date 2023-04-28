@@ -24,6 +24,7 @@ class CharacterInformation;
 class HUD;
 class Hotbar;
 class QuestLog;
+class Shop;
 
 using namespace std;
 
@@ -65,6 +66,7 @@ public:
     static std::unique_ptr<HUD> gHUD;
     static std::unique_ptr<Hotbar> gHotbar;
     static std::unique_ptr<QuestLog> gQuestLog;
+    static std::unique_ptr<Shop> gShop;
 
     static SDL_Rect gCamera;
     static SESSION_GAME session;

@@ -218,7 +218,7 @@ void Login::LoadGameDatabase(std::string _account_id)
         Game::gDialogue = std::make_unique<Dialogue>((SCREEN_WIDTH - 478)/2 , (SCREEN_HEIGHT - 226)/2, 478, 226, " ", "EmptyFace", " ");
         Game::gHUD = std::make_unique<HUD>();
         Game::gHotbar = std::make_unique<Hotbar>();
-
+        Game::gShop = std::make_unique<Shop>((SCREEN_WIDTH - 277)/2 , (SCREEN_HEIGHT - 292)/2, 277, 292, " ");
     // Quest
         Game::gQuestLog = std::make_unique<QuestLog>();
         qstr = "SELECT * FROM `actor_quest` WHERE actor_id = '" + actor_id + "'";

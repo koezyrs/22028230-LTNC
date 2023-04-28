@@ -25,10 +25,15 @@
 #include "HUD.h"
 #include "Hotbar.h"
 #include "QuestLog.h"
+#include "Shop.h"
 
 // Database
 #include "Database/MonsterDB.h"
 #include "Database/SkillDB.h"
+#include "Database/EquipmentDB.h"
+#include "Database/ItemDB.h"
+#include "Database/QuestDB.h"
+#include "Database/ShopDB.h"
 
 // Settings
 #include "Settings.h"
@@ -47,6 +52,7 @@ std::unique_ptr<HUD> Game::gHUD;
 std::unique_ptr<Hotbar> Game::gHotbar;
 std::unique_ptr<CharacterInformation> Game::gCharacterInformation;
 std::unique_ptr<QuestLog> Game::gQuestLog;
+std::unique_ptr<Shop> Game::gShop;
 
 Game::Game() {
     session = INIT;
@@ -129,6 +135,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/TargetHPBar.png", "TargetHPBar");
     TextureManager::LoadTexture("data files/graphics/gui/48.png", "AddButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/49.png", "AddButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/Shop.png", "Shop");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
@@ -182,6 +189,9 @@ void Game::loadData()
 
     // Load all quest
     QuestDB::LoadQuestDatabase();
+
+    // Load all shop
+    ShopDB::LoadShopDatabase();
 
     // Load all map
     MapManager::LoadMapDatabase();
@@ -249,6 +259,7 @@ void Game::update()
     if(!gDialogue->isHide()) gDialogue->Update();
     if(!gInventory->isHide()) gInventory->Update();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Update();
+    if(!gShop->isHide()) gShop->Update();
 
     // Camera Update
     gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
@@ -276,6 +287,7 @@ void Game::render()
     if(!gDialogue->isHide()) gDialogue->Render();
     if(!gInventory->isHide()) gInventory->Render();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Render();
+    if(!gShop->isHide()) gShop->Render();
     gHUD->Render();
     gHotbar->Render();
 

@@ -50,17 +50,21 @@ void DialogueManager::LoadDialogue()
                                              "1. Ok let me do the quest",
                                              "2. I don't care!",
                                              "3. I've done the quest!",
-                                             NULL,
+                                             "4. I want to buy",
                                              []{
                                                  if(QuestLog::giveQuest(1)) Play("The Guard Introduction");
                                                  else Play("Failed to give quest");
                                                 },
-                                             []{Game::gDialogue->hideWindow();},
+                                             []{
+                                                 Game::gShop->OpenShop(2);
+                                                 },
                                              []{
                                                  if(QuestLog::checkQuest(1)) Play("Good Job");
                                                     else Play("Finish the quest bro");
                                                  },
-                                             []{},
+                                             []{
+                                                 Game::gShop->OpenShop(1);
+                                                },
                                              "Face-Guard1");
 
     dialogueList["Failed to give quest"] = DialogueType("Conversation with the Guard",

@@ -41,6 +41,7 @@ NPC::~NPC()
 void NPC::PlayDialogue()
 {
     isInteract = true;
+    Game::gShop->hideWindow();
     DialogueManager::Play(npcName);
 }
 

@@ -16,6 +16,7 @@
 #include "../HUD.h"
 #include "../Hotbar.h"
 #include "../QuestLog.h"
+#include "../Shop.h"
 #include "../MapManager.h"
 
 class Login
