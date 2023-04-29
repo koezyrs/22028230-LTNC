@@ -32,6 +32,7 @@ const int MAX_INVENTORY_SLOTS = 35;
 const int MAX_EQUIPMENT_SLOTS = 10;
 const int MAX_SHOP_SLOTS = 35;
 const int MAX_LEVEL = 50;
+const int MAX_RANKING_TOP = 10;
 const unsigned int flowDistanceMax = 512;
 const float NEXT_LEVEL_EXP_RATE = 1.5;
 // Enums

@@ -112,6 +112,8 @@
 		<Unit filename="src/Quest.h" />
 		<Unit filename="src/QuestLog.cpp" />
 		<Unit filename="src/QuestLog.h" />
+		<Unit filename="src/Ranking.cpp" />
+		<Unit filename="src/Ranking.h" />
 		<Unit filename="src/Register/Register.cpp" />
 		<Unit filename="src/Register/Register.h" />
 		<Unit filename="src/Settings.h" />

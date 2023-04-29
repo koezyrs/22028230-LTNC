@@ -26,6 +26,7 @@
 #include "Hotbar.h"
 #include "QuestLog.h"
 #include "Shop.h"
+#include "Ranking.h"
 
 // Database
 #include "Database/MonsterDB.h"
@@ -53,6 +54,7 @@ std::unique_ptr<Hotbar> Game::gHotbar;
 std::unique_ptr<CharacterInformation> Game::gCharacterInformation;
 std::unique_ptr<QuestLog> Game::gQuestLog;
 std::unique_ptr<Shop> Game::gShop;
+std::unique_ptr<Ranking> Game::gRanking;
 
 Game::Game() {
     session = INIT;
@@ -143,7 +145,13 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/59.png", "SellButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/57.png", "SellButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/DescriptionBox.png", "DescriptionBox");
-
+    TextureManager::LoadTexture("data files/graphics/gui/Ranking.png", "Ranking");
+    TextureManager::LoadTexture("data files/graphics/gui/PowerButtonOut.png", "PowerButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/PowerButtonOver.png", "PowerButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/GoldButtonOut.png", "GoldButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/GoldButtonOver.png", "GoldButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOut.png", "LevelButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOver.png", "LevelButtonOver");
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
     TextureManager::LoadTexture("data files/maps/map01_above_player.png", "Map01_Overlay");
@@ -249,6 +257,9 @@ void Game::handleEvents()
             case SDLK_c:
                 Game::gCharacterInformation->Toggle();
                 break;
+            case SDLK_r:
+                Game::gRanking->Toggle();
+                break;
             default:
                 break;
             }
@@ -268,6 +279,7 @@ void Game::update()
     if(!gInventory->isHide()) gInventory->Update();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Update();
     if(!gShop->isHide()) gShop->Update();
+    if(!gRanking->isHide()) gRanking->Update();
 
     // Camera Update
     gCamera.x = gPlayer->getTransformComponent()->position.x - SCREEN_WIDTH / 2;
@@ -296,6 +308,7 @@ void Game::render()
     if(!gInventory->isHide()) gInventory->Render();
     if(!gCharacterInformation->isHide()) gCharacterInformation->Render();
     if(!gShop->isHide()) gShop->Render();
+    if(!gRanking->isHide()) gRanking->Render();
     gHUD->Render();
     gHotbar->Render();
 
@@ -515,6 +528,19 @@ void Game::saveData()
         {
             std::cerr << "Can not make query! (Can not save actor finished quest #3!)" << std::endl;
         }
+    }
+
+    // Update ranking
+    std::string actor_power = std::to_string(gPlayer->mStats->Power);
+    std::string actor_gold = std::to_string(gInventory->GetGold());
+    std::string actor_level = std::to_string(gPlayer->mStats->Level);
+    qstr = "";
+    qstr += "UPDATE `actor_ranking` SET `actor_power`='" + actor_power + "',`actor_gold`='" + actor_gold + "',`actor_level`='" +  actor_level ;
+    qstr += "' WHERE `actor_id` = '" + actor_id + "'";
+    qstate = mysql_query(conn, qstr.c_str());
+    if(qstate)
+    {
+        std::cout << "Can not make query! (Can not save actor ranking!)" << std::endl;
     }
 
     std::cout << "Player data was saved!" << std::endl;

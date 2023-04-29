@@ -218,6 +218,16 @@ void Register::RegistButon()
         }
     }
 
+    // Them vao bang xep hang
+    qstr = "INSERT INTO actor_ranking(actor_id, character_name, actor_power, actor_gold, actor_level) VALUES(" + actor_id + ",'" + username_input->inputValue + "',0,0,1)";
+    qstate = mysql_query(Game::conn, qstr.c_str());
+    if(qstate)
+    {
+        setMessage("Can not query database! ");
+        std::cout << "Error#7: Can not insert data into Ranking!" << std::endl;
+        return;
+    }
+
     // Success
     setMessage("Create account successfully!");
 }

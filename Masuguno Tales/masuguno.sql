@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 26, 2023 lúc 04:49 PM
+-- Thời gian đã tạo: Th4 29, 2023 lúc 08:52 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 7.4.27
 
@@ -118,6 +118,21 @@ CREATE TABLE `actor_quest` (
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `actor_ranking`
+--
+
+CREATE TABLE `actor_ranking` (
+  `id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `character_name` varchar(20) NOT NULL,
+  `actor_power` int(11) NOT NULL,
+  `actor_gold` int(11) NOT NULL,
+  `actor_level` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `actor_variable`
 --
 
@@ -169,6 +184,12 @@ ALTER TABLE `actor_quest`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `actor_ranking`
+--
+ALTER TABLE `actor_ranking`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `actor_variable`
 --
 ALTER TABLE `actor_variable`
@@ -212,6 +233,12 @@ ALTER TABLE `actor_monster_kills`
 -- AUTO_INCREMENT cho bảng `actor_quest`
 --
 ALTER TABLE `actor_quest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `actor_ranking`
+--
+ALTER TABLE `actor_ranking`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

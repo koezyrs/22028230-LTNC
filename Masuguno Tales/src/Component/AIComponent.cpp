@@ -45,6 +45,8 @@ void AIComponent::Update()
         std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;
         return;
     }
+    int sizeX = tiles[0].size();
+    int sizeY = tiles.size();
     switch(monsterState)
     {
     case ROAMING:
@@ -54,6 +56,8 @@ void AIComponent::Update()
 
             int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
             int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
+            if(coordinateX < 0 || coordinateX >= sizeX) break;
+            if(coordinateY < 0 || coordinateY >= sizeY) break;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
@@ -81,6 +85,8 @@ void AIComponent::Update()
             mTransform->speed = chaseSpeed;
             int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
             int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
+            if(coordinateX < 0 || coordinateX >= sizeX) break;
+            if(coordinateY < 0 || coordinateY >= sizeY) break;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
@@ -117,6 +123,8 @@ void AIComponent::Update()
             // Move to destination
             int coordinateX = (static_cast<int>(mCollider->mCollider.x + Game::gCamera.x)) / GAME_PIXELS;
             int coordinateY = (static_cast<int>(mCollider->mCollider.y + Game::gCamera.y)) / GAME_PIXELS;
+            if(coordinateX < 0 || coordinateX >= sizeX) break;
+            if(coordinateY < 0 || coordinateY >= sizeY) break;
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 

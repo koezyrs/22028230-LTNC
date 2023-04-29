@@ -284,6 +284,70 @@ void Login::LoadGameDatabase(std::string _account_id)
             return;
         }
 
+    // Ranking
+        std::vector<std::string> topPower;
+        std::vector<std::string> topGold;
+        std::vector<std::string> topLevel;
+        qstr = "SELECT * FROM `actor_ranking` ORDER BY `actor_power` DESC LIMIT 10";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                std::string characterName(row[2]);
+                std::string actor_power(row[3]);
+                topPower.push_back(characterName);
+                topPower.push_back(actor_power);
+            }
+            std::cout << "Success load power ranking!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
+
+        qstr = "SELECT * FROM `actor_ranking` ORDER BY `actor_gold` DESC LIMIT 10";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                std::string characterName(row[2]);
+                std::string actor_gold(row[4]);
+                topGold.push_back(characterName);
+                topGold.push_back(actor_gold);
+            }
+            std::cout << "Success load gold ranking!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
+
+        qstr = "SELECT * FROM `actor_ranking` ORDER BY `actor_level` DESC LIMIT 10";
+        qstate = mysql_query(Game::conn, qstr.c_str());
+        if(!qstate)
+        {
+            res = mysql_store_result(Game::conn);
+            while(row = mysql_fetch_row(res))
+            {
+                std::string characterName(row[2]);
+                std::string actor_level(row[5]);
+                topLevel.push_back(characterName);
+                topLevel.push_back(actor_level);
+            }
+            std::cout << "Success load level ranking!" << std::endl;
+            mysql_free_result(res);
+        }else{
+            std::cout << "Can not make query! (Can not load character information!)" << std::endl;
+            return;
+        }
+        Game::gRanking = std::make_unique<Ranking>((SCREEN_WIDTH - 316)/2 , (SCREEN_HEIGHT - 406)/2 - 20, 316, 406, topPower, topGold, topLevel);
+
         Game::session = RUNNING;
 }
 

@@ -46,6 +46,10 @@ void Monster::Update()
         if(SDL_GetTicks64() > timeSpawn)
         {
             setPosition(startPosition.x, startPosition.y);
+            mTransform->Update();
+            mCollider->Update();
+            mSprite->Update();
+            mName->Update();
             health = maxhealth;
             active = true;
         }
@@ -62,21 +66,17 @@ void Monster::Update()
         float spawnWaitTime = 10000;
         timeSpawn = SDL_GetTicks64() + spawnWaitTime;
         mTransform->position = Vector2D(0,0); // The deadzone
+        mTransform->Update();
         mCollider->Update();
+        mSprite->Update();
+        mName->Update();
         Game::gQuestLog->totalMonsterKilled[monster_id] = Game::gQuestLog->totalMonsterKilled[monster_id] + 1;
         return;
     }
 
     // Update component
-    //Vector2D monsterPos = mTransform->position;
     mAI->Update();
     mTransform->Update();
-    /*
-    if(Collision::AABB(*mCollider, *Game::gPlayer->getColliderComponent()))
-    {
-        mTransform->position = monsterPos;
-    }
-    */
     mCollider->Update();
     mSprite->Update();
     mName->Update();
