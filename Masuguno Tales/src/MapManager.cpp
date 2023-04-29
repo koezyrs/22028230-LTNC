@@ -87,7 +87,17 @@ void MapManager::LoadMap1()
                                     LoadMap(4);
                                     Game::gPlayer->setPosition(27 * 32, 0 * 32);
                                 });
-    mapDatabase[1]->AddMonster(17*32,16*32,1,mapBase[1]);
+    mapDatabase[1]->AddMonster(21*32,6*32,3,mapBase[1]);
+    mapDatabase[1]->AddMonster(15*32,4*32,3,mapBase[1]);
+    mapDatabase[1]->AddMonster(5*32,3*32,3,mapBase[1]);
+    mapDatabase[1]->AddMonster(10*32,3*32,3,mapBase[1]);
+    mapDatabase[1]->AddMonster(18*32,4*32,3,mapBase[1]);
+
+    mapDatabase[1]->AddMonster(45*32,26*32,4,mapBase[1]);
+    mapDatabase[1]->AddMonster(46*32,22*32,4,mapBase[1]);
+    mapDatabase[1]->AddMonster(39*32,26*32,4,mapBase[1]);
+    mapDatabase[1]->AddMonster(42*32,19*32,4,mapBase[1]);
+    mapDatabase[1]->AddMonster(46*32,19*32,4,mapBase[1]);
 }
 
 void MapManager::LoadMap2()

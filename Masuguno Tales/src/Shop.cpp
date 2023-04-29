@@ -280,7 +280,6 @@ void Shop::Reset()
 Shop::~Shop()
 {
     delete closeButton;
-    delete ShopBox;
     delete[] shopSlot;
     delete goldLabel;
     delete pickedName;
@@ -302,9 +301,7 @@ bool Shop::OpenShop(int shop_id)
     pickedItem = NULL;
     pickedEquip = NULL;
     ShopType shopTemp = ShopDB::shopDatabase[shop_id];
-    int item_amount = shopTemp.itemList.size();
     for(auto& i : shopTemp.itemList) AddItem(i);
-    int equip_amount = shopTemp.equipmentList.size();
     for(auto& e : shopTemp.equipmentList) AddEquipment(e);
     shopTitle->Reset();
     shopTitle = new Label(GAME_FONT, shopTemp.shop_title.c_str(), 10, position.x + 5, position.y + 5, White, 250);

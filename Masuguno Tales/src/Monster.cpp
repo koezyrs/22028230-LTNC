@@ -2,10 +2,12 @@
 
 Monster::Monster(int _monster_id,float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
-                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase)
+                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase,
+                 int _exp_reward,  int _gold_reward,int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent)
 : monster_id(_monster_id),startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
-    stopChaseRange(_stopChaseRange) ,timeSpawn(0)
+    stopChaseRange(_stopChaseRange) , exp_reward(_exp_reward), gold_reward(_gold_reward) ,item_reward_id(_item_reward_id), item_drop_percent(_item_drop_percent),
+    equipment_reward_id(_equipment_reward_id),  equipment_drop_percent(_equipment_drop_percent) ,timeSpawn(0)
 {
     mTransform = new TransformComponent(_x, _y, _width, _height, _scale);
     mSprite = new SpriteComponent(monsterSprite, mTransform, true);
@@ -58,11 +60,30 @@ void Monster::Update()
 
     // Check if HP <= 0
     if(health <= 0) {
+        // Reward
         active = false;
-        Game::gPlayer->mStats->Experience += 20;
+        Game::gPlayer->mStats->Experience += exp_reward;
+        Game::gInventory->AddGold(gold_reward);
+        float random_number;
+        // Reward item
+        if(item_reward_id > 0)
+        {
+            random_number = rand()%100 + 1;
+            if(random_number <= 100*item_drop_percent) Game::gInventory->AddItem(item_reward_id);
+        }
+
+        // Reward equipment
+        if(equipment_reward_id > 0)
+        {
+            random_number = rand()%100 + 1;
+            if(random_number <= 100*equipment_drop_percent) Game::gInventory->AddEquipment(equipment_reward_id);
+        }
+
         Game::gPlayer->getKeyboardController()->unsetTarget();
         targeted = false;
         trigger = false;
+
+        // Spawn again
         float spawnWaitTime = 10000;
         timeSpawn = SDL_GetTicks64() + spawnWaitTime;
         mTransform->position = Vector2D(0,0); // The deadzone

@@ -169,6 +169,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/characters/159.png", "Sprite-Guard2");
     TextureManager::LoadTexture("data files/graphics/characters/17.png", "Sprite-MonsterCow");
     TextureManager::LoadTexture("data files/graphics/characters/BossDragon.png", "Sprite-BossDragon");
+    TextureManager::LoadTexture("data files/graphics/characters/24.png", "Sprite-BlueSlime");
+    TextureManager::LoadTexture("data files/graphics/characters/21.png", "Sprite-GreenSlime");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
@@ -250,6 +252,7 @@ void Game::handleEvents()
                 Game::gInventory->hideWindow();
                 Game::gCharacterInformation->hideWindow();
                 Game::gShop->hideWindow();
+                Game::gRanking->hideWindow();
                 break;
             case SDLK_i:
                 Game::gInventory->Toggle();

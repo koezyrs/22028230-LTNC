@@ -19,7 +19,8 @@ class Monster : public Entity
 public:
     Monster(int _monster_id, float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
-                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase);
+                 float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase,
+                 int _exp_reward, int _gold_reward, int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent);
     ~Monster();
     void Update() override;
     void Render() override;
@@ -55,6 +56,11 @@ private:
     float damage, health, maxhealth, attackSpeed;
     float chaseSpeed, roamSpeed;
     float attackRange, stopChaseRange;
+    int exp_reward, gold_reward;
+    int item_reward_id;
+    float item_drop_percent;
+    int equipment_reward_id;
+    float equipment_drop_percent;
 
     SDL_Rect currentSprite;
     SDL_Rect mSpriteMoveUp[3];
