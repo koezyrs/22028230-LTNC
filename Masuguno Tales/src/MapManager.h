@@ -8,9 +8,11 @@
 #include "Game.h"
 #include "Map.h"
 #include "Actor.h"
+#include "Ranking.h"
 #include "Event.h"
 #include "Tile.h"
 #include "Settings.h"
+#include "Vector2D.h"
 
 class MapManager
 {
@@ -26,6 +28,8 @@ private:
     static void LoadMap3();
     static void LoadMap4();
     static void LoadMap5();
+private:
+    static void OpenRankingBoard();
 };
 
 #endif // MapManager_h

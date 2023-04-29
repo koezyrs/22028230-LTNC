@@ -4,6 +4,7 @@ std::map<int, std::vector<std::vector<Tile>>> MapManager::mapBase;
 std::map<int, std::shared_ptr<Map>> MapManager::mapDatabase;
 void MapManager::LoadMap(int map_id)
 {
+    Game::gPlayer->getKeyboardController()->unsetTarget();
     Game::currentMap = mapDatabase[map_id];
 }
 
@@ -87,6 +88,12 @@ void MapManager::LoadMap1()
                                     LoadMap(4);
                                     Game::gPlayer->setPosition(27 * 32, 0 * 32);
                                 });
+    mapDatabase[1]->AddEvent(12 * 32, 17 * 32 + 5, []{OpenRankingBoard();});
+    mapDatabase[1]->AddEvent(13 * 32, 17 * 32 + 5, []{OpenRankingBoard();});
+    mapDatabase[1]->AddEvent(14 * 32, 17 * 32 + 5, []{OpenRankingBoard();});
+    mapDatabase[1]->AddEvent(15 * 32, 17 * 32 + 5, []{OpenRankingBoard();});
+
+
     mapDatabase[1]->AddMonster(21*32,6*32,3,mapBase[1]);
     mapDatabase[1]->AddMonster(15*32,4*32,3,mapBase[1]);
     mapDatabase[1]->AddMonster(5*32,3*32,3,mapBase[1]);
@@ -121,6 +128,7 @@ void MapManager::LoadMap3()
                                     LoadMap(1);
                                     Game::gPlayer->setPosition(0 * 32, 24 * 32);
                                 });
+
 }
 
 void MapManager::LoadMap4()
@@ -145,4 +153,24 @@ void MapManager::LoadMap5()
                                     Game::gPlayer->setPosition(47 * 32, 21 * 32);
                                 });
      mapDatabase[5]->AddMonster(15 * 32, 6 * 32, 2, mapBase[5]);
+}
+
+
+void MapManager::OpenRankingBoard()
+{
+    if((Game::event.type == SDL_KEYDOWN))
+    {
+        switch(Game::event.key.keysym.sym )
+        {
+            case SDLK_LCTRL: Game::gRanking->showWindow(); break;
+            case SDLK_UP:
+            case SDLK_DOWN:
+            case SDLK_RIGHT:
+            case SDLK_LEFT:
+                Game::gRanking->hideWindow();
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -23,6 +23,7 @@ void KeyboardController::setTarget(std::shared_ptr<Monster>& _tar) {
 }
 
 void KeyboardController::unsetTarget() {
+    if(target) target->unTargeted();
     target.reset();
 }
 

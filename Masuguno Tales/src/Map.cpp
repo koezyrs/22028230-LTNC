@@ -180,7 +180,6 @@ void Map::Update()
     {
         if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *eventa->getColliderComponent()))
         {
-            Game::gPlayer->getTransformComponent()->position = playerPos;
             eventa->Perform();
             break;
         }

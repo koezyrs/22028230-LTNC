@@ -7,12 +7,12 @@ Dialogue::Dialogue(int _x, int _y, int _width, int _height, const char* title, s
     DialogueBox = TextureManager::GetTexture("Dialogue");
     Face = TextureManager::GetTexture(facefile); // (x,y) = (24,40)
     closeButton = new Button("CloseButtonOut", "CloseButtonOver", _x + 461, _y + 5, 13, 13, [this]{Window::hideWindow(); });
-    dialogueTitle = new Label("data files/font/game.ttf", title, 10, _x + 5, _y + 5, SDL_Color{255,255,255}, false, []{});
-    dialogueContent = new Label("data files/font/game.ttf", content, 10, _x + 134, _y + 45, SDL_Color{255,255,255}, 320, false, []{});
-    dialogueOption1 = new Label("data files/font/game.ttf", "1.", 10, _x + 25, _y + 145, SDL_Color{0,0,0}, 430, false, []{});
-    dialogueOption2 = new Label("data files/font/game.ttf", "2.", 10, _x + 25, _y + 160, SDL_Color{0,0,0}, 430, false, []{});
-    dialogueOption3 = new Label("data files/font/game.ttf", "3.", 10, _x + 25, _y + 175, SDL_Color{0,0,0}, 430, false, []{});
-    dialogueOption4 = new Label("data files/font/game.ttf", "4.", 10, _x + 25, _y + 190, SDL_Color{0,0,0}, 430, false, []{});
+    dialogueTitle = new Label(GAME_FONT, title, 10, _x + 5, _y + 5, SDL_Color{255,255,255},320);
+    dialogueContent = new Label(GAME_FONT, content, 10, _x + 134, _y + 45, SDL_Color{255,255,255}, 320);
+    dialogueOption1 = new Label(GAME_FONT, "1.", 10, _x + 25, _y + 145, SDL_Color{0,0,0}, 430);
+    dialogueOption2 = new Label(GAME_FONT, "2.", 10, _x + 25, _y + 160, SDL_Color{0,0,0}, 430);
+    dialogueOption3 = new Label(GAME_FONT, "3.", 10, _x + 25, _y + 175, SDL_Color{0,0,0}, 430);
+    dialogueOption4 = new Label(GAME_FONT, "4.", 10, _x + 25, _y + 190, SDL_Color{0,0,0}, 430);
     srcRect = {0,0, mWidth, mHeight};
     destRect = {static_cast<int> (position.x), static_cast<int> (position.y), mWidth, mHeight};
     faceSrcRect ={0, 0, 96, 96};

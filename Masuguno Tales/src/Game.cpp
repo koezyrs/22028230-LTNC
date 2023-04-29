@@ -260,9 +260,6 @@ void Game::handleEvents()
             case SDLK_c:
                 Game::gCharacterInformation->Toggle();
                 break;
-            case SDLK_r:
-                Game::gRanking->Toggle();
-                break;
             default:
                 break;
             }

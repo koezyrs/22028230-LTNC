@@ -3,7 +3,7 @@ AIComponent::AIComponent(TransformComponent* trans, ColliderComponent* collider,
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
     roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
-    targetX(0), targetY(0)
+    targetX(0), targetY(0), idleTimeout(0)
 {
     trigger = _trigger;
     mTransform = trans;
@@ -61,7 +61,7 @@ void AIComponent::Update()
             mTransform->velocity.x = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionX);
             mTransform->velocity.y = mTransform->speed * static_cast<float>(tiles[coordinateY][coordinateX].flowDirectionY);
 
-            float reachedPositionDistance = 33.0f;
+            float reachedPositionDistance = 1.0f;
             if(mTransform->position.DistanceTo(roamPosition) < reachedPositionDistance)
             {
                 int nextMoveX, nextMoveY;
@@ -72,6 +72,23 @@ void AIComponent::Update()
             }
 
             if(*trigger) FindTarget();
+
+            if(mTransform->position.x != lastX || mTransform->position.y != lastY)
+            {
+                idleTimeout = SDL_GetTicks64() + 1200;
+                lastX = mTransform->position.x;
+                lastY = mTransform->position.y;
+            }else
+            {
+                if(SDL_GetTicks64() > idleTimeout)
+                {
+                    int nextMoveX, nextMoveY;
+                    getRandomRange(4,&nextMoveX, &nextMoveY);
+                    roamPosition.x = nextMoveX * GAME_PIXELS;
+                    roamPosition.y = nextMoveY * GAME_PIXELS;
+                    setTargetAndCalculateFlowField(nextMoveX, nextMoveY);
+                }
+            }
             break;
         }
 
