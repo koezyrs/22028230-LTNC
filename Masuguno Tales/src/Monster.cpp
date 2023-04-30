@@ -63,8 +63,6 @@ void Monster::Update()
     if(health <= 0) {
         // Reward
         active = false;
-        dropXPosition = mTransform->position.x;
-        dropYPosition = mTransform->position.y;
         Game::gPlayer->mStats->Experience += exp_reward;
         Game::gInventory->AddGold(gold_reward);
         float random_number;
@@ -75,7 +73,9 @@ void Monster::Update()
             {
                 ItemType itemTemp = ItemDB::itemDatabase[item_reward_id];
                 random_number = rand()%100 + 1;
-                if(random_number <= 100*item_drop_percent) Game::currentMap->AddEvent(dropXPosition,dropYPosition,itemTemp.spriteName,[this]{dropItem(item_reward_id,dropXPosition,dropYPosition);});
+                float dropX = mTransform->position.x;
+                float dropY = mTransform->position.y;
+                if(random_number <= 100*item_drop_percent) Game::currentMap->AddEvent(dropX,dropY,itemTemp.spriteName,[this, dropX, dropY]{dropItem(item_reward_id,dropX,dropY);});
             }else std::cout << "Not found item reward id: " << item_reward_id << std::endl;
         }
 
@@ -86,7 +86,9 @@ void Monster::Update()
             {
                 EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_reward_id];
                 random_number = rand()%100 + 1;
-                if(random_number <= 100*equipment_drop_percent) Game::currentMap->AddEvent(dropXPosition,dropYPosition,equipTemp.spriteName,[this]{dropEquipment(equipment_reward_id,dropXPosition,dropYPosition);});
+                float dropX = mTransform->position.x;
+                float dropY = mTransform->position.y;
+                if(random_number <= 100*equipment_drop_percent) Game::currentMap->AddEvent(dropX,dropY,equipTemp.spriteName,[this, dropX, dropY]{dropEquipment(equipment_reward_id,dropX,dropY);});
             }else std::cout << "Not found equipment reward id: " << equipment_reward_id << std::endl;
         }
 

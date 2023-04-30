@@ -87,8 +87,6 @@ private:
     void dropItem(int item_id, float x, float y);
     void dropEquipment(int equipment_id, float x, float y);
     void destroyDrop(float x, float y);
-    float dropXPosition;
-    float dropYPosition;
 };
 
 #endif // Monster_h
