@@ -30,6 +30,7 @@ private:
     static void LoadMap5();
 private:
     static void OpenRankingBoard();
+    static void GuildMasterConversation();
 };
 
 #endif // MapManager_h

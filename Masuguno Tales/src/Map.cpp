@@ -218,7 +218,7 @@ void Map::AddMonster(float x, float y, int monster_id, std::vector<std::vector<T
                                           , monster.monsterSprite, monster.damage, monster.health, monster.attackSpeed,
                                           monster.attackRange, monster.stopChaseRange, monster.chaseSpeed, monster.roamSpeed,mapBase,
                                           monster.exp_reward, monster.gold_reward, monster.item_reward_id, monster.item_drop_percent,
-                                          monster.equipment_reward_id, monster.equipment_drop_percent));
+                                          monster.equipment_reward_id, monster.equipment_drop_percent, monster.freeze));
     }
     else
     {

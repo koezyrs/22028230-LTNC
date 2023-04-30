@@ -167,10 +167,12 @@ void Game::loadResources()
     // Sprite
     TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
     TextureManager::LoadTexture("data files/graphics/characters/BossDragon.png", "Sprite-BossDragon");
+    TextureManager::LoadTexture("data files/graphics/characters/Dummy.png", "Sprite-Dummy");
     TextureManager::LoadTexture("data files/graphics/characters/24.png", "Sprite-BlueSlime");
     TextureManager::LoadTexture("data files/graphics/characters/21.png", "Sprite-GreenSlime");
     TextureManager::LoadTexture("data files/graphics/characters/15.png", "Sprite-Leiea");
     TextureManager::LoadTexture("data files/graphics/characters/35.png", "Sprite-Aurez");
+
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
@@ -179,7 +181,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/items/14.png", "Item-HPPotion");
 
     // Faces
-    TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-GuildMaster");
+    TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-Aurez");
     TextureManager::LoadTexture("data files/graphics/faces/15.png", "Face-Leiea");
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");

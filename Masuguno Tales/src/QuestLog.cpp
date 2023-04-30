@@ -101,3 +101,24 @@ bool QuestLog::checkQuest(int quest_id)
     }
     return success;
 }
+
+void QuestLog::GuildMasterGiveQuest()
+{
+    // Quest 1
+    if(finishedQuest.count(1) > 0)
+    {
+        DialogueManager::Play("Guild Master#5");
+        return;
+    }
+
+    if(onGoingQuest.count(1) > 0)
+    {
+        if(checkQuest(1)) DialogueManager::Play("Guild Master#5");
+        else DialogueManager::Play("Guild Master#4");
+        return;
+    }else
+    {
+        // Introduce
+        DialogueManager::Play("Guild Master#1");
+    }
+}

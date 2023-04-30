@@ -7,9 +7,9 @@ std::map<int, MonsterType> MonsterDB::monsterDatabase;
 
 void MonsterDB::LoadMonsterDatabase()
 {
-    monsterDatabase[3] = MonsterType(3, 192, 192, "Boss Dragon Lv.100", "Sprite-BossDragon",
-                                    10.0f, 200.0f, 2000.0f, 1.0f, 0.5f, 70.0f, 500.0f,
-                                    0,0,0,0,0,0);
+    monsterDatabase[3] = MonsterType(3, 32, 38, "Dummy", "Sprite-Dummy",
+                                    0.0f, 15.0f, 10000.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                                    0,0,0,0,0,0,true);
     monsterDatabase[1] = MonsterType(1, 32, 32, "Slime Lv.1", "Sprite-BlueSlime",
                                     10.0f, 30.0f, 3000.0f, 0.4f, 0.1f, 30.0f, 128.0f,
                                     15,5,1,1,0,0);

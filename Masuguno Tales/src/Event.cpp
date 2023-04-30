@@ -8,7 +8,7 @@ Event::Event(float x, float y, std::string spriteName, std::function<void()> fun
     if(!spriteName.empty())
     {
         srcRect = {0,0,32,32};
-        destRect = {x,y,32,32};
+        destRect = {static_cast<int>(x),static_cast<int>(y),32,32};
         eventSprite = TextureManager::GetTexture(spriteName);
     }
 }

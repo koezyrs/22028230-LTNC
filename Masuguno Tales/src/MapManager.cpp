@@ -105,6 +105,12 @@ void MapManager::LoadMap1()
     mapDatabase[1]->AddMonster(39*32,26*32,2,mapBase[1]);
     mapDatabase[1]->AddMonster(42*32,19*32,2,mapBase[1]);
     mapDatabase[1]->AddMonster(46*32,19*32,2,mapBase[1]);
+
+
+    mapDatabase[1]->AddMonster(22 * 32, 19 * 32, 3, mapBase[1]);
+    mapDatabase[1]->AddMonster(24 * 32, 19 * 32, 3, mapBase[1]);
+    mapDatabase[1]->AddMonster(26 * 32, 19 * 32, 3, mapBase[1]);
+    mapDatabase[1]->AddMonster(26 * 32, 17 * 32, 3, mapBase[1]);
 }
 
 void MapManager::LoadMap2()
@@ -115,6 +121,10 @@ void MapManager::LoadMap2()
                                     Game::gPlayer->setPosition(10 * 32, 16 * 32);
                                 });
     mapDatabase[2]->AddNPC(16 * 32, 9 * 32, "Sprite-Aurez", "Aurez Lv. 50");
+    mapDatabase[2]->AddEvent(16 * 32, 10 * 32 + 1, "",[]
+                                {
+                                    GuildMasterConversation();
+                                });
 
 }
 
@@ -154,7 +164,6 @@ void MapManager::LoadMap5()
                                     LoadMap(4);
                                     Game::gPlayer->setPosition(47 * 32, 21 * 32);
                                 });
-     mapDatabase[5]->AddMonster(15 * 32, 6 * 32, 2, mapBase[5]);
 }
 
 
@@ -170,6 +179,25 @@ void MapManager::OpenRankingBoard()
             case SDLK_RIGHT:
             case SDLK_LEFT:
                 Game::gRanking->hideWindow();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void MapManager::GuildMasterConversation()
+{
+    if((Game::event.type == SDL_KEYDOWN))
+    {
+        switch(Game::event.key.keysym.sym )
+        {
+            case SDLK_LCTRL: QuestLog::GuildMasterGiveQuest(); break;
+            case SDLK_UP:
+            case SDLK_DOWN:
+            case SDLK_RIGHT:
+            case SDLK_LEFT:
+                Game::gDialogue->hideWindow();
                 break;
             default:
                 break;

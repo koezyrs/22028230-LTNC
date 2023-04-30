@@ -24,7 +24,7 @@ public:
     Monster(int _monster_id, float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase,
-                 int _exp_reward, int _gold_reward, int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent);
+                 int _exp_reward, int _gold_reward, int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent, bool freeze = false);
     ~Monster();
     void Update() override;
     void Render() override;

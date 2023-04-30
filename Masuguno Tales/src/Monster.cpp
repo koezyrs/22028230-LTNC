@@ -4,7 +4,7 @@
 Monster::Monster(int _monster_id,float _x, float _y, int _width, int _height, int _scale,  std::string _monsterName,
                  std::string _monsterSprite, float _damage, float _health, float _attackSpeed,
                  float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, std::vector<std::vector<Tile>> mapBase,
-                 int _exp_reward,  int _gold_reward,int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent)
+                 int _exp_reward,  int _gold_reward,int _item_reward_id, float _item_drop_percent, int _equipment_reward_id,  float _equipment_drop_percent, bool freeze)
 : monster_id(_monster_id),startPosition(_x,_y), monsterName(_monsterName), monsterSprite(_monsterSprite), damage(_damage), health(_health), maxhealth(_health),
     attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed), roamSpeed(_roamSpeed), attackRange(_attackRange),
     stopChaseRange(_stopChaseRange) , exp_reward(_exp_reward), gold_reward(_gold_reward) ,item_reward_id(_item_reward_id), item_drop_percent(_item_drop_percent),
@@ -14,7 +14,7 @@ Monster::Monster(int _monster_id,float _x, float _y, int _width, int _height, in
     mSprite = new SpriteComponent(monsterSprite, mTransform, true);
     mCollider = new ColliderComponent(mTransform, "Monster", true);
     mName = new NameComponent(mTransform, monsterName, GAME_FONT, 10, SDL_Color{255,0,0});
-    mAI = new AIComponent(mTransform, mCollider, startPosition, damage, attackSpeed, attackRange, stopChaseRange, chaseSpeed, roamSpeed, &trigger, mapBase);
+    mAI = new AIComponent(mTransform, mCollider, startPosition, damage, attackSpeed, attackRange, stopChaseRange, chaseSpeed, roamSpeed, &trigger, mapBase, freeze);
 
     // HP Bar
     HPBarTexture = TextureManager::GetTexture("HPBar");

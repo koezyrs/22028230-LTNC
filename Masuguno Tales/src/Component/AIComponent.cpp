@@ -1,9 +1,9 @@
 #include "AIComponent.h"
 AIComponent::AIComponent(TransformComponent* trans, ColliderComponent* collider, Vector2D startPos, float _damage, float _attackSpeed,
-    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase)
+    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase, bool _freeze)
     : startPostion(startPos), trigger(_trigger), damage(_damage), attackSpeed(_attackSpeed), chaseSpeed(_chaseSpeed),
     roamSpeed(_roamSpeed), attackRange(_attackRange), stopChaseRange(_stopChaseRange), monsterState(ROAMING),
-    targetX(0), targetY(0), idleTimeout(0)
+    targetX(0), targetY(0), freeze(_freeze), idleTimeout(0)
 {
     trigger = _trigger;
     mTransform = trans;
@@ -40,6 +40,7 @@ void AIComponent::getRandomRange(int n, int *nextMoveX, int *nextMoveY)
 
 void AIComponent::Update()
 {
+    if(freeze) return;
     if(tiles.empty())
     {
         std::cout << "Invalid map! Please check Map Manager! (AI Component Error!)" << std::endl;

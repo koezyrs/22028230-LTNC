@@ -46,13 +46,13 @@ private:
     Uint64 timeout;
     std::vector<std::vector<Tile>> tiles;
     void getRandomRange(int n, int *nextMoveX, int *nextMoveY);
-
+    bool freeze;
 private:
     float lastX, lastY;
     Uint64 idleTimeout;
 public:
     AIComponent(TransformComponent* trans, ColliderComponent* collider ,Vector2D startPos, float _damage, float _attackSpeed,
-    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase);
+    float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase, bool _freeze);
     ~AIComponent();
     void Update();
 };

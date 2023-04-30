@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Actor.h"
 #include "Inventory.h"
+#include "DialogueManager.h"
 #include "Database/QuestDB.h"
 
 class QuestLog
@@ -23,6 +24,9 @@ public:
     static bool giveQuest(int quest_id);
     static void dropQuest(int quest_id);
     static bool checkQuest(int quest_id);
+
+    static void GuildMasterGiveQuest();
+
 };
 
 #endif // QuestLog_h
