@@ -62,21 +62,31 @@ void Monster::Update()
     if(health <= 0) {
         // Reward
         active = false;
+        dropXPosition = mTransform->position.x;
+        dropYPosition = mTransform->position.y;
         Game::gPlayer->mStats->Experience += exp_reward;
         Game::gInventory->AddGold(gold_reward);
         float random_number;
         // Reward item
         if(item_reward_id > 0)
         {
-            random_number = rand()%100 + 1;
-            if(random_number <= 100*item_drop_percent) Game::gInventory->AddItem(item_reward_id);
+            if(ItemDB::itemDatabase.count(item_reward_id) > 0)
+            {
+                ItemType itemTemp = ItemDB::itemDatabase[item_reward_id];
+                random_number = rand()%100 + 1;
+                if(random_number <= 100*item_drop_percent) Game::currentMap->AddEvent(dropXPosition,dropYPosition,itemTemp.spriteName,[this]{dropItem(item_reward_id,dropXPosition,dropYPosition);});
+            }else std::cout << "Not found item reward id: " << item_reward_id << std::endl;
         }
 
         // Reward equipment
         if(equipment_reward_id > 0)
         {
-            random_number = rand()%100 + 1;
-            if(random_number <= 100*equipment_drop_percent) Game::gInventory->AddEquipment(equipment_reward_id);
+            if(EquipmentDB::equipmentDatabase.count(equipment_reward_id) > 0)
+            {
+                EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equipment_reward_id];
+                random_number = rand()%100 + 1;
+                if(random_number <= 100*equipment_drop_percent) Game::currentMap->AddEvent(dropXPosition,dropYPosition,equipTemp.spriteName,[this]{dropEquipment(equipment_reward_id,dropXPosition,dropYPosition);});
+            }else std::cout << "Not found equipment reward id: " << equipment_reward_id << std::endl;
         }
 
         Game::gPlayer->getKeyboardController()->unsetTarget();
@@ -152,4 +162,59 @@ Monster::~Monster()
     delete mCollider;
     delete mName;
 //    delete mAI;
+}
+
+void Monster::dropItem(int item_id, float x, float y)
+{
+    if(Game::event.type == SDL_KEYDOWN)
+    {
+        switch(Game::event.key.keysym.sym )
+        {
+            case SDLK_LCTRL:
+                if(Game::gInventory->AddItem(item_id))
+                {
+                    destroyDrop(x,y);
+                }else
+                {
+                    Game::gHUD->setSystemMessage("Your inventory is full!", 2000);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void Monster::dropEquipment(int equipment_id, float x, float y)
+{
+    if(Game::event.type == SDL_KEYDOWN)
+    {
+        switch(Game::event.key.keysym.sym )
+        {
+            case SDLK_LCTRL:
+                if(Game::gInventory->AddEquipment(equipment_id))
+                {
+                    destroyDrop(x,y);
+                }else
+                {
+                    Game::gHUD->setSystemMessage("Your inventory is full!", 2000);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void Monster::destroyDrop(float x, float y)
+{
+    for(auto& e : Game::currentMap->events)
+    {
+        Vector2D position = e->getTransformComponent()->position;
+        if(position.x == x && position.y == y)
+        {
+            e->destroy();
+            break;
+        }
+    }
 }

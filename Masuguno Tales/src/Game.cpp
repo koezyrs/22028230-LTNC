@@ -152,6 +152,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/GoldButtonOver.png", "GoldButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOut.png", "LevelButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOver.png", "LevelButtonOver");
+
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
     TextureManager::LoadTexture("data files/maps/map01_above_player.png", "Map01_Overlay");
@@ -165,12 +166,11 @@ void Game::loadResources()
 
     // Sprite
     TextureManager::LoadTexture("data files/graphics/characters/Player.png", "Sprite-Player");
-    TextureManager::LoadTexture("data files/graphics/characters/158.png", "Sprite-Guard1");
-    TextureManager::LoadTexture("data files/graphics/characters/159.png", "Sprite-Guard2");
-    TextureManager::LoadTexture("data files/graphics/characters/17.png", "Sprite-MonsterCow");
     TextureManager::LoadTexture("data files/graphics/characters/BossDragon.png", "Sprite-BossDragon");
     TextureManager::LoadTexture("data files/graphics/characters/24.png", "Sprite-BlueSlime");
     TextureManager::LoadTexture("data files/graphics/characters/21.png", "Sprite-GreenSlime");
+    TextureManager::LoadTexture("data files/graphics/characters/15.png", "Sprite-Leiea");
+    TextureManager::LoadTexture("data files/graphics/characters/35.png", "Sprite-Aurez");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
@@ -179,8 +179,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/items/14.png", "Item-HPPotion");
 
     // Faces
-    TextureManager::LoadTexture("data files/graphics/faces/18.png", "Face-Guard1");
-
+    TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-GuildMaster");
+    TextureManager::LoadTexture("data files/graphics/faces/15.png", "Face-Leiea");
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
 

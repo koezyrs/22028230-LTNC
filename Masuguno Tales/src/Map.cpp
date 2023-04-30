@@ -44,9 +44,10 @@ void Map::Refresh()
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(),
         [](auto& theNPC) {return !theNPC->isActive();}), npcs.end());
 
+    */
     events.erase(std::remove_if(events.begin(), events.end(),
         [](auto& theEvent){return !theEvent->isActive();}), events.end());
-    */
+
     projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(),
         [](auto& theProjectile){return !theProjectile->isActive();}), projectiles.end());
 
@@ -97,17 +98,6 @@ void Map::Update()
             Game::gPlayer->getTransformComponent()->position = playerPos;
         }
     }
-
-    /*
-    // Hit Monster check
-    for(auto& monster : monsters)
-    {
-        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *monster->getColliderComponent()))
-        {
-            Game::gPlayer->getTransformComponent()->position = playerPos;
-        }
-    }
-    */
 
     // Collide with NPC
     for(auto& npc : npcs)
@@ -189,6 +179,10 @@ void Map::Update()
 void Map::RenderBottomLayer()
 {
     TextureManager::Draw(mTexture, srcRect, destRect);
+    for(auto& e : events)
+    {
+        e->Render();
+    }
 }
 
 void Map::RenderUpperLayer()
@@ -232,9 +226,9 @@ void Map::AddMonster(float x, float y, int monster_id, std::vector<std::vector<T
     }
 }
 
-void Map::AddEvent(float x, float y, std::function<void()> func)
+void Map::AddEvent(float x, float y, std::string spriteName, std::function<void()> func)
 {
-    events.emplace_back(std::make_shared<Event>(x,y, func));
+    events.emplace_back(std::make_shared<Event>(x,y,spriteName,func));
 }
 
 void Map::AddNPC(float x, float y, const char* filepath, std::string name)

@@ -37,7 +37,7 @@ public:
     int id;
     void AddWall(float x, float y);
     void AddMonster(float x, float y, int monster_id, std::vector<std::vector<Tile>> mapBase);
-    void AddEvent(float x, float y, std::function<void()> func = []{});
+    void AddEvent(float x, float y, std::string spriteName = "", std::function<void()> func = []{});
     void AddNPC(float x, float y, const char* filepath, std::string name);
     void AddProjectile(float x, float y, int frames, std::string skillName, float _damage);
     int getWidth();
