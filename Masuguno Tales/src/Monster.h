@@ -17,7 +17,6 @@
 #include "Database/ItemDB.h"
 #include "HUD.h"
 #include "Inventory.h"
-#include "Map.h"
 
 class Monster : public Entity
 {
