@@ -40,7 +40,7 @@ public:
     void AddGold(int gold);
     int GetGold();
 
-    // Use for register only
+    // Use for login only
     void AddEquipmentToSlot(int slot_id, int equipment_id);
     void AddItemToSlot(int slot_id, int item_id, int item_amount);
     // </>

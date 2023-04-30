@@ -111,6 +111,9 @@ void MapManager::LoadMap1()
     mapDatabase[1]->AddMonster(24 * 32, 19 * 32, 3, mapBase[1]);
     mapDatabase[1]->AddMonster(26 * 32, 19 * 32, 3, mapBase[1]);
     mapDatabase[1]->AddMonster(26 * 32, 17 * 32, 3, mapBase[1]);
+
+    mapDatabase[1]->AddNPC(9 * 32, 25 * 32 - 17, "Sprite-Ryn", "Ryn");
+    mapDatabase[1]->AddEvent(9 * 32, 25 * 32 + 5, "",[]{OpenShop(1);});
 }
 
 void MapManager::LoadMap2()
@@ -121,7 +124,7 @@ void MapManager::LoadMap2()
                                     Game::gPlayer->setPosition(10 * 32, 16 * 32);
                                 });
     mapDatabase[2]->AddNPC(16 * 32, 9 * 32, "Sprite-Aurez", "Aurez Lv. 50");
-    mapDatabase[2]->AddEvent(16 * 32, 10 * 32 + 1, "",[]
+    mapDatabase[2]->AddEvent(16 * 32, 10 * 32 + 5, "",[]
                                 {
                                     GuildMasterConversation();
                                 });
@@ -198,6 +201,25 @@ void MapManager::GuildMasterConversation()
             case SDLK_RIGHT:
             case SDLK_LEFT:
                 Game::gDialogue->hideWindow();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void MapManager::OpenShop(int shop_id)
+{
+    if((Game::event.type == SDL_KEYDOWN))
+    {
+        switch(Game::event.key.keysym.sym )
+        {
+            case SDLK_LCTRL: Game::gShop->OpenShop(shop_id); break;
+            case SDLK_UP:
+            case SDLK_DOWN:
+            case SDLK_RIGHT:
+            case SDLK_LEFT:
+                Game::gShop->hideWindow();
                 break;
             default:
                 break;

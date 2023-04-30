@@ -104,21 +104,35 @@ bool QuestLog::checkQuest(int quest_id)
 
 void QuestLog::GuildMasterGiveQuest()
 {
+    // Quest 2
+    if(finishedQuest.count(2) > 0)
+    {
+        DialogueManager::Play("Guild Master#8");
+        return;
+    }
+
+    if(onGoingQuest.count(2) > 0)
+    {
+        if(checkQuest(2)) DialogueManager::Play("Guild Master#8");
+        else DialogueManager::Play("Guild Master#7");
+        return;
+    }
+
     // Quest 1
     if(finishedQuest.count(1) > 0)
     {
-        DialogueManager::Play("Guild Master#5");
+        DialogueManager::Play("Guild Master#5"); // Give Quest 2
         return;
     }
 
     if(onGoingQuest.count(1) > 0)
     {
-        if(checkQuest(1)) DialogueManager::Play("Guild Master#5");
+        if(checkQuest(1)) DialogueManager::Play("Guild Master#5"); // Give Quest 2
         else DialogueManager::Play("Guild Master#4");
         return;
-    }else
-    {
-        // Introduce
-        DialogueManager::Play("Guild Master#1");
     }
+
+    // Introduce
+    DialogueManager::Play("Guild Master#1");
+
 }

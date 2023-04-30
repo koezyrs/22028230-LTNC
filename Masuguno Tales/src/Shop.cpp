@@ -127,7 +127,7 @@ Shop::Shop(int _x, int _y, int _width, int _height, std::string shop_title)
     {
         for(int j = 0; j < 7; j++)
         {
-            shopSlot[slot].init(position.x + 8 + j*39, position.y + 27 + i*39);
+            shopSlot[slot].init(position.x + 8 + j*38, position.y + 27 + i*38);
             slot++;
         }
     }

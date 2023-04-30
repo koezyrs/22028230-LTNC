@@ -12,7 +12,7 @@ void MonsterDB::LoadMonsterDatabase()
                                     0,0,0,0,0,0,true);
     monsterDatabase[1] = MonsterType(1, 32, 32, "Slime Lv.1", "Sprite-BlueSlime",
                                     10.0f, 30.0f, 3000.0f, 0.4f, 0.1f, 30.0f, 128.0f,
-                                    15,5,1,1,0,0);
+                                    15,5,2,0.45,0,0);
     monsterDatabase[2] = MonsterType(2, 32, 32, "Slime Lv.5", "Sprite-GreenSlime",
                                     17.0f, 100.0f, 2000.0f, 0.4f, 0.2f, 40.0f, 128.0f,
                                     25,10,0,0,0,0);

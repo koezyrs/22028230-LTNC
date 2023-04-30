@@ -44,9 +44,38 @@ void DialogueManager::Play(std::string dialogueName)
 
 void DialogueManager::LoadDialogue()
 {
+    dialogueList["Guild Master#8"] = DialogueType("Conversation with Aurez",
+                                             "Excellent work. I just have given you 30 gold. Your next task is to purchase a HP potion from the local shop. It will come in handy for future quests.!",
+                                             "1. Wow, thanks Aurez!! Let's grab some potion!",
+                                             "2. No, I will save some golds and buy those later!",
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 // give quest
+                                                },
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                                },
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#7"] = DialogueType("Conversation with Aurez",
+                                             "You don't have enough slime phlegm my friend! Comeback here when you have 5 blue slime phlegms adventurer!",
+                                             "1. Ahh damm, I thought this was enough! Be back soon sir!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                                },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+
     dialogueList["Guild Master#6"] = DialogueType("Conversation with Aurez",
-                                             "You are very brave adventurer! The prize you will get what you are deserved!",
-                                             "1. That seems challenging, but nothing can stop me. I'm in sir!",
+                                             "You are very brave adventurer! You will get what you are deserved!",
+                                             "1. I'm will come back soon, I promise!",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -75,7 +104,7 @@ void DialogueManager::LoadDialogue()
                                              []{},
                                              "Face-Aurez");
     dialogueList["Guild Master#4"] = DialogueType("Conversation with Aurez",
-                                             "You haven't defeat 10 dummies yet! Train harder adventurer!",
+                                             "You haven't defeated 10 dummies yet! Train harder adventurer!",
                                              "1. Oh, my bad. I will get back training!",
                                              NULL,
                                              NULL,

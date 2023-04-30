@@ -172,13 +172,30 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/characters/21.png", "Sprite-GreenSlime");
     TextureManager::LoadTexture("data files/graphics/characters/15.png", "Sprite-Leiea");
     TextureManager::LoadTexture("data files/graphics/characters/35.png", "Sprite-Aurez");
-
+    TextureManager::LoadTexture("data files/graphics/characters/5.png", "Sprite-Ryn");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
 
     // Item
     TextureManager::LoadTexture("data files/graphics/items/14.png", "Item-HPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/BlueSlimePhlegms.png", "Item-BlueSlimePhlegms");
+    TextureManager::LoadTexture("data files/graphics/items/12.png", "Item-MPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/13.png", "Item-SyntheticPotion");
+    TextureManager::LoadTexture("data files/graphics/items/MediumHPPotion.png", "Item-MedHPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/MediumMPPotion.png", "Item-MedMPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/MediumPotion.png", "Item-MedSyntheticPotion");
+    TextureManager::LoadTexture("data files/graphics/items/BigHPPotion.png", "Item-BigHPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/BigMPPotion.png", "Item-BigMPPotion");
+    TextureManager::LoadTexture("data files/graphics/items/BigPotion.png", "Item-BigSyntheticPotion");
+    TextureManager::LoadTexture("data files/graphics/items/bronze_case.png", "Item-BronzeCase");
+    TextureManager::LoadTexture("data files/graphics/items/silver_case.png", "Item-SilverCase");
+    TextureManager::LoadTexture("data files/graphics/items/golden_case.png", "Item-GoldenCase");
+    TextureManager::LoadTexture("data files/graphics/items/Bronze_key.png", "Item-BronzeKey");
+    TextureManager::LoadTexture("data files/graphics/items/Silver_key.png", "Item-SilverKey");
+    TextureManager::LoadTexture("data files/graphics/items/Golden_key.png", "Item-GoldenKey");
+    TextureManager::LoadTexture("data files/graphics/items/mystery_box.png", "Item-MysteryBox");
+    TextureManager::LoadTexture("data files/graphics/items/Teleport_wing.png", "Item-TeleportWing");
 
     // Faces
     TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-Aurez");

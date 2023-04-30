@@ -5,6 +5,7 @@
 #include <functional>
 #include "../Game.h"
 #include "../Actor.h"
+#include "../Inventory.h"
 
 struct ItemType{
     int item_id;

@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "Map.h"
 #include "Actor.h"
+#include "Shop.h"
 #include "Ranking.h"
 #include "Event.h"
 #include "Tile.h"
@@ -31,6 +32,7 @@ private:
 private:
     static void OpenRankingBoard();
     static void GuildMasterConversation();
+    static void OpenShop(int shop_id);
 };
 
 #endif // MapManager_h
