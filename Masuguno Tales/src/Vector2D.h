@@ -30,6 +30,7 @@ public:
     Vector2D& Zero();
 
     bool operator==(const Vector2D& vec);
+    bool operator!=(const Vector2D& vec);
 
     float DistanceTo(const Vector2D& vec);
 };

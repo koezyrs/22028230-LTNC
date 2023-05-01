@@ -196,7 +196,7 @@ Inventory::Inventory(int _x, int _y, int _width, int _height)
     {
         for(int j = 0; j < 5; j++)
         {
-            invSlot[slot].init(position.x + 7 + j*39, position.y + 25 + i*39);
+            invSlot[slot].init(position.x + 7 + j*38, position.y + 25 + i*39);
             slot++;
         }
     }

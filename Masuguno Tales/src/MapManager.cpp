@@ -6,6 +6,26 @@ void MapManager::LoadMap(int map_id)
 {
     Game::gPlayer->getKeyboardController()->unsetTarget();
     Game::currentMap = mapDatabase[map_id];
+    switch(map_id)
+    {
+    case 1:
+        MixerManager::PlayMusic("Map01Music");
+        break;
+    case 2:
+        MixerManager::PlayMusic("Map02Music");
+        break;
+    case 3:
+        MixerManager::PlayMusic("Map03Music");
+        break;
+    case 4:
+        MixerManager::PlayMusic("Map04Music");
+        break;
+    case 5:
+        MixerManager::PlayMusic("Map05Music", 20);
+        break;
+    default:
+        break;
+    }
 }
 
 std::vector<std::vector<Tile>> MapManager::setupMap(const char* msgnFile, int sizeX, int sizeY)
@@ -101,7 +121,7 @@ void MapManager::LoadMap1()
     mapDatabase[1]->AddMonster(18*32,4*32,1,mapBase[1]);
 
     mapDatabase[1]->AddMonster(45*32,26*32,2,mapBase[1]);
-    mapDatabase[1]->AddMonster(46*32,22*32,2,mapBase[1]);
+    mapDatabase[1]->AddMonster(42*32,22*32,2,mapBase[1]);
     mapDatabase[1]->AddMonster(39*32,26*32,2,mapBase[1]);
     mapDatabase[1]->AddMonster(42*32,19*32,2,mapBase[1]);
     mapDatabase[1]->AddMonster(46*32,19*32,2,mapBase[1]);

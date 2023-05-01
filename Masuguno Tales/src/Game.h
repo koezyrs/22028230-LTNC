@@ -33,6 +33,7 @@ enum SESSION_GAME
     {
         INIT,
         LOAD_RESOURCES,
+        LOAD_MIX,
         LOGIN,
         REGISTER,
         LOAD_DATA,
@@ -47,6 +48,7 @@ public:
     ~Game();
     void init(const char* titile, int xpos, int ypos, int width, int height);
     void loadResources();
+    void loadMix();
     void loginProcess();
     void registProcess();
     void loadData();

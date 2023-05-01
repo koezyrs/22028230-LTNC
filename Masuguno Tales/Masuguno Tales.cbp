@@ -102,6 +102,8 @@
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/MapManager.cpp" />
 		<Unit filename="src/MapManager.h" />
+		<Unit filename="src/MixerManager.cpp" />
+		<Unit filename="src/MixerManager.h" />
 		<Unit filename="src/Monster.cpp" />
 		<Unit filename="src/Monster.h" />
 		<Unit filename="src/NPC.cpp" />

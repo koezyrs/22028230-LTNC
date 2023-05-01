@@ -50,7 +50,7 @@ void KeyboardController::setNearestTarget()
     }
 }
 
-void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown)
+void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown, bool is_collide_monster)
 {
     if(!target) return;
     SkillType sk = SkillDB::skillDatabase[skill_id];
@@ -75,7 +75,7 @@ void KeyboardController::PerformSkill(int skill_id, Uint64 &_cooldown)
     Vector2D currentplayerPos = mTransform->position;
     float distance = sqrt((monsterPos.x - currentplayerPos.x)*(monsterPos.x - currentplayerPos.x) + (monsterPos.y - currentplayerPos.y)*(monsterPos.y - currentplayerPos.y));
     float skillRange = sk.skillRange;
-    if( (distance <= skillRange) && (target->isTargeted()) )
+    if( ((distance <= skillRange) || is_collide_monster) && (target->isTargeted()) )
     {
         float offsetX = 32;
         float offsetY = 32;
@@ -148,19 +148,49 @@ void KeyboardController::Update()
                 setNearestTarget();
                 break;
             }
-
+        /*
         case SDLK_LCTRL:
             {
                 PerformSkill(1, cooldownBasicAttack);
                 break;
             }
-
-        case SDLK_1:
-            {
-                break;
-            }
-
+        */
         }
     }
+
+    // Collision check
+    if(target)
+    {
+        if(Collision::AABB(*Game::gPlayer->getColliderComponent(), *target->getColliderComponent()))
+        {
+            if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
+            {
+                switch(Game::event.key.keysym.sym)
+                {
+                case SDLK_LCTRL:
+                    {
+                        PerformSkill(1, cooldownBasicAttack, true);
+                        break;
+                    }
+                }
+            }
+        }else
+        {
+            if(Game::event.type == SDL_KEYDOWN && Game::event.key.repeat == 0)
+            {
+                switch(Game::event.key.keysym.sym)
+                {
+                case SDLK_LCTRL:
+                    {
+                        PerformSkill(1, cooldownBasicAttack, false);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+
 
 }

@@ -7,6 +7,7 @@
 #include "Login/Login.h"
 #include "Register/Register.h"
 #include "TextureManager.h"
+#include "MixerManager.h"
 #include "Map.h"
 #include "MapManager.h"
 #include "Collision.h"
@@ -82,8 +83,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height)
         return;
     }
 
-    if(Mix_Init(MIX_INIT_OGG) < 0){
-        cout << "Unable to initialize Mixer! Mix_Error: " << Mix_GetError() << endl;
+    if(Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0){
+        cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
         session = CLEAR;
         return;
     }
@@ -152,6 +153,10 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/GoldButtonOver.png", "GoldButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOut.png", "LevelButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/LevelButtonOver.png", "LevelButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/ItemButtonOut.png", "ItemButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/EquipButtonOut.png", "EquipButtonOut");
+    TextureManager::LoadTexture("data files/graphics/gui/ItemButtonOver.png", "ItemButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/EquipButtonOver.png", "EquipButtonOver");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
@@ -203,6 +208,16 @@ void Game::loadResources()
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
 
+    session = LOAD_MIX;;
+}
+
+void Game::loadMix()
+{
+    MixerManager::LoadMusic("data files/music/13 Ochakai.mp3", "Map01Music");
+    MixerManager::LoadMusic("data files/music/18 Semarikuru Shuumatsu e.mp3", "Map02Music");
+    MixerManager::LoadMusic("data files/music/04 Saihate.mp3", "Map03Music");
+    MixerManager::LoadMusic("data files/music/16 Yuzurenai Mono.mp3", "Map04Music");
+    MixerManager::LoadMusic("data files/music/23 Awakening.mp3", "Map05Music");
     session = LOAD_DATA;
 }
 
@@ -569,6 +584,7 @@ void Game::saveData()
 void Game::clean()
 {
     TextureManager::CleanTexture();
+    MixerManager::CleanMixer();
     SDL_DestroyWindow(gWindow);
     SDL_DestroyRenderer(gRenderer);
     mysql_close(conn);

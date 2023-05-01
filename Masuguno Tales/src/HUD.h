@@ -51,6 +51,9 @@ private:
     // System label message
     Label* systemMessage;
     Uint64 systemMessageTimeout;
+
+    // System Button
+    Button *inventoryBtn, *ccBtn;
 };
 
 #endif // HUD_h

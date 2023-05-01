@@ -13,6 +13,8 @@ HUD::HUD() : target(nullptr)
     targetName = new Label(GAME_FONT, " ", 10, 420, 47, White, 120, false, []{});
     targetHP = new Label(GAME_FONT, " ", 10, 440, 53, White, 120, false, []{});
     systemMessage = new Label(GAME_FONT, " ", 10, 460, 80, Black, 360, false, []{});
+    ccBtn = new Button("EquipButtonOut","EquipButtonOver",750,520,32,32,[]{Game::gCharacterInformation->Toggle();});
+    inventoryBtn = new Button("ItemButtonOut","ItemButtonOver",800,520,32,32,[]{Game::gInventory->Toggle();});
 
     BaseSrcRect = {0,0,365,48};
     BaseDestRect = {329,478,365,48};
@@ -92,6 +94,10 @@ void HUD::Update()
             systemMessage->Reset();
             systemMessage = new Label("data files/font/game.ttf", " ", 10, 460, 50, Black, 360, false, []{});
         }
+
+    // Update button
+        inventoryBtn->handleEvent(&Game::event);
+        ccBtn->handleEvent(&Game::event);
 }
 void HUD::Render()
 {
@@ -115,6 +121,10 @@ void HUD::Render()
 
     // Render system message
     systemMessage->Render();
+
+    // Render button
+        inventoryBtn->Render();
+        ccBtn->Render();
 }
 
 void HUD::setSystemMessage(std::string _message, Uint64 timeout)

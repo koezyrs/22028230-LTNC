@@ -14,6 +14,7 @@
 #include "Tile.h"
 #include "Settings.h"
 #include "Vector2D.h"
+#include "MixerManager.h"
 
 class MapManager
 {

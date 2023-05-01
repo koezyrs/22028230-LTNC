@@ -24,10 +24,10 @@ private:
         RIGHT,
         NONE
     };
+    Uint64 cooldownBasicAttack;
     TransformComponent* mTransform;
     SpriteComponent* mSprite;
     std::shared_ptr<Monster> target;
-    Uint64 cooldownBasicAttack;
     DIRECTION state;
     bool *movementAvailable;
 public:
@@ -37,7 +37,7 @@ public:
     void setTarget(std::shared_ptr<Monster>& _tar);
     void unsetTarget();
     void setNearestTarget();
-    void PerformSkill(int skill_id, Uint64 &_cooldown);
+    void PerformSkill(int skill_id, Uint64 &_cooldown, bool is_collide_monster = false);
     void Update();
 };
 

@@ -21,6 +21,9 @@ int main(int argc, char* args[]){
         case LOAD_RESOURCES:
             game->loadResources();
             break;
+        case LOAD_MIX:
+            game->loadMix();
+            break;
         case LOAD_DATA:
             game->loadData();
             break;

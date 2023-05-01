@@ -185,14 +185,6 @@ void Shop::Render()
         }
     }
 
-    for(int i = 0; i < MAX_SHOP_SLOTS; i++)
-    {
-        if(shopSlot[i].isFull)
-        {
-            shopSlot[i].RenderDescription();
-        }
-    }
-
     if(pickedEquip)
     {
         TextureManager::Draw(pickedEquip->getEquipmentSprite(), srcPickedRect, destPickedRect);
@@ -206,7 +198,6 @@ void Shop::Render()
     buyingBtn->Render();
     sellBtn->Render();
 
-
     SDL_Rect optionSrc = {0,0,49,20};
     if(!BuyOrSell)
     {
@@ -217,6 +208,14 @@ void Shop::Render()
     {
         SDL_Rect optionDest = {static_cast<int>(position.x) + 225, static_cast<int>(position.y) + 264, 49, 20};
         TextureManager::Draw(TextureManager::GetTexture("SellButtonOver"), optionSrc, optionDest);
+    }
+
+    for(int i = 0; i < MAX_SHOP_SLOTS; i++)
+    {
+        if(shopSlot[i].isFull)
+        {
+            shopSlot[i].RenderDescription();
+        }
     }
 }
 
@@ -235,11 +234,9 @@ bool Shop::AddItem(int item_id)
         {
             itemList.emplace_back(new Item(itemTemp.item_id, itemTemp.spriteName,itemTemp.maxStack,itemTemp.itemTag,itemTemp.itemName, itemTemp.itemDescription, itemTemp.buyPrice, itemTemp.sellPrice ,itemTemp.ItemFunc));
             shopSlot[i].AddItemToSlot(itemList.back());
-            std::cout << "Added " << itemTemp.itemName << " to the Shop!" << std::endl;
             return true;
         }
     }
-    std::cout << "Shop full!" << std::endl;
     return false;
 }
 
@@ -254,13 +251,10 @@ bool Shop::AddEquipment(int equipment_id)
                                                      equipTemp.Strength, equipTemp.Dexterity, equipTemp.Intelligence,
                                                      equipTemp.Vitality, equipTemp.Agility, equipTemp.buyPrice, equipTemp.sellPrice));
             shopSlot[i].AddEquipmentToSlot(equipmentList.back());
-            std::cout << "Added " << equipTemp.equipmentName << " to the Shop!" << std::endl;
             return true;
             break;
         }
     }
-
-    std::cout << "Shop full!" << std::endl;
     return false;
 }
 
