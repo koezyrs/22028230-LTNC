@@ -134,6 +134,17 @@ void MapManager::LoadMap1()
 
     mapDatabase[1]->AddNPC(9 * 32, 25 * 32 - 17, "Sprite-Ryn", "Ryn");
     mapDatabase[1]->AddEvent(9 * 32, 25 * 32 + 5, "",[]{OpenShop(1);});
+
+    mapDatabase[1]->AddNPC(23 * 32, 16 * 32 - 17, "Sprite-Zeph", "Zeph");
+    mapDatabase[1]->AddEvent(23 * 32, 16 * 32 + 5, "",[]{OpenShop(2);});
+
+    mapDatabase[1]->AddNPC(3 * 32, 19 * 32 - 17, "Sprite-Cephur", "Cephur");
+    mapDatabase[1]->AddEvent(3 * 32, 19 * 32 + 5, "",[]{OpenShop(3);});
+
+    mapDatabase[1]->AddNPC(19 * 32, 28 * 32, "Sprite-July", "July Lv. 3");
+    mapDatabase[1]->AddNPC(21 * 32, 28 * 32, "Sprite-Peeper", "Peeper Lv. 4");
+    mapDatabase[1]->AddNPC(16 * 32, 14 * 32, "Sprite-Athur", "Athur Lv. 17");
+    mapDatabase[1]->AddNPC(19 * 32, 14 * 32, "Sprite-Irish", "Irish Lv. 12");
 }
 
 void MapManager::LoadMap2()
@@ -164,6 +175,7 @@ void MapManager::LoadMap3()
                                     Game::gPlayer->setPosition(0 * 32, 24 * 32);
                                 });
 
+    mapDatabase[3]->AddNPC(54 * 32, 24 * 32, "Sprite-Morwag", "Morwag Lv. 37");
 }
 
 void MapManager::LoadMap4()

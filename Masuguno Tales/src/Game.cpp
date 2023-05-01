@@ -178,9 +178,56 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/characters/15.png", "Sprite-Leiea");
     TextureManager::LoadTexture("data files/graphics/characters/35.png", "Sprite-Aurez");
     TextureManager::LoadTexture("data files/graphics/characters/5.png", "Sprite-Ryn");
+    TextureManager::LoadTexture("data files/graphics/characters/34.png", "Sprite-Zeph");
+    TextureManager::LoadTexture("data files/graphics/characters/43.png", "Sprite-Cephur");
+    TextureManager::LoadTexture("data files/graphics/characters/173.png", "Sprite-Athur");
+    TextureManager::LoadTexture("data files/graphics/characters/8.png", "Sprite-July");
+    TextureManager::LoadTexture("data files/graphics/characters/7.png", "Sprite-Peeper");
+    TextureManager::LoadTexture("data files/graphics/characters/6.png", "Sprite-Irish");
+    TextureManager::LoadTexture("data files/graphics/characters/4.png", "Sprite-Morwag");
+
+    // Faces
+    TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-Aurez");
+    TextureManager::LoadTexture("data files/graphics/faces/15.png", "Face-Leiea");
+    TextureManager::LoadTexture("data files/graphics/faces/7.png", "Face-Peeper");
+    TextureManager::LoadTexture("data files/graphics/faces/8.png", "Face-July");
+    TextureManager::LoadTexture("data files/graphics/faces/173.png", "Face-Athur");
+    TextureManager::LoadTexture("data files/graphics/faces/6.png", "Face-Irish");
+    TextureManager::LoadTexture("data files/graphics/faces/4.png", "Face-Morwag");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
+    TextureManager::LoadTexture("data files/graphics/weapons/beginner_staff.png", "Equip-BeginnerStaff");
+    TextureManager::LoadTexture("data files/graphics/weapons/long_sword.png", "Equip-LongSword");
+    TextureManager::LoadTexture("data files/graphics/weapons/light_sword.png", "Equip-LightSword");
+    TextureManager::LoadTexture("data files/graphics/weapons/flame_blade.png", "Equip-FlameBlade");
+    TextureManager::LoadTexture("data files/graphics/weapons/flame_staff.png", "Equip-FlameStaff");
+    TextureManager::LoadTexture("data files/graphics/weapons/water_blade.png", "Equip-WaterBlade");
+    TextureManager::LoadTexture("data files/graphics/weapons/water_staff.png", "Equip-WaterStaff");
+
+    TextureManager::LoadTexture("data files/graphics/shield/beginner_shield.png", "Equip-BeginnerShield");
+    TextureManager::LoadTexture("data files/graphics/shield/common_shield.png", "Equip-CommonShield");
+    TextureManager::LoadTexture("data files/graphics/shield/common2_shield.png", "Equip-Common2Shield");
+    TextureManager::LoadTexture("data files/graphics/shield/uncommon_shield.png", "Equip-UncommonShield");
+
+    TextureManager::LoadTexture("data files/graphics/helmet/beginner_helmet.png", "Equip-BeginnerHelmet");
+    TextureManager::LoadTexture("data files/graphics/helmet/common_helmet.png", "Equip-CommonHelmet");
+    TextureManager::LoadTexture("data files/graphics/helmet/rare2_helmet.png", "Equip-Rare2Helmet");
+
+    TextureManager::LoadTexture("data files/graphics/armor/beginner_armor.png", "Equip-BeginnerArmor");
+    TextureManager::LoadTexture("data files/graphics/armor/common_armor.png", "Equip-CommonArmor");
+    TextureManager::LoadTexture("data files/graphics/armor/rare_armor.png", "Equip-RareArmor");
+    TextureManager::LoadTexture("data files/graphics/armor/rare2_armor.png", "Equip-Rare2Armor");
+    TextureManager::LoadTexture("data files/graphics/armor/uncommon_armor.png", "Equip-UncommonArmor");
+
+    TextureManager::LoadTexture("data files/graphics/gloves/beginner_gloves.png", "Equip-BeginnerGloves");
+    TextureManager::LoadTexture("data files/graphics/gloves/common_gloves.png", "Equip-CommonGlove");
+    TextureManager::LoadTexture("data files/graphics/gloves/uncommon_gloves.png", "Equip-UncommonGlove");
+
+    TextureManager::LoadTexture("data files/graphics/shoes/beginner_shoes.png", "Equip-BeginnerShoes");
+    TextureManager::LoadTexture("data files/graphics/shoes/common_shoes.png", "Equip-CommonShoes");
+    TextureManager::LoadTexture("data files/graphics/shoes/uncommon_shoes.png", "Equip-UncommonShoes");
+    TextureManager::LoadTexture("data files/graphics/shoes/rare_shoes.png", "Equip-RareShoes");
 
     // Item
     TextureManager::LoadTexture("data files/graphics/items/14.png", "Item-HPPotion");
@@ -202,9 +249,6 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/items/mystery_box.png", "Item-MysteryBox");
     TextureManager::LoadTexture("data files/graphics/items/Teleport_wing.png", "Item-TeleportWing");
 
-    // Faces
-    TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-Aurez");
-    TextureManager::LoadTexture("data files/graphics/faces/15.png", "Face-Leiea");
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");
 

@@ -166,7 +166,7 @@ void Register::RegistButon()
 
 
     // Them actor moi
-    qstr = "INSERT INTO actors(account_id,character_name,level,experience,experience_to_next_level,strength,dexterity,intelligence,vitality,agility,stats_used,stats_available,map_id,x,y,gold,skin) VALUES(" + account_id + ",'" + username_input->inputValue + "',1,0,100,3,6,10,20,15,0,5,1,192,128,0,'Player')";
+    qstr = "INSERT INTO actors(account_id,character_name,level,experience,experience_to_next_level,strength,dexterity,intelligence,vitality,agility,stats_used,stats_available,map_id,x,y,gold,skin) VALUES(" + account_id + ",'" + username_input->inputValue + "',1,0,100,3,6,10,20,15,0,0,1,192,128,0,'Player')";
 
     qstate = mysql_query(Game::conn, qstr.c_str());
     if(qstate)

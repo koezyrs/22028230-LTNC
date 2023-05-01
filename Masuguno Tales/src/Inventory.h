@@ -37,6 +37,8 @@ public:
     bool AddEquipment(int equipment_id);
     bool FindItem(int item_id, int item_amount);
     bool FindEquip(int equip_id, int equip_amount);
+    bool RemoveItem(int item_id, int item_amount);
+    bool RemoveEquipment(int equip_id, int equip_amount);
     void AddGold(int gold);
     int GetGold();
 

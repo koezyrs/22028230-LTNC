@@ -42,12 +42,6 @@ struct InventorySlot
                         item->Perform();
                         item->currentStack = item->currentStack - 1;
                     }
-
-                    if(item->currentStack <= 0)
-                    {
-                        item->destroy();
-                        Reset();
-                    }
                 }
                 lastClick = SDL_GetTicks64();
             }
@@ -79,6 +73,12 @@ struct InventorySlot
 
         if(item != NULL)
         {
+            if(item->currentStack <= 0)
+            {
+                item->destroy();
+                Reset();
+            }
+
             if(lastUpdateStack != item->currentStack)
             {
                 std::string tmp = std::to_string(item->currentStack);
@@ -325,8 +325,7 @@ bool Inventory::FindItem(int item_id, int item_amount)
     int amount = 0;
     bool success = false;
 
-    ItemType itemTemp = ItemDB::itemDatabase[item_id];
-    if(itemTemp.itemName.empty())
+    if(ItemDB::itemDatabase.count(item_id) <= 0)
     {
         std::cerr << "Not found item id: " << item_id << std::endl;
         return false;
@@ -337,7 +336,7 @@ bool Inventory::FindItem(int item_id, int item_amount)
         if(amount >= item_amount) {success = true; break;}
         if(!invSlot[i].isFull) continue;
         if(invSlot[i].item == NULL) continue;
-        if(invSlot[i].item->item_id == itemTemp.item_id) amount = amount + invSlot[i].item->currentStack;
+        if(invSlot[i].item->item_id == item_id) amount = amount + invSlot[i].item->currentStack;
     }
 
     return success;
@@ -348,14 +347,69 @@ bool Inventory::FindEquip(int equip_id, int equip_amount)
     int amount = 0;
     bool success = false;
 
-    EquipmentType equipTemp = EquipmentDB::equipmentDatabase[equip_id];
-
+    if(EquipmentDB::equipmentDatabase.count(equip_id) <= 0) return false;
     for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
     {
         if(amount >= equip_amount) {success = true; break;}
         if(!invSlot[i].isFull) continue;
         if(invSlot[i].equipment == NULL) continue;
-        if(invSlot[i].equipment->equipment_id == equipTemp.equipment_id) amount = amount + 1;
+        if(invSlot[i].equipment->equipment_id == equip_id) amount = amount + 1;
+    }
+    return success;
+}
+
+bool Inventory::RemoveItem(int item_id, int item_amount)
+{
+    bool success = false;
+    int amount = 0;
+    if(ItemDB::itemDatabase.count(item_id) <= 0)
+    {
+        std::cerr << "Not found item id: " << item_id << std::endl;
+        return false;
+    }
+    if(FindItem(item_id, item_amount))
+    {
+        for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+        {
+            if(amount >= item_amount) {success = true; break;}
+            if(!invSlot[i].isFull) continue;
+            if(invSlot[i].item == NULL) continue;
+            if(invSlot[i].item->item_id == item_id)
+            {
+                if(amount + invSlot[i].item->currentStack > item_amount)
+                {
+                    invSlot[i].item->currentStack = invSlot[i].item->currentStack - (item_amount - amount);
+                    amount = item_amount;
+                    success = true;
+                    break;
+                }else
+                {
+                    amount = amount + invSlot[i].item->currentStack;
+                    invSlot[i].item->currentStack = 0;
+                }
+            }
+        }
+    }
+    return success;
+}
+
+bool Inventory::RemoveEquipment(int equip_id, int equip_amount)
+{
+    int amount = 0;
+    bool success = false;
+
+    if(EquipmentDB::equipmentDatabase.count(equip_id) <= 0) return false;
+    for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)
+    {
+        if(amount >= equip_amount) {success = true; break;}
+        if(!invSlot[i].isFull) continue;
+        if(invSlot[i].equipment == NULL) continue;
+        if(invSlot[i].equipment->equipment_id == equip_id)
+        {
+            invSlot[i].equipment->destroy();
+            amount = amount + 1;
+            invSlot[i].Reset();
+        }
     }
     return success;
 }

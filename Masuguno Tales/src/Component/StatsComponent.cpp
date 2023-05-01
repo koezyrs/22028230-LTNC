@@ -12,7 +12,7 @@ Dexterity(_dexterity), Intelligence(_intelligence), Vitality(_vitality), Agility
     AttackSpeed = _agility;
     Mana = MaxMana;
     Health = MaxHealth;
-    Power = Strength*3+Dexterity*3+Intelligence*2+Vitality*2+Agility*5;
+    Power = Strength*3+Dexterity*3+Intelligence*2+Vitality*2+Agility*0.1;
 }
 
 StatsComponent::~StatsComponent() {}
@@ -41,7 +41,7 @@ void StatsComponent::Update()
             Experience = Experience - ExperienceToNextLevel;
             Level = Level + 1;
             ExperienceToNextLevel = ExperienceToNextLevel + ExperienceToNextLevel*NEXT_LEVEL_EXP_RATE;
-            int rewardStatsForLevelUp = 5;
+            int rewardStatsForLevelUp = 1;
             StatsAvailable += rewardStatsForLevelUp;
         }
     }

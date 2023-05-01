@@ -142,7 +142,7 @@ CharacterInformation::CharacterInformation(int _x, int _y, int _width, int _heig
 
     for(int i = 0; i < 10; i++)
     {
-        equipSlot[i].init(position.x + 166, position.y + 27 + i*39);
+        equipSlot[i].init(position.x + 166, position.y + 27 + i*38);
     }
 }
 

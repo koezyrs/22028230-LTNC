@@ -94,6 +94,8 @@ bool QuestLog::checkQuest(int quest_id)
         Game::gInventory->AddGold(quest.reward_gold);
         for(int i = 1; i <= quest.reward_item_amount; i++) Game::gInventory->AddItem(quest.reward_item_id);
         for(int i = 1; i <= quest.reward_equip_amount; i++) Game::gInventory->AddEquipment(quest.reward_equip_id);
+        Game::gInventory->RemoveItem(quest.item_id, quest.item_amount);
+        Game::gInventory->RemoveEquipment(quest.equip_id, quest.equip_amount);
         totalMonsterKilled[quest.enemy_id] = 0;
         onGoingQuest[quest_id] = false;
         if(!quest.repeat) finishedQuest[quest_id] = true;
@@ -104,6 +106,45 @@ bool QuestLog::checkQuest(int quest_id)
 
 void QuestLog::GuildMasterGiveQuest()
 {
+    // Quest 5
+    if(finishedQuest.count(5) > 0)
+    {
+        DialogueManager::Play("Guild Master#.."); // Give quest 6
+        return;
+    }
+
+    if(onGoingQuest.count(5) > 0)
+    {
+        if(checkQuest(5)) DialogueManager::Play("Guild Master#.."); // Give quest 6
+        else DialogueManager::Play("Guild Master#17");              // Not finish quest 5
+        return;
+    }
+    // Quest 4
+    if(finishedQuest.count(4) > 0)
+    {
+        DialogueManager::Play("Guild Master#15"); // Give quest 5
+        return;
+    }
+
+    if(onGoingQuest.count(4) > 0)
+    {
+        if(checkQuest(4)) DialogueManager::Play("Guild Master#15"); // Give quest 5
+        else DialogueManager::Play("Guild Master#14");              // Not finish quest 4
+        return;
+    }
+    // Quest 3
+    if(finishedQuest.count(3) > 0)
+    {
+        DialogueManager::Play("Guild Master#11");
+        return;
+    }
+
+    if(onGoingQuest.count(3) > 0)
+    {
+        if(checkQuest(3)) DialogueManager::Play("Guild Master#11");
+        else DialogueManager::Play("Guild Master#10");
+        return;
+    }
     // Quest 2
     if(finishedQuest.count(2) > 0)
     {

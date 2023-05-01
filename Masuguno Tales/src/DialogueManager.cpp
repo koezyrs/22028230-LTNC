@@ -44,14 +44,482 @@ void DialogueManager::Play(std::string dialogueName)
 
 void DialogueManager::LoadDialogue()
 {
+     dialogueList["Morwag#3"] = DialogueType("Conversation with Morwag",
+                                             "Well, I suppose I could offer you some advice. But don't expect any hand-holding or coddling. If you want to learn from me, you'll have to prove yourself worthy of my time and expertise. Come back here when you level 20!",
+                                             "Thank you, Morwag. I won't let you down.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->mVariable[2] = 1;
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Morwag");
+    dialogueList["Morwag#2"] = DialogueType("Conversation with Morwag",
+                                             "I don't train anyone. I'm retired for a reason. What makes you think I would take on an apprentice?",
+                                             "I understand that you're retired, but I'm just looking for some guidance. You have a lot of knowledge and experience, and I'm willing to learn from you in any way I can.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Morwag#3");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Morwag");
+    dialogueList["Morwag Lv. 37"] = DialogueType("Conversation with Morwag",
+                                             "(gruffly) What do you want?",
+                                             " I'm an adventurer looking to improve my skills, and I heard that you're a retired warrior with a lot of experience. I was hoping you could teach me a thing or two.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Morwag#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Morwag");
+    dialogueList["Irish#11"] = DialogueType("Conversation with Irish",
+                                             "No problem. Just be careful out there, and don't let his gruff exterior discourage you. I have a feeling you could learn a lot from him.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{},
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#10"] = DialogueType("Conversation with Irish",
+                                             "Just head towards the outskirts of town, there's a small tent near the forest. That's where he lives. But be warned, he's not the friendliest of people, and he's not easily impressed. You'll have to prove yourself if you want him to take you seriously.",
+                                             "I understand. Thank you for the information, Irish.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#11");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#9"] = DialogueType("Conversation with Irish",
+                                             "Well, he's a bit of a recluse these days, but he used to be one of the strongest warriors in the land. He's got a lot of experience and knowledge that he could pass on to someone like you.",
+                                             "That sounds like just what I need. How do I go about finding him?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#10");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#8"] = DialogueType("Conversation with Irish",
+                                             "Actually, there's one that comes to mind. His name is Morwag, he's a retired warrior who used to be quite the force to be reckoned with. He's got a scar over his eye, hard to miss him.",
+                                             "Oh can you tell me more about him?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#9");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#7"] = DialogueType("Conversation with Irish",
+                                             "Ah, I see. Well, good luck to you on your adventures. And if you ever need any help, don't hesitate to ask.",
+                                             "Thank you, I appreciate it. It was nice meeting you, Irish.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#6"] = DialogueType("Conversation with Irish",
+                                             "Ah, I see. Well, good luck to you on your adventures. And if you ever need any help, don't hesitate to ask.",
+                                             "1. Thank you, I appreciate it. It was nice meeting you, Irish.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#7");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#5"] = DialogueType("Conversation with Irish",
+                                             "Thank you, I take my duties very seriously. But enough about me, what brings you to our town?",
+                                             "1. I'm actually here to complete some quests and hopefully make a name for myself as an adventurer.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#6");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#4"] = DialogueType("Conversation with Irish",
+                                             "There have been a few instances where I've had to use my training to diffuse tense situations. But I've always been able to handle them.",
+                                             "1. It sounds like you're really good at your job.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#5");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#3"] = DialogueType("Conversation with Irish",
+                                             "It's definitely a unique experience, being the only female guard. But I've always been good at fighting and protecting people, so it was a natural fit for me.",
+                                             "1. That's impressive. Have you faced any particularly tough challenges while on guard duty?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#4");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish#2"] = DialogueType("Conversation with Irish",
+                                             "Of course, I'm Irish, the only female guard in town. What do you want to know?",
+                                             "1. Well, I was curious about what it's like being a guard in this town.",
+                                             "2. Is there anyone that is still living in the town but is hard to find?",
+                                             "3. No, there is nothing *hehe.",
+                                             NULL,
+                                             []{
+                                                Play("Irish#3");
+                                             },
+                                             []{
+                                                 Play("Irish#8");
+                                                },
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             "Face-Irish");
+    dialogueList["Irish Lv. 12"] = DialogueType("Player approach Irish!",
+                                             "You said: Hello there, I was wondering if I could ask you a few questions.",
+                                             "* Irish reply",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Irish#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "");
+    dialogueList["Athur#5"] = DialogueType("Conversation with Athur",
+                                             "Suit yourself. Well, it was nice meeting you. If you have any more questions, don't hesitate to ask.",
+                                             "* Shake Athur's hand and go exploring!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Athur");
+    dialogueList["Athur#4"] = DialogueType("Conversation with Athur",
+                                             "Just be respectful to the townsfolk, and they'll be respectful to you. Oh, and if you're interested in joining the guard, we're always looking for new recruits. You look like you could handle yourself in a fight.",
+                                             "1. Thanks for the offer, but I think I'll stick to adventuring for now.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Athur#5");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Athur");
+    dialogueList["Athur#3"] = DialogueType("Conversation with Athur",
+                                             "That's the spirit. And if you see any suspicious activity, don't hesitate to report it to me or one of the other guards.",
+                                             "1. Will do. Is there anything else I should know?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Athur#4");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Athur");
+    dialogueList["Athur#2"] = DialogueType("Conversation with Athur",
+                                             "Hmm, well, this is generally a peaceful town. But as a guard, I have to be prepared for anything. There have been a few reports of goblin sightings near the outskirts of town, so you might want to be careful if you plan on venturing out there.",
+                                             "1. Goblins, huh? I'll make sure to keep an eye out.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Athur#3");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Athur");
+    dialogueList["Athur Lv. 17"] = DialogueType("Conversation with Athur",
+                                             "Ah, welcome to our humble town. I'm Athur, one of the town guards. What do you want to know?",
+                                             "1. Well, I was wondering if there's anything I should be aware of while I'm here.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Play("Athur#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Athur");
+    dialogueList["July#4"] = DialogueType("Conversation with July",
+                                             "No problem. And if you ever want to join us on an adventure, just let us know!",
+                                             "1. Yeah, we're always up for a good quest. We'll see you around!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-July");
+    dialogueList["July#3"] = DialogueType("Conversation with July",
+                                             "And if you're looking for adventure, you should talk to the guild master. He's always looking for people to go on quests.",
+                                             "1. Thanks for the information. It's good to know where everything is.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("July#4");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-July");
+    dialogueList["Peeper#3"] = DialogueType("Conversation with Peeper",
+                                             "Sure thing. The town is pretty small, but it has everything you need. There's a blacksmith where you can buy weapons and armor, a potion shop where you can buy healing items, and even a library where you can read up on the history of this world.",
+                                             "*July also talk..",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("July#3");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Peeper");
+    dialogueList["Peeper#2"] = DialogueType("Conversation with Peeper",
+                                             "That's right. We've been exploring this world for a while now, and we know a lot of useful things. If you have any questions, don't hesitate to ask.",
+                                             "1. Actually, I was hoping you could tell me a bit more about the town.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("Peeper#3");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Peeper");
+    dialogueList["July#2"] = DialogueType("Conversation with July",
+                                             "Awesome! Welcome to our world. We're happy to help you out in any way we can.",
+                                             "*Peeper also talk..",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("Peeper#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-July");
+    dialogueList["Peeper Lv. 4"] = DialogueType("Conversation with Peeper",
+                                             "Nice to meet you I'm Peeper. What brings you here?",
+                                             "*July also talk...",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("July#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Peeper");
+    dialogueList["July Lv. 3"] = DialogueType("Conversation with July",
+                                             "Nice to meet you I'm July. What brings you here?",
+                                             "1. I'm new to this world, and I was told to come and meet you two.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("July#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-July");
+    dialogueList["Guild Master#17"] = DialogueType("Conversation with Aurez",
+                                             "You haven't slayed 10 green slime yet! Keep going adventurer!",
+                                             "1. Oh, I think I forgot to count again! I will continue then!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#16"] = DialogueType("Conversation with Aurez",
+                                             "Good, come back when you finish, adventurer",
+                                             "1. Okay, I got it!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#15"] = DialogueType("Conversation with Aurez",
+                                             "You're doing great so far. Now it's time to take on some stronger foes. You need to defeat 10 green slimes in the forest.",
+                                             "1. Wow, that sounds really fun! This is such an adventure.",
+                                             "2. This is too tough, I will be back later.",
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->giveQuest(5);
+                                                Play("Guild Master#16");
+                                             },
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#14"] = DialogueType("Conversation with Aurez",
+                                             "I have heard you didn't meet everybody yet! Just make sure you don't miss anyone adventurer!",
+                                             "1. Oh, maybe there are someone I haven't talked to! *Quickly walk away.. ",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#13"] = DialogueType("Conversation with Aurez",
+                                             "Don't worry, everyone here are very friendly, you should go meet July and Peeper, they are such good kids!",
+                                             "1. Uhh..., alright let me give a try! ",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 QuestLog::giveQuest(4);
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#12"] = DialogueType("Conversation with Aurez",
+                                             "You should go meet July and Peeper, they are such good kids!",
+                                             "1. That sounds great. I'll go now! ",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 QuestLog::giveQuest(4);
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#11"] = DialogueType("Conversation with Aurez",
+                                             "You're doing great. As an adventurer, it's important to establish good relationships with NPCs. Your next quest is to simply say hello to a some NPC in the town square, come back here when you feel like you have meet every body in the town!",
+                                             "1. Alright, who shall I meet first? ",
+                                             "2. I'm too shy to meet new people...",
+                                             "3. I think I might go back to training, kill some slime.. maybe.",
+                                             NULL,
+                                             []{
+                                                Play("Guild Master#12");
+                                             },
+                                             []{
+                                                Play("Guild Master#13");
+                                             },
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#10"] = DialogueType("Conversation with Aurez",
+                                             "Did you forgot to buy a small HP potion from Ryn's store, adventurer?",
+                                             "1. Ahh, I did forget to buy one. I will be back soon!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                                },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#9"] = DialogueType("Conversation with Aurez",
+                                             "Excellent! This is a really simple quest, so see you later adventurer!",
+                                             "1. See you later Aurez!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                                },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
     dialogueList["Guild Master#8"] = DialogueType("Conversation with Aurez",
-                                             "Excellent work. I just have given you 30 gold. Your next task is to purchase a HP potion from the local shop. It will come in handy for future quests.!",
+                                             "Excellent work. Your next task is to purchase a small HP potion from Ryn's shop, her shop is in front of the guild house. It will come in handy for future quests.!",
                                              "1. Wow, thanks Aurez!! Let's grab some potion!",
                                              "2. No, I will save some golds and buy those later!",
                                              NULL,
                                              NULL,
                                              []{
-                                                 // give quest
+                                                 QuestLog::giveQuest(3);
+                                                 Play("Guild Master#9");
                                                 },
                                              []{
                                                  Game::gDialogue->hideWindow();
@@ -132,17 +600,17 @@ void DialogueManager::LoadDialogue()
     dialogueList["Guild Master#2"] = DialogueType("Conversation with Aurez",
                                              " Ah, yes. Leiea is one of our most experienced adventurers. It's good to see she's helping out new arrivals. I'm the guild master, and I have plenty of tasks that need doing. But first, we need to see what you're capable of. Your quest is to hone your combat abilities by attacking 10 practice dummies.",
                                              "1. I'm ready, let's do it!",
-                                             "2. I think I'm gonna take a look around a bit!",
                                              NULL,
+                                             "2. I think I'm gonna take a look around a bit!",
                                              NULL,
                                              []{
                                                   QuestLog::giveQuest(1);
                                                   Play("Guild Master#3");
                                                 },
-                                             []{
-                                                 Game::gDialogue->hideWindow();
-                                                },
                                              []{},
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
                                              []{},
                                              "Face-Aurez");
     dialogueList["Guild Master#1"] = DialogueType("Conversation with Aurez",

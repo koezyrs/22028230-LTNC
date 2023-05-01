@@ -115,21 +115,12 @@ void Map::Update()
         float exitDistance = 1.0f;
         if((Game::event.type == SDL_KEYDOWN) && (distance <= GAME_PIXELS + exitDistance))
         {
-            // Check if NPC and Player are facing to each other
-            int playerAnimIndex = Game::gPlayer->getSpriteComponent()->animIndex;
-            int npcAnimIndex = npc->getSpriteComponent()->animIndex;
-            bool success = false;
-            if(playerAnimIndex == 0 && npcAnimIndex == 3) success = true;
-            else if(playerAnimIndex == 1 && npcAnimIndex == 2) success = true;
-            else if(playerAnimIndex == 2 && npcAnimIndex == 1) success = true;
-            else if(playerAnimIndex == 3 && npcAnimIndex == 0) success = true;
 
-            // If is facing
-            if(success){
-                switch(Game::event.key.keysym.sym )
-                {
-                    case SDLK_LCTRL: npc->PlayDialogue();
-                }
+            switch(Game::event.key.keysym.sym )
+            {
+                case SDLK_LCTRL:
+                    npc->PlayDialogue();
+                    break;
             }
         }
 
