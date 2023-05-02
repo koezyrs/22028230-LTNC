@@ -100,6 +100,7 @@ void Monster::Update()
         float spawnWaitTime = 10000;
         timeSpawn = SDL_GetTicks64() + spawnWaitTime;
         mTransform->position = Vector2D(0,0); // The deadzone
+        mAI->Reset();
         mTransform->Update();
         mCollider->Update();
         mSprite->Update();

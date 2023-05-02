@@ -5,6 +5,8 @@ HUD::HUD() : target(nullptr)
     HUDBase = TextureManager::GetTexture("HUDBase");
     HUDBars = TextureManager::GetTexture("HUDBars");
     TargetHP = TextureManager::GetTexture("TargetHPBar");
+    page1 = TextureManager::GetTexture("GuidePage1");
+    page2 = TextureManager::GetTexture("GuidePage2");
     playerName = new Label(GAME_FONT, Game::gPlayer->getNameComponent()->mName.c_str()  ,10,370, 485, Black, 120, false, []{});
     playerLevel = new Label(GAME_FONT, " ",10,570,485, Black, 120, false, []{});
     playerHP = new Label(GAME_FONT, " ",10,370,503, White, 120, false, []{});
@@ -15,6 +17,10 @@ HUD::HUD() : target(nullptr)
     systemMessage = new Label(GAME_FONT, " ", 10, 460, 80, Black, 360, false, []{});
     ccBtn = new Button("EquipButtonOut","EquipButtonOver",750,520,32,32,[]{Game::gCharacterInformation->Toggle();});
     inventoryBtn = new Button("ItemButtonOut","ItemButtonOver",800,520,32,32,[]{Game::gInventory->Toggle();});
+    closePlayerGuide = new Button("CloseButtonOut","CloseButtonOver",654,89,13,13,[this]{guide = 0;});
+    toPage2 = new Label(GAME_FONT, "Next",10,480,440, Black, 120, true, [this]{guide = 2;});
+    toPage1 = new Label(GAME_FONT, "Back",10,460,440, Black, 120, true, [this]{guide = 1;});
+    finish = new Label(GAME_FONT, "Finish",10,520,440, Black, 120, true, [this]{guide = 0; Game::gQuestLog->mVariable[1] = 1;});
 
     BaseSrcRect = {0,0,365,48};
     BaseDestRect = {329,478,365,48};
@@ -38,9 +44,17 @@ HUD::~HUD()
     delete playerHP;
     delete playerMP;
     delete playerExperience;
+    delete inventoryBtn;
+    delete ccBtn;
+    delete systemMessage;
+    delete targetName;
+    delete targetHP;
+    delete closePlayerGuide, toPage2, toPage1, finish;
 
     HUDBars = NULL;
     HUDBase = NULL;
+    page1 = NULL;
+    page2 = NULL;
 }
 
 void HUD::Update()
@@ -98,6 +112,17 @@ void HUD::Update()
     // Update button
         inventoryBtn->handleEvent(&Game::event);
         ccBtn->handleEvent(&Game::event);
+    // Guide
+    if(guide == 1)
+    {
+        toPage2->handleEvent(&Game::event);
+        closePlayerGuide->handleEvent(&Game::event);
+    }else if(guide == 2)
+    {
+        toPage1->handleEvent(&Game::event);
+        finish->handleEvent(&Game::event);
+        closePlayerGuide->handleEvent(&Game::event);
+    }
 }
 void HUD::Render()
 {
@@ -122,11 +147,28 @@ void HUD::Render()
     // Render system message
     systemMessage->Render();
 
-    // Render button
-        inventoryBtn->Render();
-        ccBtn->Render();
-}
+    // Render player guide
+    SDL_Rect guideSrc = {0,0,316,406};
+    SDL_Rect guideDest = {354,85,316,406};
+    if(guide == 1)
+    {
+        TextureManager::Draw(page1, guideSrc, guideDest);
+        toPage2->Render();
+        closePlayerGuide->Render();
+    }else if(guide == 2)
+    {
+        TextureManager::Draw(page2, guideSrc, guideDest);
+        toPage1->Render();
+        finish->Render();
+        closePlayerGuide->Render();
+    }
 
+    // Render button
+    inventoryBtn->Render();
+    ccBtn->Render();
+
+}
+void HUD::showGuide() {guide = 1;}
 void HUD::setSystemMessage(std::string _message, Uint64 timeout)
 {
     systemMessage->Reset();

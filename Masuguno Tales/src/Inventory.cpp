@@ -77,16 +77,19 @@ struct InventorySlot
             {
                 item->destroy();
                 Reset();
+
+            }else
+            {
+                if(lastUpdateStack != item->currentStack)
+                {
+                    std::string tmp = std::to_string(item->currentStack);
+                    SDL_Color White = {255, 255, 255};
+                    lastUpdateStack = item->currentStack;
+                    stackLabel->Reset();
+                    stackLabel = new Label(GAME_FONT, tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
+                }
             }
 
-            if(lastUpdateStack != item->currentStack)
-            {
-                std::string tmp = std::to_string(item->currentStack);
-                SDL_Color White = {255, 255, 255};
-                lastUpdateStack = item->currentStack;
-                stackLabel->Reset();
-                stackLabel = new Label(GAME_FONT, tmp.c_str(), 10, destRect.x + 26, destRect.y + 24,  White, 20, false, []{});
-            }
         }
     }
 
@@ -362,11 +365,8 @@ bool Inventory::RemoveItem(int item_id, int item_amount)
 {
     bool success = false;
     int amount = 0;
-    if(ItemDB::itemDatabase.count(item_id) <= 0)
-    {
-        std::cerr << "Not found item id: " << item_id << std::endl;
-        return false;
-    }
+    if(ItemDB::itemDatabase.count(item_id) <= 0) return false;
+
     if(FindItem(item_id, item_amount))
     {
         for(int i = 0; i < MAX_INVENTORY_SLOTS; i++)

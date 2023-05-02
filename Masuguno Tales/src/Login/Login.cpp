@@ -93,9 +93,11 @@ void Login::LoginButon()
             std::cout << "Id cua ban la: " << row[0] << std::endl;
             std::cout << "Dang nhap thanh cong!" << std::endl;
             std::string account_id(row[0]);
+            setMessage("Login successfully, please wait for loading!");
             LoadGameDatabase(account_id);
         }else
         {
+            setMessage("Username or password is incorrect!");
             std::cout << "Sai thong tin dang nhap!" << std::endl;
         }
         mysql_free_result(res);
@@ -347,12 +349,12 @@ void Login::LoadGameDatabase(std::string _account_id)
             return;
         }
         Game::gRanking = std::make_unique<Ranking>((SCREEN_WIDTH - 316)/2 , (SCREEN_HEIGHT - 406)/2 - 20, 316, 406, topPower, topGold, topLevel);
-
+        if(Game::gQuestLog->mVariable[1] != 1) Game::gHUD->showGuide();
         Game::session = RUNNING;
 }
 
 void Login::setMessage(std::string text)
 {
     systemMessageText->Reset();
-    systemMessageText = new Label(GAME_FONT, text.c_str(), 12, 420, 150, Black, 204);
+    systemMessageText = new Label(GAME_FONT, text.c_str(), 12, 380, 150, Black, 500);
 }

@@ -3,6 +3,34 @@
 std::map<int, ItemType> ItemDB::itemDatabase;
 void ItemDB::LoadItemDatabase()
 {
+    itemDatabase[20] = ItemType(
+        20,                                          // id (Must match database)
+        "Item-GoblinTear",                            // Item
+        999,                                        // Max stack
+        "Material",                                   // Tag
+        "Goblin Tear - Material",                        // Name
+        "Goblin tears are a rare and valuable substance that can be extracted from the eyes of goblins. The tears are often collected by adventurers or sold by those who have managed to obtain them. Goblin tears are a thick, viscous liquid that has a greenish tint to it. It is said to have healing properties and is often used as a potion ingredient by alchemists. .",
+        999,
+        20,
+        []                                          // Use
+        {
+            Game::gInventory->AddItem(20);
+        }
+    );
+    itemDatabase[19] = ItemType(
+        19,                                          // id (Must match database)
+        "Item-WolfFang",                            // Item
+        999,                                        // Max stack
+        "Material",                                   // Tag
+        "Wolf Fang - Material",                        // Name
+        "Sharp and deadly, these fangs are harvested from the jaws of ferocious wolves that roam the wilderness. They are prized for their razor-sharp edges and are often used by blacksmiths and crafters to make weapons and armor that can slice through even the toughest materials.",
+        999,
+        10,
+        []                                          // Use
+        {
+            Game::gInventory->AddItem(19);
+        }
+    );
     itemDatabase[18] = ItemType(
         18,                                          // id (Must match database)
         "Item-TeleportWing",                            // Item

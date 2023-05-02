@@ -134,6 +134,7 @@ void AIComponent::Update()
     case RECALL:
         {
             // Set target
+            nextAttackTime = SDL_GetTicks64() + attackSpeed/1.4;
             int startX = static_cast<int>(startPostion.x + GAME_PIXELS/2 ) / GAME_PIXELS;
             int startY = static_cast<int>(startPostion.y + GAME_PIXELS/2) / GAME_PIXELS;
             setTargetAndCalculateFlowField(startX, startY);
@@ -293,4 +294,10 @@ void AIComponent::calculateFlowDirections() {
         }
     }
 
+}
+
+void AIComponent::Reset()
+{
+    monsterState = ROAMING;
+    *trigger = false;
 }

@@ -157,6 +157,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/gui/EquipButtonOut.png", "EquipButtonOut");
     TextureManager::LoadTexture("data files/graphics/gui/ItemButtonOver.png", "ItemButtonOver");
     TextureManager::LoadTexture("data files/graphics/gui/EquipButtonOver.png", "EquipButtonOver");
+    TextureManager::LoadTexture("data files/graphics/gui/Howtoplay_1.png", "GuidePage1");
+    TextureManager::LoadTexture("data files/graphics/gui/Howtoplay_2.png", "GuidePage2");
 
     // Map
     TextureManager::LoadTexture("data files/maps/map01.png", "Map01");
@@ -185,6 +187,15 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/characters/7.png", "Sprite-Peeper");
     TextureManager::LoadTexture("data files/graphics/characters/6.png", "Sprite-Irish");
     TextureManager::LoadTexture("data files/graphics/characters/4.png", "Sprite-Morwag");
+    TextureManager::LoadTexture("data files/graphics/characters/14.png", "Sprite-Wolf");
+    TextureManager::LoadTexture("data files/graphics/characters/58.png", "Sprite-MysteryMan");
+    TextureManager::LoadTexture("data files/graphics/characters/124.png", "Sprite-Goblin");
+    TextureManager::LoadTexture("data files/graphics/characters/137.png", "Sprite-Grasswyrm");
+    TextureManager::LoadTexture("data files/graphics/characters/129.png", "Sprite-CarnivorousPetal");
+    TextureManager::LoadTexture("data files/graphics/characters/122.png", "Sprite-Baconator");
+    TextureManager::LoadTexture("data files/graphics/characters/106.png", "Sprite-Minator");
+    TextureManager::LoadTexture("data files/graphics/characters/119.png", "Sprite-BayouBehemoth");
+    TextureManager::LoadTexture("data files/graphics/characters/16.png", "Sprite-NightwingDevastator");
 
     // Faces
     TextureManager::LoadTexture("data files/graphics/faces/35.png", "Face-Aurez");
@@ -194,6 +205,7 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/faces/173.png", "Face-Athur");
     TextureManager::LoadTexture("data files/graphics/faces/6.png", "Face-Irish");
     TextureManager::LoadTexture("data files/graphics/faces/4.png", "Face-Morwag");
+    TextureManager::LoadTexture("data files/graphics/faces/58.png", "Face-MysteryMan");
 
     //Equipment
     TextureManager::LoadTexture("data files/graphics/items/2.png", "Equip-AssasinDagger");
@@ -248,6 +260,8 @@ void Game::loadResources()
     TextureManager::LoadTexture("data files/graphics/items/Golden_key.png", "Item-GoldenKey");
     TextureManager::LoadTexture("data files/graphics/items/mystery_box.png", "Item-MysteryBox");
     TextureManager::LoadTexture("data files/graphics/items/Teleport_wing.png", "Item-TeleportWing");
+    TextureManager::LoadTexture("data files/graphics/items/wolf_fang.png", "Item-WolfFang");
+    TextureManager::LoadTexture("data files/graphics/items/goblin_tear.png", "Item-GoblinTear");
 
     // Skill
     TextureManager::LoadTexture("data files/graphics/animations/13.png", "Skill-Basic Attack");

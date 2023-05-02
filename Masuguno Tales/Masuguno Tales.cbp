@@ -66,6 +66,7 @@
 		<Unit filename="src/Database/ItemDB.h" />
 		<Unit filename="src/Database/MonsterDB.cpp" />
 		<Unit filename="src/Database/MonsterDB.h" />
+		<Unit filename="src/Database/PlayerVariableLog.h" />
 		<Unit filename="src/Database/QuestDB.cpp" />
 		<Unit filename="src/Database/QuestDB.h" />
 		<Unit filename="src/Database/ShopDB.cpp" />

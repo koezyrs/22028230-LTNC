@@ -106,16 +106,70 @@ bool QuestLog::checkQuest(int quest_id)
 
 void QuestLog::GuildMasterGiveQuest()
 {
+    // Quest 9
+    if(finishedQuest.count(9) > 0)
+    {
+        DialogueManager::Play("Guild Master#25");
+        return;
+    }
+
+    if(onGoingQuest.count(9) > 0)
+    {
+        DialogueManager::Play("Guild Master#23");
+        return;
+    }
+
+    // Quest 8
+    if(finishedQuest.count(8) > 0)
+    {
+        DialogueManager::Play("Guild Master#23");
+        return;
+    }
+
+    if(onGoingQuest.count(8) > 0)
+    {
+        if(mVariable[4] == 1) DialogueManager::Play("Guild Master#23");
+        else DialogueManager::Play("Guild Master#24");
+        return;
+    }
+    // Quest 7
+    if(finishedQuest.count(7) > 0)
+    {
+        DialogueManager::Play("Guild Master#22"); // Give quest 8
+        return;
+    }
+
+    if(onGoingQuest.count(7) > 0)
+    {
+        if(checkQuest(7)) DialogueManager::Play("Guild Master#22"); // Give quest 8
+        else DialogueManager::Play("Guild Master#21");              // Not finish quest 7
+        return;
+    }
+    // Quest 6
+    if(finishedQuest.count(6) > 0)
+    {
+        DialogueManager::Play("Guild Master#20"); // Give quest 7
+        return;
+    }
+
+    if(onGoingQuest.count(6) > 0)
+    {
+        if(Game::gPlayer->mStats->Level >= 7) mVariable[3] = 1;
+        if(checkQuest(6)) DialogueManager::Play("Guild Master#20"); // Give quest 7
+        else DialogueManager::Play("Guild Master#19");              // Not finish quest 6
+        return;
+    }
     // Quest 5
     if(finishedQuest.count(5) > 0)
     {
-        DialogueManager::Play("Guild Master#.."); // Give quest 6
+        DialogueManager::Play("Guild Master#18"); // Give quest 6
         return;
     }
 
     if(onGoingQuest.count(5) > 0)
     {
-        if(checkQuest(5)) DialogueManager::Play("Guild Master#.."); // Give quest 6
+        if(Game::gPlayer->mStats->Level == 7) mVariable[3] = 1;
+        if(checkQuest(5)) DialogueManager::Play("Guild Master#18"); // Give quest 6
         else DialogueManager::Play("Guild Master#17");              // Not finish quest 5
         return;
     }

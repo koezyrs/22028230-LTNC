@@ -19,6 +19,7 @@ public:
     void Render();
 
     void setSystemMessage(std::string _message, Uint64 timeout);
+    void showGuide();
 private:
     // Color
     SDL_Color White = {255,255,255};
@@ -54,6 +55,13 @@ private:
 
     // System Button
     Button *inventoryBtn, *ccBtn;
+
+
+    // New player guide
+    int guide = 0;
+    Button *closePlayerGuide;
+    Label* toPage2, *toPage1, *finish;
+    SDL_Texture *page1, *page2;
 };
 
 #endif // HUD_h

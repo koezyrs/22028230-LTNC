@@ -82,22 +82,26 @@ void Dialogue::setOption1(const char* text, std::function<void()> func)
 {
     dialogueOption1->Reset();
     if(text != NULL) dialogueOption1 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430, true, func);
+    else dialogueOption1 = new Label(GAME_FONT, " ", 10, position.x + 25, position.y + 145, SDL_Color{0,0,0}, 430);
 }
 
 void Dialogue::setOption2(const char* text, std::function<void()> func)
 {
     dialogueOption2->Reset();
     if(text != NULL) dialogueOption2 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430, true, func);
+    else dialogueOption2 = new Label(GAME_FONT, " ", 10, position.x + 25, position.y + 160, SDL_Color{0,0,0}, 430);
 }
 
 void Dialogue::setOption3(const char* text, std::function<void()> func)
 {
     dialogueOption3->Reset();
     if(text != NULL) dialogueOption3 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430, true, func);
+    else dialogueOption3 = new Label(GAME_FONT, " ", 10, position.x + 25, position.y + 175, SDL_Color{0,0,0}, 430);
 }
 
 void Dialogue::setOption4(const char* text, std::function<void()> func)
 {
     dialogueOption4->Reset();
     if(text != NULL) dialogueOption4 = new Label(GAME_FONT, text, 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430, true, func);
+    else dialogueOption4 = new Label(GAME_FONT, " ", 10, position.x + 25, position.y + 190, SDL_Color{0,0,0}, 430);
 }

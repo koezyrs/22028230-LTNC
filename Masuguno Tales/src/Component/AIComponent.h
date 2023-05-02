@@ -55,6 +55,7 @@ public:
     float _attackRange, float _stopChaseRange, float _chaseSpeed, float _roamSpeed, bool* _trigger, std::vector<std::vector<Tile>> mapBase, bool _freeze);
     ~AIComponent();
     void Update();
+    void Reset();
 };
 
 #endif // AIComponent_h

@@ -4,6 +4,94 @@ std::map<int, Quest> QuestDB::questDatabase;
 
 void QuestDB::LoadQuestDatabase()
 {
+    questDatabase[9] = Quest(
+        // Requirements
+        9,                                  // Quest id (Must match database)
+        "Collect 12 goblin tear!",    // Quest name
+        "Collect 12 goblin tear in the west forest! ", // Desc
+        0,                                  // Var id
+        0,                                  // Var amount
+        20,                                  // Item id
+        12,                                  // Item amount
+        0,                                  // Equip id
+        0,                                  // Equip amount
+        0,                                  // Enemy id
+        0,                                  // Enemy amount
+        // Reward
+        300,                                 // Exp
+        30,                                  // Gold
+        0,                                  // Reward item id
+        0,                                  // Reward item amount
+        22,                                  // Reward equip id
+        1,                                  // Reward equip amount
+        false                               // Repeat
+    );
+    questDatabase[8] = Quest(
+        // Requirements
+        8,                                  // Quest id (Must match database)
+        "Find a mystery man in the forest!",    // Quest name
+        "A mysterious journeyman has been spotted in the forest to the east. We're not sure what he's doing there, but we need you to find him and report back.", // Desc
+        4,                                  // Var id
+        1,                                  // Var amount
+        0,                                  // Item id
+        0,                                  // Item amount
+        0,                                  // Equip id
+        0,                                  // Equip amount
+        0,                                  // Enemy id
+        0,                                  // Enemy amount
+        // Reward
+        300,                                 // Exp
+        30,                                  // Gold
+        0,                                  // Reward item id
+        0,                                  // Reward item amount
+        0,                                  // Reward equip id
+        0,                                  // Reward equip amount
+        false                               // Repeat
+    );
+    questDatabase[7] = Quest(
+        // Requirements
+        7,                                  // Quest id (Must match database)
+        "Get 10 wolf fangs.",    // Quest name
+        "Adventurer needs to 10 wolf fangs.", // Desc
+        0,                                  // Var id
+        0,                                  // Var amount
+        19,                                  // Item id
+        10,                                  // Item amount
+        0,                                  // Equip id
+        0,                                  // Equip amount
+        0,                                  // Enemy id
+        0,                                  // Enemy amount
+        // Reward
+        1500,                                 // Exp
+        70,                                  // Gold
+        14,                                  // Reward item id
+        1,                                  // Reward item amount
+        16,                                  // Reward equip id
+        1,                                  // Reward equip amount
+        false                               // Repeat
+    );
+    questDatabase[6] = Quest(
+        // Requirements
+        6,                                  // Quest id (Must match database)
+        "Get to Lv 7.",    // Quest name
+        "Adventurer needs to get to Lv 10", // Desc
+        3,                                  // Var id
+        1,                                  // Var amount
+        0,                                  // Item id
+        0,                                  // Item amount
+        0,                                  // Equip id
+        0,                                  // Equip amount
+        0,                                  // Enemy id
+        0,                                  // Enemy amount
+        // Reward
+        1000,                                 // Exp
+        50,                                  // Gold
+        5,                                  // Reward item id
+        10,                                  // Reward item amount
+        13,                                  // Reward equip id
+        1,                                  // Reward equip amount
+        false                               // Repeat
+    );
     questDatabase[5] = Quest(
         // Requirements
         5,                                  // Quest id (Must match database)

@@ -176,6 +176,31 @@ void MapManager::LoadMap3()
                                 });
 
     mapDatabase[3]->AddNPC(54 * 32, 24 * 32, "Sprite-Morwag", "Morwag Lv. 37");
+    mapDatabase[3]->AddNPC(3 * 32, 14 * 32, "Sprite-MysteryMan", "Lv. ???");
+
+    mapDatabase[3]->AddMonster(48*32,3*32,4,mapBase[3]);
+    mapDatabase[3]->AddMonster(55*32,5*32,4,mapBase[3]);
+    mapDatabase[3]->AddMonster(49*32,6*32,4,mapBase[3]);
+    mapDatabase[3]->AddMonster(52*32,4*32,4,mapBase[3]);
+    mapDatabase[3]->AddMonster(46*32,7*32,4,mapBase[3]);
+
+    mapDatabase[3]->AddMonster(19*32,22*32,5,mapBase[3]);
+    mapDatabase[3]->AddMonster(15*32,23*32,5,mapBase[3]);
+    mapDatabase[3]->AddMonster(16*32,27*32,5,mapBase[3]);
+    mapDatabase[3]->AddMonster(20*32,27*32,5,mapBase[3]);
+    mapDatabase[3]->AddMonster(9*32,21*32,5,mapBase[3]);
+
+    mapDatabase[3]->AddMonster(6*32,4*32,6,mapBase[3]);
+    mapDatabase[3]->AddMonster(5*32,7*32,6,mapBase[3]);
+    mapDatabase[3]->AddMonster(14*32,5*32,6,mapBase[3]);
+    mapDatabase[3]->AddMonster(18*32,5*32,6,mapBase[3]);
+    mapDatabase[3]->AddMonster(9*32,6*32,6,mapBase[3]);
+
+    mapDatabase[3]->AddMonster(24*32,7*32,7,mapBase[3]);
+    mapDatabase[3]->AddMonster(29*32,8*32,7,mapBase[3]);
+    mapDatabase[3]->AddMonster(23*32,18*32,7,mapBase[3]);
+    mapDatabase[3]->AddMonster(29*32,19*32,7,mapBase[3]);
+    mapDatabase[3]->AddMonster(22*32,11*32,7,mapBase[3]);
 }
 
 void MapManager::LoadMap4()
@@ -190,6 +215,30 @@ void MapManager::LoadMap4()
                                     LoadMap(5);
                                     Game::gPlayer->setPosition(16 * 32, 17 * 32);
                                 });
+    mapDatabase[4]->AddMonster(25*32,8*32,8,mapBase[4]);
+    mapDatabase[4]->AddMonster(35*32,9*32,8,mapBase[4]);
+    mapDatabase[4]->AddMonster(23*32,14*32,8,mapBase[4]);
+    mapDatabase[4]->AddMonster(38*32,11*32,8,mapBase[4]);
+    mapDatabase[4]->AddMonster(29*32,8*32,8,mapBase[4]);
+
+    mapDatabase[4]->AddMonster(6*32,14*32,9,mapBase[4]);
+    mapDatabase[4]->AddMonster(11*32,18*32,9,mapBase[4]);
+    mapDatabase[4]->AddMonster(15*32,20*32,9,mapBase[4]);
+    mapDatabase[4]->AddMonster(4*32,23*32,9,mapBase[4]);
+    mapDatabase[4]->AddMonster(15*32,25*32,9,mapBase[4]);
+
+    mapDatabase[4]->AddMonster(32*32,21*32,10,mapBase[4]);
+    mapDatabase[4]->AddMonster(36*32,25*32,10,mapBase[4]);
+    mapDatabase[4]->AddMonster(25*32,24*32,10,mapBase[4]);
+    mapDatabase[4]->AddMonster(22*32,27*32,10,mapBase[4]);
+    mapDatabase[4]->AddMonster(39*32,26*32,10,mapBase[4]);
+
+    mapDatabase[4]->AddMonster(46*32,23*32,11,mapBase[4]);
+    mapDatabase[4]->AddMonster(54*32,22*32,11,mapBase[4]);
+    mapDatabase[4]->AddMonster(51*32,27*32,11,mapBase[4]);
+    mapDatabase[4]->AddMonster(41*32,26*32,11,mapBase[4]);
+    mapDatabase[4]->AddMonster(55*32,18*32,11,mapBase[4]);
+
 }
 
 void MapManager::LoadMap5()

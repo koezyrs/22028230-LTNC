@@ -44,15 +44,287 @@ void DialogueManager::Play(std::string dialogueName)
 
 void DialogueManager::LoadDialogue()
 {
+    dialogueList["Guild Master#25"] = DialogueType("Conversation with Aurez",
+                                             "Your performance has been impressive thus far. We have more difficult tasks for you to undertake. Your next quest will be provided soon.",
+                                             "*Updating",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+
+    dialogueList["???#10"] = DialogueType("Conversation with ???",
+                                             "Of course, here you go. *Hands over a pouch of gold coins and give you a common glove.",
+                                             "1. Alright, Thank you for the business. ",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#9"] = DialogueType("Conversation with ???",
+                                             "Mysterious Man examines the goblin tears\nImpressive. These are of the highest quality. You have done well.",
+                                             "1. Thank you. So, about the reward you promised?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("???#10");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#8"] = DialogueType("Conversation with ???",
+                                             "Excellent work. May I see them?",
+                                             "1. Sure, here they are.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("???#9");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#7"] = DialogueType("Conversation with ???",
+                                             "Ah, you have returned. Do you have the goblin tears that I requested?",
+                                             "1. Yes, I was able to extract the substance from several goblins that I encountered.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("???#8");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#6"] = DialogueType("Conversation with ???",
+                                             "You don't have 12 goblin tears. Try to get all of them..",
+                                             "1. Alright",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#5"] = DialogueType("Conversation with ???",
+                                             "Nothing to see here!",
+                                             "*You go away",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#4"] = DialogueType("Conversation with ???",
+                                             "Excellent. Please do not hesitate to bring them to me if you find any. I will reward you generously for your efforts.",
+                                             "1. Alright, I will keep that in mind. Thank you for your time.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->mVariable[4] = 1;
+                                                 Game::gQuestLog->checkQuest(8);
+                                                 Game::gQuestLog->giveQuest(9);
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#3"] = DialogueType("Conversation with ???",
+                                             "It is not actual tears that I seek, but rather a rare substance that can be extracted from their bodies. It is said to be difficult to obtain, but I am willing to pay handsomely for it. Bring back 12 goblin tear my friend!",
+                                             "1. I see. Well, I will keep an eye out for any goblins that might have what you're looking for.",
+                                             NULL,
+                                             "2. Well, I'm not interested anymore...",
+                                             NULL,
+                                             []{
+                                                 Play("???#4");
+                                             },
+                                             []{},
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                                },
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#2"] = DialogueType("Conversation with ???",
+                                             "They are said to have magical properties and can be used in certain rituals. I am willing to pay a handsome sum for any that you may come across in your travels.",
+                                             "1. Hmm, I see. Well, I have fought goblins before, but I have never seen them cry.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("???#3");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["???#1"] = DialogueType("Conversation with ???",
+                                             "Yes, I am. I am in search of a rare item known as goblin tears.",
+                                             "1. Goblin tears? I've never heard of such a thing. What are they used for?",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Play("???#2");
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["Lv. ???"] = DialogueType("You approach mysterious journeyman ",
+                                             "You said: Excuse me, sir. Are you looking for something?",
+                                             "*The mysterious man reply",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 if(Game::gQuestLog->onGoingQuest[8] == true)
+                                                 {
+                                                     Play("???#1");
+                                                 }else if(Game::gQuestLog->onGoingQuest[9] == true)
+                                                 {
+                                                    if(Game::gQuestLog->checkQuest(9)) Play("???#7");
+                                                    else Play("???#6");
+                                                 }else
+                                                 {
+                                                    Play("???#5");
+                                                 }
+
+
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-MysteryMan");
+    dialogueList["Guild Master#24"] = DialogueType("Conversation with Aurez",
+                                             "You haven't found him? Just try to search deep into the west forest!",
+                                             "1. Ah, let me try again..",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#23"] = DialogueType("Conversation with Aurez",
+                                             "Oh, you found him! Investigate him for more information..",
+                                             "1. I got it Aurez!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#22"] = DialogueType("Conversation with Aurez",
+                                             "Great job on the wolf fangs. But we have a new quest for you. A mysterious journeyman has been spotted in the forest to the east. We're not sure what he's doing there, but we need you to find him and report back.",
+                                             "1. Oh, this is a real adventure to the west forest! I'will go right away!",
+                                             "2. What if he attack me, I'm not gonna do it...",
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->giveQuest(8);
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#21"] = DialogueType("Conversation with Aurez",
+                                             "You need 10 wolf's fangs to complete this quest. The wolves can be found in the west of the town. Be careful adventure!",
+                                             "1. I'll be right back!",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#20"] = DialogueType("Conversation with Aurez",
+                                             "Good job on reaching level 7. But we have a problem with wolves in the forest. They've been attacking travelers and livestock alike. We need you to hunt them down and bring back 10 of their fangs. They can be found in the forest to the west of the town. Be careful, they're ferocious creatures.",
+                                             "1. I accept the quest sir!",
+                                             "2. This quest is too hard for me. Maybe I should get back to traning!",
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->giveQuest(7);
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{
+                                                Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#19"] = DialogueType("Conversation with Aurez",
+                                             "Your level is too low at the moment! Advance to Lv. 7 and come back here adventurer!",
+                                             "1. Oh, I will come back when I reach Lv 7.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
+    dialogueList["Guild Master#18"] = DialogueType("Conversation with Aurez",
+                                             "Nice work on the green slimes. But you're going to need to be tougher if you want to survive out there. I want you to level up to level 7. Do whatever quests you need to, or simply go out and fight monsters until you reach the milestone.",
+                                             "1. Oh, I will come back when I reach Lv 7.",
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             []{
+                                                 Game::gQuestLog->giveQuest(6);
+                                                 Game::gDialogue->hideWindow();
+                                             },
+                                             []{},
+                                             []{},
+                                             []{},
+                                             "Face-Aurez");
      dialogueList["Morwag#3"] = DialogueType("Conversation with Morwag",
                                              "Well, I suppose I could offer you some advice. But don't expect any hand-holding or coddling. If you want to learn from me, you'll have to prove yourself worthy of my time and expertise. Come back here when you level 20!",
-                                             "Thank you, Morwag. I won't let you down.",
+                                             "1. Thank you, Morwag. I won't let you down.",
                                              NULL,
                                              NULL,
                                              NULL,
                                              []{
                                                  Game::gQuestLog->mVariable[2] = 1;
-                                                Game::gDialogue->hideWindow();
+                                                 Game::gDialogue->hideWindow();
                                              },
                                              []{},
                                              []{},
@@ -60,7 +332,7 @@ void DialogueManager::LoadDialogue()
                                              "Face-Morwag");
     dialogueList["Morwag#2"] = DialogueType("Conversation with Morwag",
                                              "I don't train anyone. I'm retired for a reason. What makes you think I would take on an apprentice?",
-                                             "I understand that you're retired, but I'm just looking for some guidance. You have a lot of knowledge and experience, and I'm willing to learn from you in any way I can.",
+                                             "1. I understand that you're retired, but I'm just looking for some guidance. You have a lot of knowledge and experience, and I'm willing to learn from you in any way I can.",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -73,7 +345,7 @@ void DialogueManager::LoadDialogue()
                                              "Face-Morwag");
     dialogueList["Morwag Lv. 37"] = DialogueType("Conversation with Morwag",
                                              "(gruffly) What do you want?",
-                                             " I'm an adventurer looking to improve my skills, and I heard that you're a retired warrior with a lot of experience. I was hoping you could teach me a thing or two.",
+                                             "1. I'm an adventurer looking to improve my skills, and I heard that you're a retired warrior with a lot of experience. I was hoping you could teach me a thing or two.",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -85,7 +357,7 @@ void DialogueManager::LoadDialogue()
                                              []{},
                                              "Face-Morwag");
     dialogueList["Irish#11"] = DialogueType("Conversation with Irish",
-                                             "No problem. Just be careful out there, and don't let his gruff exterior discourage you. I have a feeling you could learn a lot from him.",
+                                             "1. No problem. Just be careful out there, and don't let his gruff exterior discourage you. I have a feeling you could learn a lot from him.",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -97,7 +369,7 @@ void DialogueManager::LoadDialogue()
                                              "Face-Irish");
     dialogueList["Irish#10"] = DialogueType("Conversation with Irish",
                                              "Just head towards the outskirts of town, there's a small tent near the forest. That's where he lives. But be warned, he's not the friendliest of people, and he's not easily impressed. You'll have to prove yourself if you want him to take you seriously.",
-                                             "I understand. Thank you for the information, Irish.",
+                                             "1. I understand. Thank you for the information, Irish.",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -110,7 +382,7 @@ void DialogueManager::LoadDialogue()
                                              "Face-Irish");
     dialogueList["Irish#9"] = DialogueType("Conversation with Irish",
                                              "Well, he's a bit of a recluse these days, but he used to be one of the strongest warriors in the land. He's got a lot of experience and knowledge that he could pass on to someone like you.",
-                                             "That sounds like just what I need. How do I go about finding him?",
+                                             "1. That sounds like just what I need. How do I go about finding him?",
                                              NULL,
                                              NULL,
                                              NULL,
@@ -123,25 +395,12 @@ void DialogueManager::LoadDialogue()
                                              "Face-Irish");
     dialogueList["Irish#8"] = DialogueType("Conversation with Irish",
                                              "Actually, there's one that comes to mind. His name is Morwag, he's a retired warrior who used to be quite the force to be reckoned with. He's got a scar over his eye, hard to miss him.",
-                                             "Oh can you tell me more about him?",
+                                             "1. Oh can you tell me more about him?",
                                              NULL,
                                              NULL,
                                              NULL,
                                              []{
                                                 Play("Irish#9");
-                                             },
-                                             []{},
-                                             []{},
-                                             []{},
-                                             "Face-Irish");
-    dialogueList["Irish#7"] = DialogueType("Conversation with Irish",
-                                             "Ah, I see. Well, good luck to you on your adventures. And if you ever need any help, don't hesitate to ask.",
-                                             "Thank you, I appreciate it. It was nice meeting you, Irish.",
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             []{
-                                                Game::gDialogue->hideWindow();
                                              },
                                              []{},
                                              []{},
@@ -154,7 +413,7 @@ void DialogueManager::LoadDialogue()
                                              NULL,
                                              NULL,
                                              []{
-                                                Play("Irish#7");
+                                                Game::gDialogue->hideWindow();
                                              },
                                              []{},
                                              []{},
