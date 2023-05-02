@@ -4,8 +4,8 @@
 Game* game = nullptr;
 
 int main(int argc, char* args[]){
-    if(argc < 2) return 0;
-    if(strcmp(args[1],"-1sak1")) return 0;
+    //if(argc < 2) return 0;
+    //if(strcmp(args[1],"-1sak1")) return 0;
 
     Uint32 frameStart;
     int frameTime;

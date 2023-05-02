@@ -1,4 +1,5 @@
 #include "StatsComponent.h"
+#include "../MapManager.h"
 
 StatsComponent::StatsComponent(int _level, int _experience, int _experienceToNextLevel,int _strength, int _dexterity, int _intelligence,
                    int _vitality, int _agility, int _statsUsed, int _statsAvailable)
@@ -41,16 +42,24 @@ void StatsComponent::Update()
             Experience = Experience - ExperienceToNextLevel;
             Level = Level + 1;
             ExperienceToNextLevel = ExperienceToNextLevel + ExperienceToNextLevel*NEXT_LEVEL_EXP_RATE;
-            int rewardStatsForLevelUp = 1;
+            int rewardStatsForLevelUp = 3;
             StatsAvailable += rewardStatsForLevelUp;
         }
+    }
+
+    if(Health <= 0)
+    {
+        MapManager::LoadMap(2);
+        Game::gPlayer->setPosition(16 * 32, 15 * 32);
+        Game::gInventory->AddGold(-Game::gInventory->GetGold()*0.3);
+        Health = MaxHealth * 0.5;
     }
 }
 
 void StatsComponent::ApplyDamage(int _damage)
 {
-    float LO = 0.8f;
-    float HI = 1.8f;
+    float LO = 0.5f;
+    float HI = 1.5f;
     float D = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
     int healthLose = (_damage - Defense) * D;
 
